@@ -23,7 +23,7 @@ public class ExportToExcel{
 
         // Save workbook to file
         String fileName = ngayThang + "_xoso.xlsx";
-        String filePath = "D:/test/" + fileName;
+        String filePath = "A:/F/2023-HK1/DataWarehouse/data/" + fileName;
         Path fileFullPath = Paths.get(filePath);
         Path parentDir = fileFullPath.getParent();
 
@@ -95,5 +95,36 @@ public class ExportToExcel{
             }
         }
     }
+
+
+    public static void writeDataToExcelOneURL(String title,String path,List<ProvinceResult> provinceResultsMN, String ngayThang) {
+            Workbook workbook = new XSSFWorkbook();
+
+            try {
+                writeSheetData(workbook, "Xoso"+title, provinceResultsMN);
+
+                String fileName = ngayThang + "_xoso" +title+".xlsx";
+                String filePath = path + fileName;
+                Path fileFullPath = Paths.get(filePath);
+                Path parentDir = fileFullPath.getParent();
+
+                if (parentDir != null && !Files.exists(parentDir)) {
+                    Files.createDirectories(parentDir);
+                }
+
+                try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                    workbook.write(fileOut);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    workbook.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
 }
 
