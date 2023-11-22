@@ -4,15 +4,13 @@ import java.util.List;
 
 public class ProvinceResult {
     private String tenTinh;
-    private String loaiVe;
     private List<Prize> prizes;
 
     public ProvinceResult() {
     }
 
-    public ProvinceResult(String tenTinh, String loaiVe, List<Prize> prizes) {
+    public ProvinceResult(String tenTinh, List<Prize> prizes) {
         this.tenTinh = tenTinh;
-        this.loaiVe = loaiVe;
         this.prizes = prizes;
     }
 
@@ -24,13 +22,6 @@ public class ProvinceResult {
         this.tenTinh = tenTinh;
     }
 
-    public String getLoaiVe() {
-        return loaiVe;
-    }
-
-    public void setLoaiVe(String loaiVe) {
-        this.loaiVe = loaiVe;
-    }
 
     public List<Prize> getPrizes() {
         return prizes;
@@ -44,7 +35,6 @@ public class ProvinceResult {
     public String toString() {
         return "ProvinceResult{" +
                 "tenTinh='" + tenTinh + '\'' +
-                ", loaiVe='" + loaiVe + '\'' +
                 ", prizes=" + prizes +
                 '}';
     }

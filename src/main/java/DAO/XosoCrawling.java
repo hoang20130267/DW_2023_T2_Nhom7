@@ -39,7 +39,6 @@ public class XosoCrawling {
                 // Lấy tên tỉnh và loại vé để lưu
                 ProvinceResult provinceResult = new ProvinceResult();
                 provinceResult.setTenTinh(tinhElement.select(".tentinh a .namelong").text());
-                provinceResult.setLoaiVe(tinhElement.select(".loaive").text());
 
                 List<Prize> prizes = new ArrayList<>();
 
@@ -115,7 +114,6 @@ public class XosoCrawling {
                 // Lấy tên tỉnh và loại vé để lưu
                 ProvinceResult provinceResultMT = new ProvinceResult();
                 provinceResultMT.setTenTinh(tinhElementMT.select(".tentinh a .namelong").text());
-                provinceResultMT.setLoaiVe(tinhElementMT.select(".loaive").text());
 
                 List<Prize> prizesMT = new ArrayList<>();
 
@@ -166,7 +164,88 @@ public class XosoCrawling {
             lotteryResultMT.setNgayThang(ngayThang);
             lotteryResultMT.setProvinceResults(provinceResultsMT);
 
-            ExportToExcel.writeDataToExcel(provinceResults, provinceResultsMT, ngayThang);
+
+            // Kết nối đến URL chứa dữ liệu xổ số
+            Document docMB = Jsoup.connect("https://xosohomnay.com.vn/truc-tiep-xo-so-mien-bac-xstt-mb-xsmb").get();
+
+            String titleMB = docMB.select("div.title").text();
+            String dateMB = docMB.select("div.ngaykqxs span.daymonth").text() + "/"
+                    + docMB.select("div.ngaykqxs span.year").text();
+            String provinceMB = docMB.select("td.tentinh span.phathanh a").text();
+
+            List<ProvinceResult> provinceResultsMB = new ArrayList<>();
+            ProvinceResult provinceResultMB = new ProvinceResult();
+            provinceResultMB.setTenTinh(provinceMB);
+            List<Prize> prizesMB = new ArrayList<>();
+
+            // Lấy các phần tử chứa thông tin giải
+            Elements content = docMB.select(".kqxs_content");
+            Elements giaiElementsMB = content.select("td[class^='giai_']");
+
+            // Duyệt qua các phần tử giải
+            for (Element giaiElementMB : giaiElementsMB) {
+
+                // Lấy tên giải để lưu
+                Prize prizeMB = new Prize();
+                String tenGiaiMB = giaiElementMB.attr("class").replace("giai_", "");
+
+                // Xử lý tên giải đặc biệt
+                if (tenGiaiMB.equals("7")) {
+                    for (int i = 1; i <= 4; i++) {
+                        Prize specialPrize = new Prize();
+                        specialPrize.setTenGiai("7_" + i);
+                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
+                        prizesMB.add(specialPrize);
+                    }
+                } else if (tenGiaiMB.equals("6")) {
+                    for (int i = 1; i <= 3; i++) {
+                        Prize specialPrize = new Prize();
+                        specialPrize.setTenGiai("6_" + i);
+                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
+                        prizesMB.add(specialPrize);
+                    }
+                } else if (tenGiaiMB.equals("5")) {
+                    for (int i = 1; i <= 6; i++) {
+                        Prize specialPrize = new Prize();
+                        specialPrize.setTenGiai("5_" + i);
+                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
+                        prizesMB.add(specialPrize);
+                    }
+                } else if (tenGiaiMB.equals("4")) {
+                    for (int i = 1; i <= 4; i++) {
+                        Prize specialPrize = new Prize();
+                        specialPrize.setTenGiai("4_" + i);
+                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
+                        prizesMB.add(specialPrize);
+                    }
+                } else if (tenGiaiMB.equals("3")) {
+                    for (int i = 1; i <= 6; i++) {
+                        Prize specialPrize = new Prize();
+                        specialPrize.setTenGiai("3_" + i);
+                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
+                        prizesMB.add(specialPrize);
+                    }
+                } else if (tenGiaiMB.equals("2")) {
+                    for (int i = 1; i <= 2; i++) {
+                        Prize specialPrize = new Prize();
+                        specialPrize.setTenGiai("2_" + i);
+                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
+                        prizesMB.add(specialPrize);
+                    }
+                } else {
+                    prizeMB.setTenGiai(tenGiaiMB);
+                    prizeMB.setSoTrungThuong(getSoTrungThuong(giaiElementMB, 0));
+                    prizesMB.add(prizeMB);
+                }
+            }
+            provinceResultMB.setPrizes(prizesMB);
+            provinceResultsMB.add(provinceResultMB);
+            LotteryResult lotteryResultMB = new LotteryResult();
+            lotteryResultMB.setTitle(titleMB);
+            lotteryResultMB.setNgayThang(dateMB);
+            lotteryResultMB.setProvinceResults(provinceResultsMB);
+
+            ExportToExcel.writeDataToExcel(provinceResults, provinceResultsMT,provinceResultsMB, ngayThang);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
