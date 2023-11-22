@@ -124,7 +124,6 @@ public class CrawlData {
         for (Element tinhElement : tinhElements) {
             ProvinceResult provinceResult = new ProvinceResult();
             provinceResult.setTenTinh(tinhElement.select(".tentinh a .namelong").text());
-            provinceResult.setLoaiVe(tinhElement.select(".loaive").text());
             List<Prize> prizes = new ArrayList<>();
             Elements giaiElements = tinhElement.select("td[class^='giai_']");
             for (Element giaiElement : giaiElements) {
