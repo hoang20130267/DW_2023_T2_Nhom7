@@ -100,7 +100,6 @@ public class CrawlData {
                         updateStatusInDatabase(configuration.getId(), "CRAWLING");
                         configuration.setStatus("CRAWLING");
                         result.add(configuration);
-
                     }
                 }
                 return result;

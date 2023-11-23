@@ -89,5 +89,17 @@ public class Configuration {
         this.status = status;
     }
 
-
+    @Override
+    public String toString() {
+        return "Configuration{" +
+                "id=" + id +
+                ", file_name='" + file_name + '\'' +
+                ", path='" + path + '\'' +
+                ", url='" + url + '\'' +
+                ", user_database='" + user_database + '\'' +
+                ", password_database='" + password_database + '\'' +
+                ", flag=" + flag +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
