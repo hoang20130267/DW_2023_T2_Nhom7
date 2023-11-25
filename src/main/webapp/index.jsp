@@ -1,3 +1,6 @@
+<%@ page import="Bean.Dmart" %>
+<%@ page import="ETL.Load" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -160,6 +163,10 @@
             </div>
         </div>
     </div>
+    <%String date = Load.getCurrentDate();
+        int indexOfLastSlash = date.lastIndexOf("/");
+        String dayMonth = date.substring(0, indexOfLastSlash);
+        String year = date.substring(indexOfLastSlash + 1);%>
     <div id="main">
         <div class="pcontent">
             <div class="dnw-content-top">
@@ -175,7 +182,7 @@
                                     KẾT QUẢ XỔ SỐ MỚI NHẤT
                                 </h1>
                                 <h1 class="pagetitle1" style="font-size: 30px">
-                                    NGÀY
+                                    NGÀY <%=Load.getCurrentDate()%>
                                 </h1>
                                 <div></div>
                                 <div class="box_kqxs" id="kqxs_1-16-11-2023">
@@ -193,11 +200,12 @@
                                                         href="/ket-qua-xo-so/ngay-16-11-2023"
                                                         title="Click xem KQXS 3 Miền Ngày: 16/11/23"
                                                 ><span class="date"
-                                                ><span class="daymonth">16/11</span
-                                                ><span class="year">2023</span></span
+                                                ><span class="daymonth"><%=dayMonth%></span
+                                                ><span class="year"><%=year%></span></span
                                                 ></a
                                                 >
                                             </div>
+
                                         </div>
                                         <div class="top_adv">
                                             <a
@@ -275,8 +283,10 @@
                                                                 cellpadding="0"
                                                         >
                                                             <tbody>
+                                                            <%if(Load.getProvince(Load.getListFourthDmartMN()).equals("")){%>
                                                             <tr>
                                                                 <td>
+                                                                    <%List<Dmart> listMN1 = new Load().getListFirstDmartMN();%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -291,9 +301,9 @@
                                                                                         href="/xo-so-tay-ninh"
                                                                                         title="Xổ Số  Tây Ninh"
                                                                                 ><span class="namelong"
-                                                                                >Tây Ninh</span
+                                                                                ><%=Load.getProvince(Load.getListFirstDmartMN())%></span
                                                                                 ><span class="nameshort"
-                                                                                >T.Ninh</span
+                                                                                ></span
                                                                                 ></a
                                                                                 >
                                                                             </td>
@@ -307,7 +317,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="30"
                                                                                 >
-                                                                                    30
+                                                                                    <%=Load.getNumberWinning("tam", listMN1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -317,7 +327,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="665"
                                                                                 >
-                                                                                    665
+                                                                                    <%=Load.getNumberWinning("bay", listMN1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -327,19 +337,19 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="7081"
                                                                                 >
-                                                                                    7081
+                                                                                    <%=Load.getNumberWinning("sau1", listMN1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="5914"
                                                                                 >
-                                                                                    5914
+                                                                                    <%=Load.getNumberWinning("sau2", listMN1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
                                                                                         data="5950"
                                                                                 >
-                                                                                    5950
+                                                                                    <%=Load.getNumberWinning("sau3", listMN1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -349,7 +359,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="8911"
                                                                                 >
-                                                                                    8911
+                                                                                    <%=Load.getNumberWinning("nam", listMN1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -359,43 +369,43 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="49666"
                                                                                 >
-                                                                                    49666
+                                                                                    <%=Load.getNumberWinning("bon1", listMN1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="56531"
                                                                                 >
-                                                                                    56531
+                                                                                    <%=Load.getNumberWinning("bon2", listMN1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
                                                                                         data="58811"
                                                                                 >
-                                                                                    58811
+                                                                                    <%=Load.getNumberWinning("bon3", listMN1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_4 dayso"
                                                                                         data="22087"
                                                                                 >
-                                                                                    22087
+                                                                                    <%=Load.getNumberWinning("bon4", listMN1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_5 dayso"
                                                                                         data="33866"
                                                                                 >
-                                                                                    33866
+                                                                                    <%=Load.getNumberWinning("bon5", listMN1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_6 dayso"
                                                                                         data="45173"
                                                                                 >
-                                                                                    45173
+                                                                                    <%=Load.getNumberWinning("bon6", listMN1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_7 dayso"
                                                                                         data="89281"
                                                                                 >
-                                                                                    89281
+                                                                                    <%=Load.getNumberWinning("bon7", listMN1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -405,13 +415,13 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="55388"
                                                                                 >
-                                                                                    55388
+                                                                                    <%=Load.getNumberWinning("ba1", listMN1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="46257"
                                                                                 >
-                                                                                    46257
+                                                                                    <%=Load.getNumberWinning("ba2", listMN1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -421,7 +431,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="95488"
                                                                                 >
-                                                                                    95488
+                                                                                    <%=Load.getNumberWinning("nhi", listMN1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -431,7 +441,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="72056"
                                                                                 >
-                                                                                    72056
+                                                                                    <%=Load.getNumberWinning("nhat", listMN1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -441,7 +451,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="429638"
                                                                                 >
-                                                                                    429638
+                                                                                    <%=Load.getNumberWinning("db", listMN1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -449,6 +459,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
+                                                                    <%List<Dmart> listMN2 = new Load().getListSecondDmartMN();%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -462,10 +473,10 @@
                                                                                 <a
                                                                                         href="/xo-so-an-giang"
                                                                                         title="Xổ Số  An Giang"
-                                                                                ><span class="namelong"
-                                                                                >An Giang</span
+                                                                                ><%=Load.getProvince(Load.getListSecondDmartMN())%><span class="namelong"
+                                                                                ></span
                                                                                 ><span class="nameshort"
-                                                                                >A.Giang</span
+                                                                                ></span
                                                                                 ></a
                                                                                 >
                                                                             </td>
@@ -479,7 +490,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="27"
                                                                                 >
-                                                                                    27
+                                                                                    <%=Load.getNumberWinning("tam", listMN2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -489,7 +500,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="545"
                                                                                 >
-                                                                                    545
+                                                                                    <%=Load.getNumberWinning("bay", listMN2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -499,19 +510,19 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="1740"
                                                                                 >
-                                                                                    1740
+                                                                                    <%=Load.getNumberWinning("sau1", listMN2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="9424"
                                                                                 >
-                                                                                    9424
+                                                                                    <%=Load.getNumberWinning("sau2", listMN2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
                                                                                         data="6873"
                                                                                 >
-                                                                                    6873
+                                                                                    <%=Load.getNumberWinning("sau3", listMN2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -521,7 +532,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="4132"
                                                                                 >
-                                                                                    4132
+                                                                                    <%=Load.getNumberWinning("nam", listMN2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -531,43 +542,43 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="78741"
                                                                                 >
-                                                                                    78741
+                                                                                    <%=Load.getNumberWinning("bon1", listMN2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="21776"
                                                                                 >
-                                                                                    21776
+                                                                                    <%=Load.getNumberWinning("bon2", listMN2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
                                                                                         data="78398"
                                                                                 >
-                                                                                    78398
+                                                                                    <%=Load.getNumberWinning("bon3", listMN2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_4 dayso"
                                                                                         data="52153"
                                                                                 >
-                                                                                    52153
+                                                                                    <%=Load.getNumberWinning("bon4", listMN2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_5 dayso"
                                                                                         data="25752"
                                                                                 >
-                                                                                    25752
+                                                                                    <%=Load.getNumberWinning("bon5", listMN2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_6 dayso"
                                                                                         data="42115"
                                                                                 >
-                                                                                    42115
+                                                                                    <%=Load.getNumberWinning("bon6", listMN2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_7 dayso"
                                                                                         data="18329"
                                                                                 >
-                                                                                    18329
+                                                                                    <%=Load.getNumberWinning("bon7", listMN2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -577,13 +588,13 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="49459"
                                                                                 >
-                                                                                    49459
+                                                                                    <%=Load.getNumberWinning("ba1", listMN2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="83806"
                                                                                 >
-                                                                                    83806
+                                                                                    <%=Load.getNumberWinning("ba2", listMN2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -593,7 +604,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="63081"
                                                                                 >
-                                                                                    63081
+                                                                                    <%=Load.getNumberWinning("nhi", listMN2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -603,7 +614,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="11060"
                                                                                 >
-                                                                                    11060
+                                                                                    <%=Load.getNumberWinning("nhat", listMN2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -613,7 +624,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="324301"
                                                                                 >
-                                                                                    324301
+                                                                                    <%=Load.getNumberWinning("db", listMN2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -621,6 +632,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
+                                                                    <%List<Dmart> listMN3 = new Load().getListThirdDmartMN();%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -634,10 +646,10 @@
                                                                                 <a
                                                                                         href="/xo-so-binh-thuan"
                                                                                         title="Xổ Số  Bình Thuận"
-                                                                                ><span class="namelong"
-                                                                                >Bình Thuận</span
+                                                                                ><%=Load.getProvince(Load.getListThirdDmartMN())%><span class="namelong"
+                                                                                ></span
                                                                                 ><span class="nameshort"
-                                                                                >B.Thuận</span
+                                                                                ></span
                                                                                 ></a
                                                                                 >
                                                                             </td>
@@ -651,7 +663,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="84"
                                                                                 >
-                                                                                    84
+                                                                                    <%=Load.getNumberWinning("tam", listMN3)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -661,7 +673,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="543"
                                                                                 >
-                                                                                    543
+                                                                                    <%=Load.getNumberWinning("bay", listMN3)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -671,19 +683,19 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="5199"
                                                                                 >
-                                                                                    5199
+                                                                                    <%=Load.getNumberWinning("sau1", listMN3)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="3487"
                                                                                 >
-                                                                                    3487
+                                                                                    <%=Load.getNumberWinning("sau2", listMN3)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
                                                                                         data="0079"
                                                                                 >
-                                                                                    0079
+                                                                                    <%=Load.getNumberWinning("sau3", listMN3)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -693,7 +705,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="6490"
                                                                                 >
-                                                                                    6490
+                                                                                    <%=Load.getNumberWinning("nam", listMN3)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -703,43 +715,43 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="03563"
                                                                                 >
-                                                                                    03563
+                                                                                    <%=Load.getNumberWinning("bon1", listMN3)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="10257"
                                                                                 >
-                                                                                    10257
+                                                                                    <%=Load.getNumberWinning("bon2", listMN3)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
                                                                                         data="24034"
                                                                                 >
-                                                                                    24034
+                                                                                    <%=Load.getNumberWinning("bon3", listMN3)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_4 dayso"
                                                                                         data="96851"
                                                                                 >
-                                                                                    96851
+                                                                                    <%=Load.getNumberWinning("bon4", listMN3)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_5 dayso"
                                                                                         data="80680"
                                                                                 >
-                                                                                    80680
+                                                                                    <%=Load.getNumberWinning("bon5", listMN3)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_6 dayso"
                                                                                         data="35618"
                                                                                 >
-                                                                                    35618
+                                                                                    <%=Load.getNumberWinning("bon6", listMN3)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_7 dayso"
                                                                                         data="59392"
                                                                                 >
-                                                                                    59392
+                                                                                    <%=Load.getNumberWinning("bon7", listMN3)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -749,13 +761,13 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="15881"
                                                                                 >
-                                                                                    15881
+                                                                                    <%=Load.getNumberWinning("ba1", listMN3)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="87159"
                                                                                 >
-                                                                                    87159
+                                                                                    <%=Load.getNumberWinning("ba2", listMN3)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -765,7 +777,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="51074"
                                                                                 >
-                                                                                    51074
+                                                                                    <%=Load.getNumberWinning("nhi", listMN3)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -775,7 +787,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="38264"
                                                                                 >
-                                                                                    38264
+                                                                                    <%=Load.getNumberWinning("nhat", listMN3)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -785,7 +797,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="092098"
                                                                                 >
-                                                                                    092098
+                                                                                    <%=Load.getNumberWinning("db", listMN3)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -793,6 +805,702 @@
                                                                     </table>
                                                                 </td>
                                                             </tr>
+                                                            <%}else{%>
+                                                            <tr>
+                                                                <td>
+                                                                    <%List<Dmart> listMN1 = new Load().getListFirstDmartMN();%>
+                                                                    <table
+                                                                            width="100%"
+                                                                            border="0"
+                                                                            cellspacing="0"
+                                                                            cellpadding="0"
+                                                                            class="tblKQTinh"
+                                                                    >
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="tentinh">
+                                                                                <a
+                                                                                        href="/xo-so-tay-ninh"
+                                                                                        title="Xổ Số  Tây Ninh"
+                                                                                ><span class="namelong"
+                                                                                ><%=Load.getProvince(Load.getListFirstDmartMN())%></span
+                                                                                ><span class="nameshort"
+                                                                                ></span
+                                                                                ></a
+                                                                                >
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="loaive">11K3</td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="30"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("tam", listMN1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_bay">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="665"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bay", listMN1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_sau">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="7081"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau1", listMN1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="5914"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau2", listMN1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="5950"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau3", listMN1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="8911"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nam", listMN1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tu">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="49666"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon1", listMN1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="56531"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon2", listMN1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="58811"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon3", listMN1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_4 dayso"
+                                                                                        data="22087"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon4", listMN1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_5 dayso"
+                                                                                        data="33866"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon5", listMN1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_6 dayso"
+                                                                                        data="45173"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon6", listMN1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_7 dayso"
+                                                                                        data="89281"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon7", listMN1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_ba">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="55388"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba1", listMN1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="46257"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba2", listMN1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhi">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="95488"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhi", listMN1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhat">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="72056"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhat", listMN1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_dac_biet">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="429638"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("db", listMN1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td>
+                                                                    <%List<Dmart> listMN2 = new Load().getListSecondDmartMN();%>
+                                                                    <table
+                                                                            width="100%"
+                                                                            border="0"
+                                                                            cellspacing="0"
+                                                                            cellpadding="0"
+                                                                            class="tblKQTinh"
+                                                                    >
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="tentinh">
+                                                                                <a
+                                                                                        href="/xo-so-an-giang"
+                                                                                        title="Xổ Số  An Giang"
+                                                                                ><%=Load.getProvince(Load.getListSecondDmartMN())%><span class="namelong"
+                                                                                ></span
+                                                                                ><span class="nameshort"
+                                                                                ></span
+                                                                                ></a
+                                                                                >
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="loaive">AG-11K3</td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="27"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("tam", listMN2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_bay">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="545"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bay", listMN2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_sau">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="1740"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau1", listMN2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="9424"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau2", listMN2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="6873"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau3", listMN2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="4132"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nam", listMN2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tu">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="78741"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon1", listMN2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="21776"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon2", listMN2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="78398"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon3", listMN2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_4 dayso"
+                                                                                        data="52153"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon4", listMN2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_5 dayso"
+                                                                                        data="25752"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon5", listMN2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_6 dayso"
+                                                                                        data="42115"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon6", listMN2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_7 dayso"
+                                                                                        data="18329"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon7", listMN2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_ba">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="49459"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba1", listMN2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="83806"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba2", listMN2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhi">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="63081"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhi", listMN2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhat">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="11060"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhat", listMN2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_dac_biet">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="324301"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("db", listMN2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td>
+                                                                    <%List<Dmart> listMN3 = new Load().getListThirdDmartMN();%>
+                                                                    <table
+                                                                            width="100%"
+                                                                            border="0"
+                                                                            cellspacing="0"
+                                                                            cellpadding="0"
+                                                                            class="tblKQTinh"
+                                                                    >
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="tentinh">
+                                                                                <a
+                                                                                        href="/xo-so-binh-thuan"
+                                                                                        title="Xổ Số  Bình Thuận"
+                                                                                ><%=Load.getProvince(Load.getListThirdDmartMN())%><span class="namelong"
+                                                                                ></span
+                                                                                ><span class="nameshort"
+                                                                                ></span
+                                                                                ></a
+                                                                                >
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="loaive">11K3</td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="84"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("tam", listMN3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_bay">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="543"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bay", listMN3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_sau">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="5199"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau1", listMN3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="3487"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau2", listMN3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="0079"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau3", listMN3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="6490"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nam", listMN3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tu">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="03563"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon1", listMN3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="10257"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon2", listMN3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="24034"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon3", listMN3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_4 dayso"
+                                                                                        data="96851"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon4", listMN3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_5 dayso"
+                                                                                        data="80680"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon5", listMN3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_6 dayso"
+                                                                                        data="35618"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon6", listMN3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_7 dayso"
+                                                                                        data="59392"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon7", listMN3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_ba">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="15881"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba1", listMN3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="87159"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba2", listMN3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhi">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="51074"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhi", listMN3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhat">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="38264"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhat", listMN3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_dac_biet">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="092098"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("db", listMN3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td>
+                                                                    <%List<Dmart> listMN4 = new Load().getListFourthDmartMN();%>
+                                                                    <table
+                                                                            width="100%"
+                                                                            border="0"
+                                                                            cellspacing="0"
+                                                                            cellpadding="0"
+                                                                            class="tblKQTinh"
+                                                                    >
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="tentinh">
+                                                                                <a
+                                                                                        href="/xo-so-binh-thuan"
+                                                                                        title="Xổ Số  Bình Thuận"
+                                                                                ><%=Load.getProvince(Load.getListFourthDmartMN())%><span class="namelong"
+                                                                                ></span
+                                                                                ><span class="nameshort"
+                                                                                ></span
+                                                                                ></a
+                                                                                >
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="loaive">11K3</td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="84"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("tam", listMN4)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_bay">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="543"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bay", listMN4)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_sau">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="5199"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau1", listMN4)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="3487"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau2", listMN4)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="0079"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau3", listMN4)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="6490"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nam", listMN4)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tu">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="03563"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon1", listMN4)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="10257"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon2", listMN4)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="24034"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon3", listMN4)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_4 dayso"
+                                                                                        data="96851"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon4", listMN4)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_5 dayso"
+                                                                                        data="80680"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon5", listMN4)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_6 dayso"
+                                                                                        data="35618"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon6", listMN4)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_7 dayso"
+                                                                                        data="59392"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon7", listMN4)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_ba">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="15881"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba1", listMN4)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="87159"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba2", listMN4)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhi">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="51074"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhi", listMN4)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhat">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="38264"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhat", listMN4)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_dac_biet">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="092098"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("db", listMN4)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <%}%>
                                                             </tbody>
                                                         </table>
                                                     </td>
@@ -841,8 +1549,8 @@
                                                         href="/ket-qua-xo-so/ngay-16-11-2023"
                                                         title="Click xem KQXS 3 Miền Ngày: 16/11/23"
                                                 ><span class="date"
-                                                ><span class="daymonth">16/11</span
-                                                ><span class="year">2023</span></span
+                                                ><span class="daymonth"><%=dayMonth%></span
+                                                ><span class="year"><%=year%></span></span
                                                 ></a
                                                 >
                                             </div>
@@ -923,8 +1631,10 @@
                                                                 cellpadding="0"
                                                         >
                                                             <tbody>
+                                                            <%if(Load.getProvince(Load.getListThirdDmartMT()).equals("")){%>
                                                             <tr>
                                                                 <td>
+                                                                    <%List<Dmart> listMT1 = new Load().getListFirstDmartMT();%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -939,9 +1649,9 @@
                                                                                         href="/xo-so-binh-dinh"
                                                                                         title="Xổ Số  Bình Định"
                                                                                 ><span class="namelong"
-                                                                                >Bình Định</span
+                                                                                ><%=Load.getProvince(Load.getListFirstDmartMT())%></span
                                                                                 ><span class="nameshort"
-                                                                                >B.Định</span
+                                                                                ></span
                                                                                 ></a
                                                                                 >
                                                                             </td>
@@ -955,7 +1665,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="64"
                                                                                 >
-                                                                                    64
+                                                                                    <%=Load.getNumberWinning("tam", listMT1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -965,7 +1675,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="233"
                                                                                 >
-                                                                                    233
+                                                                                    <%=Load.getNumberWinning("bay", listMT1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -975,19 +1685,19 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="4387"
                                                                                 >
-                                                                                    4387
+                                                                                    <%=Load.getNumberWinning("sau1", listMT1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="8047"
                                                                                 >
-                                                                                    8047
+                                                                                    <%=Load.getNumberWinning("sau2", listMT1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
                                                                                         data="1648"
                                                                                 >
-                                                                                    1648
+                                                                                    <%=Load.getNumberWinning("sau3", listMT1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -997,7 +1707,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="6506"
                                                                                 >
-                                                                                    6506
+                                                                                    <%=Load.getNumberWinning("nam", listMT1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1007,43 +1717,43 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="75356"
                                                                                 >
-                                                                                    75356
+                                                                                    <%=Load.getNumberWinning("bon1", listMT1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="62304"
                                                                                 >
-                                                                                    62304
+                                                                                    <%=Load.getNumberWinning("bon2", listMT1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
                                                                                         data="50561"
                                                                                 >
-                                                                                    50561
+                                                                                    <%=Load.getNumberWinning("bon3", listMT1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_4 dayso"
                                                                                         data="76215"
                                                                                 >
-                                                                                    76215
+                                                                                    <%=Load.getNumberWinning("bon4", listMT1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_5 dayso"
                                                                                         data="67880"
                                                                                 >
-                                                                                    67880
+                                                                                    <%=Load.getNumberWinning("bon5", listMT1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_6 dayso"
                                                                                         data="60398"
                                                                                 >
-                                                                                    60398
+                                                                                    <%=Load.getNumberWinning("bon6", listMT1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_7 dayso"
                                                                                         data="19087"
                                                                                 >
-                                                                                    19087
+                                                                                    <%=Load.getNumberWinning("bon7", listMT1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1053,13 +1763,13 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="08177"
                                                                                 >
-                                                                                    08177
+                                                                                    <%=Load.getNumberWinning("ba1", listMT1)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
                                                                                         data="93481"
                                                                                 >
-                                                                                    93481
+                                                                                    <%=Load.getNumberWinning("ba2", listMT1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1069,7 +1779,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="59635"
                                                                                 >
-                                                                                    59635
+                                                                                    <%=Load.getNumberWinning("nhi", listMT1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1079,7 +1789,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="28510"
                                                                                 >
-                                                                                    28510
+                                                                                    <%=Load.getNumberWinning("nhat", listMT1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1089,7 +1799,7 @@
                                                                                         class="lq_1 dayso"
                                                                                         data="835628"
                                                                                 >
-                                                                                    835628
+                                                                                    <%=Load.getNumberWinning("db", listMT1)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1097,6 +1807,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
+                                                                    <%List<Dmart> listMT2 = new Load().getListSecondDmartMT();%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -1108,26 +1819,26 @@
                                                                         <tr>
                                                                             <td class="tentinh">
                                                                                 <a
-                                                                                        href="/xo-so-quang-tri"
-                                                                                        title="Xổ Số  Quảng Trị"
+                                                                                        href="/xo-so-binh-dinh"
+                                                                                        title="Xổ Số  Bình Định"
                                                                                 ><span class="namelong"
-                                                                                >Quảng Trị</span
+                                                                                ><%=Load.getProvince(Load.getListSecondDmartMT())%></span
                                                                                 ><span class="nameshort"
-                                                                                >Q.Trị</span
+                                                                                ></span
                                                                                 ></a
                                                                                 >
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">XSQT</td>
+                                                                            <td class="loaive">XSBDI</td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
                                                                                 <div
                                                                                         class="lq_1 dayso"
-                                                                                        data="49"
+                                                                                        data="64"
                                                                                 >
-                                                                                    49
+                                                                                    <%=Load.getNumberWinning("tam", listMT2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1135,9 +1846,9 @@
                                                                             <td class="giai_bay">
                                                                                 <div
                                                                                         class="lq_1 dayso"
-                                                                                        data="157"
+                                                                                        data="233"
                                                                                 >
-                                                                                    157
+                                                                                    <%=Load.getNumberWinning("bay", listMT2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1145,21 +1856,21 @@
                                                                             <td class="giai_sau">
                                                                                 <div
                                                                                         class="lq_1 dayso"
-                                                                                        data="8551"
+                                                                                        data="4387"
                                                                                 >
-                                                                                    8551
+                                                                                    <%=Load.getNumberWinning("sau1", listMT2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
-                                                                                        data="8676"
+                                                                                        data="8047"
                                                                                 >
-                                                                                    8676
+                                                                                    <%=Load.getNumberWinning("sau2", listMT2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
-                                                                                        data="7613"
+                                                                                        data="1648"
                                                                                 >
-                                                                                    7613
+                                                                                    <%=Load.getNumberWinning("sau3", listMT2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1167,9 +1878,9 @@
                                                                             <td class="giai_nam">
                                                                                 <div
                                                                                         class="lq_1 dayso"
-                                                                                        data="8507"
+                                                                                        data="6506"
                                                                                 >
-                                                                                    8507
+                                                                                    <%=Load.getNumberWinning("nam", listMT2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1177,45 +1888,45 @@
                                                                             <td class="giai_tu">
                                                                                 <div
                                                                                         class="lq_1 dayso"
-                                                                                        data="25758"
+                                                                                        data="75356"
                                                                                 >
-                                                                                    25758
+                                                                                    <%=Load.getNumberWinning("bon1", listMT2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
-                                                                                        data="62138"
+                                                                                        data="62304"
                                                                                 >
-                                                                                    62138
+                                                                                    <%=Load.getNumberWinning("bon2", listMT2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_3 dayso"
-                                                                                        data="40167"
+                                                                                        data="50561"
                                                                                 >
-                                                                                    40167
+                                                                                    <%=Load.getNumberWinning("bon3", listMT2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_4 dayso"
-                                                                                        data="99334"
+                                                                                        data="76215"
                                                                                 >
-                                                                                    99334
+                                                                                    <%=Load.getNumberWinning("bon4", listMT2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_5 dayso"
-                                                                                        data="16754"
+                                                                                        data="67880"
                                                                                 >
-                                                                                    16754
+                                                                                    <%=Load.getNumberWinning("bon5", listMT2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_6 dayso"
-                                                                                        data="73899"
+                                                                                        data="60398"
                                                                                 >
-                                                                                    73899
+                                                                                    <%=Load.getNumberWinning("bon6", listMT2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_7 dayso"
-                                                                                        data="58211"
+                                                                                        data="19087"
                                                                                 >
-                                                                                    58211
+                                                                                    <%=Load.getNumberWinning("bon7", listMT2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1223,15 +1934,15 @@
                                                                             <td class="giai_ba">
                                                                                 <div
                                                                                         class="lq_1 dayso"
-                                                                                        data="97098"
+                                                                                        data="08177"
                                                                                 >
-                                                                                    97098
+                                                                                    <%=Load.getNumberWinning("ba1", listMT2)%>
                                                                                 </div>
                                                                                 <div
                                                                                         class="lq_2 dayso"
-                                                                                        data="40581"
+                                                                                        data="93481"
                                                                                 >
-                                                                                    40581
+                                                                                    <%=Load.getNumberWinning("ba2", listMT2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1239,9 +1950,9 @@
                                                                             <td class="giai_nhi">
                                                                                 <div
                                                                                         class="lq_1 dayso"
-                                                                                        data="40496"
+                                                                                        data="59635"
                                                                                 >
-                                                                                    40496
+                                                                                    <%=Load.getNumberWinning("nhi", listMT2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1249,9 +1960,9 @@
                                                                             <td class="giai_nhat">
                                                                                 <div
                                                                                         class="lq_1 dayso"
-                                                                                        data="70731"
+                                                                                        data="28510"
                                                                                 >
-                                                                                    70731
+                                                                                    <%=Load.getNumberWinning("nhat", listMT2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1259,181 +1970,9 @@
                                                                             <td class="giai_dac_biet">
                                                                                 <div
                                                                                         class="lq_1 dayso"
-                                                                                        data="983396"
+                                                                                        data="835628"
                                                                                 >
-                                                                                    983396
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </td>
-                                                                <td>
-                                                                    <table
-                                                                            width="100%"
-                                                                            border="0"
-                                                                            cellspacing="0"
-                                                                            cellpadding="0"
-                                                                            class="tblKQTinh"
-                                                                    >
-                                                                        <tbody>
-                                                                        <tr>
-                                                                            <td class="tentinh">
-                                                                                <a
-                                                                                        href="/xo-so-quang-binh"
-                                                                                        title="Xổ Số  Quảng Bình"
-                                                                                ><span class="namelong"
-                                                                                >Quảng Bình</span
-                                                                                ><span class="nameshort"
-                                                                                >Q.Bình</span
-                                                                                ></a
-                                                                                >
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td class="loaive">XSQB</td>
-                                                                        </tr>
-                                                                        <tr align="center">
-                                                                            <td class="giai_tam">
-                                                                                <div
-                                                                                        class="lq_1 dayso"
-                                                                                        data="45"
-                                                                                >
-                                                                                    45
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr align="center">
-                                                                            <td class="giai_bay">
-                                                                                <div
-                                                                                        class="lq_1 dayso"
-                                                                                        data="195"
-                                                                                >
-                                                                                    195
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr align="center">
-                                                                            <td class="giai_sau">
-                                                                                <div
-                                                                                        class="lq_1 dayso"
-                                                                                        data="6941"
-                                                                                >
-                                                                                    6941
-                                                                                </div>
-                                                                                <div
-                                                                                        class="lq_2 dayso"
-                                                                                        data="8501"
-                                                                                >
-                                                                                    8501
-                                                                                </div>
-                                                                                <div
-                                                                                        class="lq_3 dayso"
-                                                                                        data="6361"
-                                                                                >
-                                                                                    6361
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr align="center">
-                                                                            <td class="giai_nam">
-                                                                                <div
-                                                                                        class="lq_1 dayso"
-                                                                                        data="6911"
-                                                                                >
-                                                                                    6911
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr align="center">
-                                                                            <td class="giai_tu">
-                                                                                <div
-                                                                                        class="lq_1 dayso"
-                                                                                        data="79109"
-                                                                                >
-                                                                                    79109
-                                                                                </div>
-                                                                                <div
-                                                                                        class="lq_2 dayso"
-                                                                                        data="87469"
-                                                                                >
-                                                                                    87469
-                                                                                </div>
-                                                                                <div
-                                                                                        class="lq_3 dayso"
-                                                                                        data="04432"
-                                                                                >
-                                                                                    04432
-                                                                                </div>
-                                                                                <div
-                                                                                        class="lq_4 dayso"
-                                                                                        data="35625"
-                                                                                >
-                                                                                    35625
-                                                                                </div>
-                                                                                <div
-                                                                                        class="lq_5 dayso"
-                                                                                        data="16971"
-                                                                                >
-                                                                                    16971
-                                                                                </div>
-                                                                                <div
-                                                                                        class="lq_6 dayso"
-                                                                                        data="42720"
-                                                                                >
-                                                                                    42720
-                                                                                </div>
-                                                                                <div
-                                                                                        class="lq_7 dayso"
-                                                                                        data="28767"
-                                                                                >
-                                                                                    28767
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr align="center">
-                                                                            <td class="giai_ba">
-                                                                                <div
-                                                                                        class="lq_1 dayso"
-                                                                                        data="41513"
-                                                                                >
-                                                                                    41513
-                                                                                </div>
-                                                                                <div
-                                                                                        class="lq_2 dayso"
-                                                                                        data="56764"
-                                                                                >
-                                                                                    56764
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr align="center">
-                                                                            <td class="giai_nhi">
-                                                                                <div
-                                                                                        class="lq_1 dayso"
-                                                                                        data="75558"
-                                                                                >
-                                                                                    75558
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr align="center">
-                                                                            <td class="giai_nhat">
-                                                                                <div
-                                                                                        class="lq_1 dayso"
-                                                                                        data="16798"
-                                                                                >
-                                                                                    16798
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr align="center">
-                                                                            <td class="giai_dac_biet">
-                                                                                <div
-                                                                                        class="lq_1 dayso"
-                                                                                        data="249035"
-                                                                                >
-                                                                                    249035
+                                                                                    <%=Load.getNumberWinning("db", listMT2)%>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -1441,6 +1980,529 @@
                                                                     </table>
                                                                 </td>
                                                             </tr>
+                                                            <%}else{%>
+                                                            <tr>
+                                                                <td>
+                                                                    <%List<Dmart> listMT1 = new Load().getListFirstDmartMT();%>
+                                                                    <table
+                                                                            width="100%"
+                                                                            border="0"
+                                                                            cellspacing="0"
+                                                                            cellpadding="0"
+                                                                            class="tblKQTinh"
+                                                                    >
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="tentinh">
+                                                                                <a
+                                                                                        href="/xo-so-binh-dinh"
+                                                                                        title="Xổ Số  Bình Định"
+                                                                                ><span class="namelong"
+                                                                                ><%=Load.getProvince(Load.getListFirstDmartMT())%></span
+                                                                                ><span class="nameshort"
+                                                                                ></span
+                                                                                ></a
+                                                                                >
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="loaive">XSBDI</td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="64"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("tam", listMT1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_bay">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="233"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bay", listMT1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_sau">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="4387"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau1", listMT1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="8047"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau2", listMT1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="1648"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau3", listMT1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="6506"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nam", listMT1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tu">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="75356"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon1", listMT1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="62304"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon2", listMT1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="50561"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon3", listMT1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_4 dayso"
+                                                                                        data="76215"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon4", listMT1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_5 dayso"
+                                                                                        data="67880"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon5", listMT1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_6 dayso"
+                                                                                        data="60398"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon6", listMT1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_7 dayso"
+                                                                                        data="19087"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon7", listMT1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_ba">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="08177"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba1", listMT1)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="93481"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba2", listMT1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhi">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="59635"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhi", listMT1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhat">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="28510"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhat", listMT1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_dac_biet">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="835628"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("db", listMT1)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td>
+                                                                    <%List<Dmart> listMT2 = new Load().getListSecondDmartMT();%>
+                                                                    <table
+                                                                            width="100%"
+                                                                            border="0"
+                                                                            cellspacing="0"
+                                                                            cellpadding="0"
+                                                                            class="tblKQTinh"
+                                                                    >
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="tentinh">
+                                                                                <a
+                                                                                        href="/xo-so-binh-dinh"
+                                                                                        title="Xổ Số  Bình Định"
+                                                                                ><span class="namelong"
+                                                                                ><%=Load.getProvince(Load.getListSecondDmartMT())%></span
+                                                                                ><span class="nameshort"
+                                                                                ></span
+                                                                                ></a
+                                                                                >
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="loaive">XSBDI</td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="64"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("tam", listMT2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_bay">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="233"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bay", listMT2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_sau">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="4387"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau1", listMT2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="8047"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau2", listMT2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="1648"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau3", listMT2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="6506"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nam", listMT2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tu">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="75356"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon1", listMT2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="62304"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon2", listMT2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="50561"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon3", listMT2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_4 dayso"
+                                                                                        data="76215"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon4", listMT2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_5 dayso"
+                                                                                        data="67880"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon5", listMT2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_6 dayso"
+                                                                                        data="60398"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon6", listMT2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_7 dayso"
+                                                                                        data="19087"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon7", listMT2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_ba">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="08177"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba1", listMT2)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="93481"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba2", listMT2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhi">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="59635"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhi", listMT2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhat">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="28510"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhat", listMT2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_dac_biet">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="835628"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("db", listMT2)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                                <td>
+                                                                    <%List<Dmart> listMT3 = new Load().getListThirdDmartMT();%>
+                                                                    <table
+                                                                            width="100%"
+                                                                            border="0"
+                                                                            cellspacing="0"
+                                                                            cellpadding="0"
+                                                                            class="tblKQTinh"
+                                                                    >
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td class="tentinh">
+                                                                                <a
+                                                                                        href="/xo-so-binh-dinh"
+                                                                                        title="Xổ Số  Bình Định"
+                                                                                ><span class="namelong"
+                                                                                ><%=Load.getProvince(Load.getListThirdDmartMT())%></span
+                                                                                ><span class="nameshort"
+                                                                                ></span
+                                                                                ></a
+                                                                                >
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="loaive">XSBDI</td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="64"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("tam", listMT3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_bay">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="233"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bay", listMT3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_sau">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="4387"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau1", listMT3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="8047"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau2", listMT3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="1648"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("sau3", listMT3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nam">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="6506"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nam", listMT3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_tu">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="75356"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon1", listMT3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="62304"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon2", listMT3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_3 dayso"
+                                                                                        data="50561"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon3", listMT3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_4 dayso"
+                                                                                        data="76215"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon4", listMT3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_5 dayso"
+                                                                                        data="67880"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon5", listMT3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_6 dayso"
+                                                                                        data="60398"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon6", listMT3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_7 dayso"
+                                                                                        data="19087"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("bon7", listMT3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_ba">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="08177"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba1", listMT3)%>
+                                                                                </div>
+                                                                                <div
+                                                                                        class="lq_2 dayso"
+                                                                                        data="93481"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("ba2", listMT3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhi">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="59635"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhi", listMT3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_nhat">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="28510"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("nhat", listMT3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr align="center">
+                                                                            <td class="giai_dac_biet">
+                                                                                <div
+                                                                                        class="lq_1 dayso"
+                                                                                        data="835628"
+                                                                                >
+                                                                                    <%=Load.getNumberWinning("db", listMT3)%>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                            <%}%>
                                                             </tbody>
                                                         </table>
                                                     </td>
@@ -1482,8 +2544,8 @@
                                                         href="/ket-qua-xo-so/ngay-16-11-2023"
                                                         title="Click xem KQXS 3 Miền Ngày: 16/11/23"
                                                 ><span class="date"
-                                                ><span class="daymonth">16/11</span
-                                                ><span class="year">2023</span></span
+                                                ><span class="daymonth"><%=dayMonth%></span
+                                                ><span class="year"><%=year%></span></span
                                                 ></a
                                                 >
                                             </div>
@@ -1508,6 +2570,11 @@
                                             /></a>
                                         </div>
                                         <div class="kqxs_content">
+                                            <%List<Dmart> listMB = new Load().getListDmartMB();
+                                             String num = Load.getNumberWinningMB("db", listMB);
+                                                String[] parts = num.split("\\s+", 2);
+                                                String number = parts[0];
+                                                String kytu = parts[1];%>
                                             <table
                                                     width="100%"
                                                     border="0"
@@ -1526,7 +2593,7 @@
                                                     <td class="tentinh">
                                 <span class="phathanh"
                                 ><a href="/xo-so-ha-noi" title="Xổ Số  Hà Nội"
-                                >Hà Nội</a
+                                ><%=Load.getProvince(Load.getListDmartMB())%></a
                                 ></span
                                 >
                                                     </td>
@@ -1536,10 +2603,10 @@
                                                     <td class="giai_dac_biet">
                                                         <div class="giaiDbmoi">
                                   <span class="kyhieuDB kyhieuDB1ve"
-                                  ><span>12-17-11-9-8-15-5-14BS</span></span
+                                  ><span><%=kytu%></span></span
                                   >
                                                             <div class="lq_1 dayso" data="54869">
-                                                                54869
+                                                                <%=number%>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -1547,62 +2614,62 @@
                                                 <tr align="center">
                                                     <td class="ten_giai_nhat">G.Nhất</td>
                                                     <td class="giai_nhat">
-                                                        <div class="lq_1 dayso" data="34677">34677</div>
+                                                        <div class="lq_1 dayso" data="34677"><%=Load.getNumberWinningMB("nhat", listMB)%></div>
                                                     </td>
                                                 </tr>
                                                 <tr align="center">
                                                     <td class="ten_giai_nhi">G.Nhì</td>
                                                     <td class="giai_nhi">
-                                                        <div class="lq_1 dayso" data="80583">80583</div>
-                                                        <div class="lq_2 dayso" data="17410">17410</div>
+                                                        <div class="lq_1 dayso" data="80583"><%=Load.getNumberWinningMB("nhi1", listMB)%></div>
+                                                        <div class="lq_2 dayso" data="17410"><%=Load.getNumberWinningMB("nhi2", listMB)%></div>
                                                     </td>
                                                 </tr>
                                                 <tr align="center">
                                                     <td class="ten_giai_ba">G.Ba</td>
                                                     <td class="giai_ba">
-                                                        <div class="lq_1 dayso" data="12119">12119</div>
-                                                        <div class="lq_2 dayso" data="75379">75379</div>
-                                                        <div class="lq_3 dayso" data="69729">69729</div>
-                                                        <div class="lq_4 dayso" data="45196">45196</div>
-                                                        <div class="lq_5 dayso" data="06463">06463</div>
-                                                        <div class="lq_6 dayso" data="06180">06180</div>
+                                                        <div class="lq_1 dayso" data="12119"><%=Load.getNumberWinningMB("ba1", listMB)%></div>
+                                                        <div class="lq_2 dayso" data="75379"><%=Load.getNumberWinningMB("ba2", listMB)%></div>
+                                                        <div class="lq_3 dayso" data="69729"><%=Load.getNumberWinningMB("ba3", listMB)%></div>
+                                                        <div class="lq_4 dayso" data="45196"><%=Load.getNumberWinningMB("ba4", listMB)%></div>
+                                                        <div class="lq_5 dayso" data="06463"><%=Load.getNumberWinningMB("ba5", listMB)%></div>
+                                                        <div class="lq_6 dayso" data="06180"><%=Load.getNumberWinningMB("ba6", listMB)%></div>
                                                     </td>
                                                 </tr>
                                                 <tr align="center">
                                                     <td class="ten_giai_tu">G.Tư</td>
                                                     <td class="giai_tu">
-                                                        <div class="lq_1 dayso" data="9936">9936</div>
-                                                        <div class="lq_2 dayso" data="0565">0565</div>
-                                                        <div class="lq_3 dayso" data="5964">5964</div>
-                                                        <div class="lq_4 dayso" data="1109">1109</div>
+                                                        <div class="lq_1 dayso" data="9936"><%=Load.getNumberWinningMB("bon1", listMB)%></div>
+                                                        <div class="lq_2 dayso" data="0565"><%=Load.getNumberWinningMB("bon2", listMB)%></div>
+                                                        <div class="lq_3 dayso" data="5964"><%=Load.getNumberWinningMB("bon3", listMB)%></div>
+                                                        <div class="lq_4 dayso" data="1109"><%=Load.getNumberWinningMB("bon4", listMB)%></div>
                                                     </td>
                                                 </tr>
                                                 <tr align="center">
                                                     <td class="ten_giai_nam">G.Năm</td>
                                                     <td class="giai_nam">
-                                                        <div class="lq_1 dayso" data="7356">7356</div>
-                                                        <div class="lq_2 dayso" data="9273">9273</div>
-                                                        <div class="lq_3 dayso" data="1879">1879</div>
-                                                        <div class="lq_4 dayso" data="6015">6015</div>
-                                                        <div class="lq_5 dayso" data="4125">4125</div>
-                                                        <div class="lq_6 dayso" data="3336">3336</div>
+                                                        <div class="lq_1 dayso" data="7356"><%=Load.getNumberWinningMB("nam1", listMB)%></div>
+                                                        <div class="lq_2 dayso" data="9273"><%=Load.getNumberWinningMB("nam2", listMB)%></div>
+                                                        <div class="lq_3 dayso" data="1879"><%=Load.getNumberWinningMB("nam3", listMB)%></div>
+                                                        <div class="lq_4 dayso" data="6015"><%=Load.getNumberWinningMB("nam4", listMB)%></div>
+                                                        <div class="lq_5 dayso" data="4125"><%=Load.getNumberWinningMB("nam5", listMB)%></div>
+                                                        <div class="lq_6 dayso" data="3336"><%=Load.getNumberWinningMB("nam6", listMB)%></div>
                                                     </td>
                                                 </tr>
                                                 <tr align="center">
                                                     <td class="ten_giai_sau">G.Sáu</td>
                                                     <td class="giai_sau">
-                                                        <div class="lq_1 dayso" data="959">959</div>
-                                                        <div class="lq_2 dayso" data="344">344</div>
-                                                        <div class="lq_3 dayso" data="804">804</div>
+                                                        <div class="lq_1 dayso" data="959"><%=Load.getNumberWinningMB("sau1", listMB)%></div>
+                                                        <div class="lq_2 dayso" data="344"><%=Load.getNumberWinningMB("sau2", listMB)%></div>
+                                                        <div class="lq_3 dayso" data="804"><%=Load.getNumberWinningMB("sau3", listMB)%></div>
                                                     </td>
                                                 </tr>
                                                 <tr align="center">
                                                     <td class="ten_giai_bay">G.Bảy</td>
                                                     <td class="giai_bay">
-                                                        <div class="lq_1 dayso" data="36">36</div>
-                                                        <div class="lq_2 dayso" data="20">20</div>
-                                                        <div class="lq_3 dayso" data="73">73</div>
-                                                        <div class="lq_4 dayso" data="21">21</div>
+                                                        <div class="lq_1 dayso" data="36"><%=Load.getNumberWinningMB("bay1", listMB)%></div>
+                                                        <div class="lq_2 dayso" data="20"><%=Load.getNumberWinningMB("bay2", listMB)%></div>
+                                                        <div class="lq_3 dayso" data="73"><%=Load.getNumberWinningMB("bay3", listMB)%></div>
+                                                        <div class="lq_4 dayso" data="21"><%=Load.getNumberWinningMB("bay4", listMB)%></div>
                                                     </td>
                                                 </tr>
                                                 </tbody>
