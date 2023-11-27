@@ -8,10 +8,11 @@ public class Configuration {
     private String user_database;
     private String password_database;
     private int flag;
-    private String status;
+    private String date_created;
+    private String date_updated;
 
 
-    public Configuration(int id, String file_name, String path, String url, String user_database, String password_database, int flag, String status) {
+    public Configuration(int id, String file_name, String path, String url, String user_database, String password_database, int flag, String date_created, String date_updated) {
         this.id = id;
         this.file_name = file_name;
         this.path = path;
@@ -19,7 +20,8 @@ public class Configuration {
         this.user_database = user_database;
         this.password_database = password_database;
         this.flag = flag;
-        this.status = status;
+        this.date_created = date_created;
+        this.date_updated = date_updated;
     }
 
     public Configuration() {
@@ -81,12 +83,20 @@ public class Configuration {
         this.flag = flag;
     }
 
-    public String getStatus() {
-        return status;
+    public String getDate_created() {
+        return date_created;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setDate_created(String date_created) {
+        this.date_created = date_created;
+    }
+
+    public String getDate_updated() {
+        return date_updated;
+    }
+
+    public void setDate_updated(String date_updated) {
+        this.date_updated = date_updated;
     }
 
     @Override
@@ -99,7 +109,8 @@ public class Configuration {
                 ", user_database='" + user_database + '\'' +
                 ", password_database='" + password_database + '\'' +
                 ", flag=" + flag +
-                ", status='" + status + '\'' +
+                ", date_created='" + date_created + '\'' +
+                ", date_updated='" + date_updated + '\'' +
                 '}';
     }
 }

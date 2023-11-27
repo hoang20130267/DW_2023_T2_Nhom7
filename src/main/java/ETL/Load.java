@@ -2,6 +2,7 @@ package ETL;
 
 import Bean.Configuration;
 import Bean.Dmart;
+import Bean.Log;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
@@ -9,23 +10,23 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Load {
-    private static Configuration getConfiguration(String currentStatus){
-        Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT * FROM configurations WHERE status= ?")
+    private static Configuration getConfig(String currentStatus){
+        Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT * FROM configurations INNER JOIN log ON configurations.id = log.configuration_id WHERE log.status = ?")
                 .bind(0, currentStatus)
                 .mapToBean(Configuration.class)
                 .findFirst());
         return configDetail.orElse(null);
     }
-    private static List<Configuration> getListConfiguration() {
-        List<Configuration> listConfig = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM configurations")
-                    .mapToBean(Configuration.class).stream().collect(Collectors.toList());
+    private static List<Log> getListLog() {
+        List<Log> listLog = JDBIConnector.get("db1").withHandle(handle -> {
+            return handle.createQuery("SELECT * FROM log")
+                    .mapToBean(Log.class).stream().collect(Collectors.toList());
         });
-        return listConfig;
+        return listLog;
     }
     private static void updateStatusInDatabase(int configurationId, String newStatus){
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("UPDATE configurations SET status = ? WHERE id = ?")
+            handle.createUpdate("UPDATE log SET status = ? FROM log INNER JOIN configurations ON log.configuration_id = configurations.id WHERE configurations.id = ?")
                     .bind(1, newStatus)
                     .bind(2, configurationId);
             return true;
@@ -272,7 +273,7 @@ public class Load {
         try {
             // Kết nối với database dmarts
             Handle dmarts = JDBIConnector.get("db4").open();
-            int idCurrentConfig = getConfiguration("TRANSFORMING").getId();
+            int idCurrentConfig = getConfig("TRANSFORMING").getId();
             if(dmarts == null) {
                 // Thêm dữ liệu vào control.configurations với status = ERROR
                 updateStatusInDatabase(idCurrentConfig, "ERROR");
@@ -283,8 +284,8 @@ public class Load {
                 LoadFromXoso_dwToDmarts();
                 updateStatusInDatabase(idCurrentConfig, "LOADING");
                 // Kiểm tra nếu còn dòng có status = PREPARED
-                for(Configuration config : getListConfiguration())
-                if(config.getStatus().equals("PREPARED")) {
+                for(Log log : getListLog())
+                if(log.getStatus().equals("PREPARED")) {
                     CrawlData.CrawlDataToFile();
                 } else {
                     //Nếu không còn dòng có status = PREPARED
@@ -305,7 +306,7 @@ public class Load {
 //        loadingAndUpdateConfig();
 //        System.out.println(getListSecondDmartMN());
 //        System.out.println(Load.getProvince(getListThirdDmartMT()));
-        System.out.println(getCurrentDate());
+//        System.out.println(getCurrentDate());
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
     }
 }
