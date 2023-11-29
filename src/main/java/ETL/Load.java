@@ -56,7 +56,7 @@ public class Load {
                 // Kiểm tra nếu còn dòng có status = PREPARED
                 for(Configuration config : getListConfiguration())
                 if(config.getStatus().equals("PREPARED")) {
-                    CrawlData.CrawlDataToFile();
+                    Extracting.CrawlDataToFile();
                 } else {
                     //Nếu không còn dòng có status = PREPARED
                     updateStatusInDatabase(getConfiguration("LOADING").getId(), "FINISH");

@@ -110,9 +110,9 @@ public class ExportToExcel{
             Workbook workbook = new XSSFWorkbook();
 
             try {
-                writeSheetData(workbook, "Xoso"+title, provinceResultsMN);
+                writeSheetData(workbook, title.substring(title.length()-10), provinceResultsMN);
 
-                String fileName = ngayThang + "_xoso" +title+".xlsx";
+                String fileName = title;
                 String filePath = path + fileName;
                 Path fileFullPath = Paths.get(filePath);
                 Path parentDir = fileFullPath.getParent();
