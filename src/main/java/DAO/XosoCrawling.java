@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class XosoCrawling {
@@ -232,6 +233,13 @@ public class XosoCrawling {
                         specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
                         prizesMB.add(specialPrize);
                     }
+                } else if (tenGiaiMB.equals("db")) {
+                        Prize specialPrize = new Prize();
+                        specialPrize.setTenGiai(tenGiaiMB);
+                        String kyHieuDB = docMB.select("div.giaiDbmoi span.kyhieuDB1ve span").text();
+                        String soTrungThuong = getSoTrungThuong(giaiElementMB, 0) + " " + kyHieuDB;
+                        specialPrize.setSoTrungThuong(Collections.singletonList(soTrungThuong));
+                        prizesMB.add(specialPrize);
                 } else {
                     prizeMB.setTenGiai(tenGiaiMB);
                     prizeMB.setSoTrungThuong(getSoTrungThuong(giaiElementMB, 0));
