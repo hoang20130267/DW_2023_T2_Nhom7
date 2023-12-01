@@ -1,6 +1,9 @@
 package ETL;
 
 import Bean.Configuration;
+import Bean.Staging;
+import db.JDBIConnector;
+import org.jdbi.v3.core.Handle;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -8,43 +11,16 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class Transform {
-
-    public static Connection connectDBStagging() throws ClassNotFoundException, SQLException {
-        String url = "jdbc:mysql://localhost:3306/stagging";
-        String username = "root";
-        String password = "";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Kết nối Database thành công");
-            return  connection;
-        } catch (SQLException e) {
-            sendMailError();
-            throw new SQLException("Kết nối Database không thành công");
-        }
-    }
-
-    public static Connection connectDBControls() throws ClassNotFoundException, SQLException {
-        String url = "jdbc:mysql://localhost:3306/controls";
-        String username = "root";
-        String password = "nguyenhuudat";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Kết nối Database thành công");
-            return  connection;
-        } catch (SQLException e) {
-            throw new SQLException("Kết nối Database không thành công");
-        }
-    }
-
-    public static void sendMailError(){
+    public static void sendMailError(String content) {
         String fromEmail = "20130224@st.hcmuaf.edu.vn";
         String password = "";
         String toEmail = "nguyenhwdat1912@gmail.com";
@@ -67,50 +43,108 @@ public class Transform {
             message.setFrom(new InternetAddress(fromEmail));
             message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
             message.setSubject("Thông báo lỗi");
-            message.setContent("Kết nối Database Stagging không thành công. Vui lòng kiểm tra lại!", "text/plain");
+            message.setContent(content, "text/plain");
             System.out.println("Gửi mail thành công");
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void updateStatusInDB(int configurationID, String newStatus) throws SQLException, ClassNotFoundException {
-        String querry = "UPDATE configurations SET status = ? WHERE id = ?";
-        Connection connection = connectDBControls();
-        PreparedStatement preparedStatement = connection.prepareStatement(querry);
-        preparedStatement.setString(1, newStatus);
-        preparedStatement.setInt(2, configurationID);
-        preparedStatement.executeUpdate();
+    public static Configuration getConfigurationStatus(String currentStatus) {
+        Configuration getStatus = JDBIConnector.get("db1").withHandle(handle ->
+                handle.createQuery("SELECT * FROM configurations INNER JOIN log ON configurations.id = log.configuration_id WHERE log.status = ?")
+                        .bind(1, currentStatus)
+                        .mapToBean(Configuration.class)
+                        .findFirst()
+                        .orElse(null));
+        return getStatus;
+
     }
 
-    public static Configuration getConfiguration(String status) throws SQLException, ClassNotFoundException {
-        String querry = "SELECT * FROM configurations WHERE status = ?";
-        Connection connection = connectDBControls();
-        PreparedStatement preparedStatement = connection.prepareStatement(querry);
-        preparedStatement.setString(1, status);
-        ResultSet resultSet = preparedStatement.executeQuery();
+    public static void updateStatusInDB(int configurationID, String newStatus) {
+        JDBIConnector.get("db1").withHandle(handle -> {
+            handle.createUpdate("UPDATE log SET status = ? FROM log INNER JOIN configurations ON log.configuration_id = configurations.id WHERE configurations.id = ?")
+                    .bind(1, newStatus)
+                    .bind(2, configurationID);
+            return true;
+        });
+    }
 
-        if(resultSet.next()){
-            Configuration configuration = new Configuration();
-            configuration.setId(resultSet.getInt(1));
-            return  configuration;
-        } else {
-            return null;
+    public static List<Staging> readCSV(String csvFile) {
+        List<Staging> stagingList = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            String line;
+            // Bỏ qua dòng tiêu đề
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                Staging staging = new Staging();
+                staging.setId(Integer.parseInt(data[0].trim()));
+                staging.setPrize(data[1].trim());
+                staging.setProvince(data[2].trim());
+                staging.setDomain(data[3].trim());
+                staging.setNumber_winning(data[4].trim());
+                staging.setDate(data[5].trim());
+                staging.setDate_update(data[6].trim());
+                staging.setDate_expired(data[7].trim());
+                stagingList.add(staging);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return stagingList;
+    }
+
+    public static void insertStagingDB(Staging staging, Handle handle) {
+        handle.execute("INSERT INTO your_table_name (id, prize, province, domain, number_winning, date, date_update, date_expired) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                staging.getId(),
+                staging.getPrize(),
+                staging.getProvince(),
+                staging.getDomain(),
+                staging.getNumber_winning(),
+                staging.getDate(),
+                staging.getDate_update(),
+                staging.getDate_expired());
+    }
+
+    public static void updateConfiguration() {
+        try {
+            Handle controls = JDBIConnector.get("db1").open();
+            Handle staging = JDBIConnector.get("db2").open();
+            Handle xoso_dw = JDBIConnector.get("db3").open();
+            int currentConfigID = getConfigurationStatus("EXTRACTING").getId();
+            if (staging == null) {
+                updateStatusInDB(currentConfigID, "ERROR");
+                sendMailError("Kết nối Database staging không thành công!");
+                controls.close();
+            } else {
+                Configuration configuration = new Configuration();
+                List<Staging> stagingList = readCSV(configuration.getPath());
+                for (Staging stagings : stagingList) {
+                    insertStagingDB(stagings, staging);
+                }
+//                code xoa du lieu rong
+                if (xoso_dw == null) {
+                    sendMailError("Kết nối Database xoso_dw không thành công!");
+                    updateStatusInDB(currentConfigID, "ERROR");
+                    staging.close();
+                    controls.close();
+                } else {
+//                    code transform staging to dim of xosodw
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public static void updateConfiguration() throws SQLException, ClassNotFoundException {
-        Connection controls = connectDBControls();
-        Connection stagging = connectDBStagging();
-        try {
-            if (stagging == null){
-                updateStatusInDB(getConfiguration("EXTRACTING").getId(), "ERROR");
-                controls.close();
-            } else{
-
-            }
-        } catch (Exception e){
-            e.printStackTrace();
+    public static void main(String[] args) {
+        List<Staging> stagingList = readCSV("/Users/hidroxit/Desktop/readFile/test.csv");
+        for (Staging staging : stagingList) {
+            System.out.println(staging);
         }
     }
 }
