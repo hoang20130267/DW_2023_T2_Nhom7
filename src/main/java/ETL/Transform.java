@@ -115,14 +115,18 @@ public class Transform {
             Handle controls = JDBIConnector.get("db1").open();
             Handle staging = JDBIConnector.get("db2").open();
             Handle xoso_dw = JDBIConnector.get("db3").open();
+            //Lấy ID của Configuration hiện tại
             int currentConfigID = getConfigurationStatus("EXTRACTING").getId();
+            //Check kết nối db Staging
             if (staging == null) {
                 updateStatusInDB(currentConfigID, "ERROR");
                 sendMailError("Kết nối Database staging không thành công!");
                 controls.close();
             } else {
+                //Đọc dữ file csv
                 Configuration configuration = new Configuration();
                 List<Staging> stagingList = readCSV(configuration.getPath());
+                //Thêm data vào db Staging table xo_so_staging
                 for (Staging stagings : stagingList) {
                     insertStagingDB(stagings, staging);
                 }
