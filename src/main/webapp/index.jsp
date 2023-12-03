@@ -1,6 +1,8 @@
 <%@ page import="Bean.Dmart" %>
 <%@ page import="ETL.Load" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,13 +11,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>XoSoHomNay</title>
     <link rel="stylesheet" href="./css/style.css" />
+
 </head>
 <body class="pagebody">
 <div class="playout">
-    <div id="header">
+    <div id="header" style="background: black">
         <div class="pcontent">
             <div class="h_banner">
-                <div class="logo">
+                <div class="logo" style="margin-left: 320px">
                     <p>
                         <a href="/"
                         ><img
@@ -29,70 +32,6 @@
                     </p>
                 </div>
                 <div class="header_ext">
-                    <div class="boxdoveso">
-                        <div>
-                            <form
-                                    id="doveso"
-                                    name="doveso"
-                                    method="get"
-                                    action="/do-ve-so.html"
-                                    onsubmit="return dove();"
-                            >
-                                <table border="0" cellpadding="0" cellspacing="10">
-                                    <tbody>
-                                    <tr>
-                                        <td align="left" valign="bottom" nowrap="nowrap">
-                                            <input
-                                                    name="ngay"
-                                                    type="text"
-                                                    id="frm_dove_ngay"
-                                                    readonly="readonly"
-                                                    value="16-11-2023"
-                                                    class="hasDatepicker"
-                                            />
-                                        </td>
-                                        <td align="left" valign="bottom" nowrap="nowrap">
-                                            <select
-                                                    name="tinh"
-                                                    id="frm_dove_tinh"
-                                                    style="width: 130px"
-                                            >
-                                                <option value="0">Chọn tỉnh</option>
-                                            </select>
-                                        </td>
-                                        <td align="left" valign="bottom" nowrap="nowrap">
-                                            <input
-                                                    name="so"
-                                                    type="text"
-                                                    id="doveso_so"
-                                                    placeholder="Nhập số"
-                                                    onkeyup="convert(this);"
-                                                    size="10"
-                                                    maxlength="6"
-                                                    value=""
-                                            />
-                                        </td>
-                                        <td align="left" valign="bottom" nowrap="nowrap">
-                                            <input
-                                                    type="submit"
-                                                    class="btndoveso"
-                                                    value="Dò KQ"
-                                            />
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </form>
-                            <script language="javascript">
-                                delay_starboxdoveso = setInterval(function () {
-                                    if (window.jQuery) {
-                                        st_doveso();
-                                        clearInterval(delay_starboxdoveso);
-                                    }
-                                }, 300);
-                            </script>
-                        </div>
-                    </div>
                 </div>
                 <div id="MobileMenuIcon">
                     <a href="#">Menu<span></span><span></span><span></span></a>
@@ -100,82 +39,24 @@
             </div>
         </div>
     </div>
-    <div id="navbar" class="navbar">
-        <div class="pcontent">
-            <div id="cssmenu">
-                <ul>
-                    <li class="has-sub">
-                        <a href="#"><span>Xổ Số Trực Tiếp</span></a>
-                    </li>
-                    <li class="has-sub">
-                        <a href="/ket-qua-xo-so"><span>Kết Quả Xổ Số</span></a>
-                    </li>
-
-                    <li class="has-sub">
-                        <a href="/so-dau-duoi-mien-nam"><span>Sớ Đầu Đuôi</span></a>
-                    </li>
-                    <li class="has-sub">
-                        <a href="/thong-ke-xo-so"><span>Thống Kê Xổ Số</span></a>
-                    </li>
-                    <li class="has-sub">
-                        <a href="/in-ve-do"><span>In Vé Dò</span></a>
-                    </li>
-                    <li>
-                        <a href="/so-mo"><span>Sổ Mơ</span></a>
-                    </li>
-                    <li class="menulast">
-                        <a href="/blog"><span>Blog</span></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="topbarmenu hidemin720">
-                <ul id="topmenubar">
-                    <li>
-                        <a
-                                href="/truc-tiep-xo-so-mien-nam-xstt-mn-xsmn"
-                                title="Xổ Số Miền Nam"
-                        >XSMN</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                                href="/truc-tiep-xo-so-mien-trung-xstt-mt-xsmt"
-                                title="Xổ Số Miền Trung"
-                        >XSMT</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                                href="/truc-tiep-xo-so-mien-bac-xstt-mb-xsmb"
-                                title="Xổ Số Miền Bắc"
-                        >XSMB</a
-                        >
-                    </li>
-                    <li>
-                        <a href="/xo-so-mega-645" title="Xổ Số Mega 6/45">Mega</a>
-                    </li>
-                    <li><a href="/xo-so-keno" title="Xổ Số Keno">Keno</a></li>
-                    <li class="hidemax320">
-                        <a href="/xo-so-power-655" title="Xổ Số Power 6/55">Power</a>
-                    </li>
-                    <!-- <li class="hidemax360"><a href="/do-ve-so.html" title="Dò Vé Số">Dò<span class="hidemax375"> Vé</span></a></li> -->
-                </ul>
-            </div>
-        </div>
-    </div>
     <%String date = Load.getCurrentDate();
-        int indexOfLastSlash = date.lastIndexOf("/");
-        String dayMonth = date.substring(0, indexOfLastSlash);
-        String year = date.substring(indexOfLastSlash + 1);%>
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+        LocalDate dateBefore = LocalDate.parse(date, formatter);
+
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String formattedDate = dateBefore.format(outputFormatter);
+
+        int indexOfLastSlash = formattedDate.lastIndexOf("/");
+        String dayMonth = formattedDate.substring(0, indexOfLastSlash);
+        String year = formattedDate.substring(indexOfLastSlash + 1);%>
     <div id="main">
-        <div class="pcontent">
             <div class="dnw-content-top">
                 <div class="hidemax720">
                     <div class="hidemax720"></div>
                     <div class="hidemin720"></div>
                 </div>
                 <div class="dnw-content-main" id="dnw-content-main">
-                    <div id="contentmodule">
+                    <div id="contentmodule" style="margin-left: 100px">
                         <div class="mainbody" id="pagecontent">
                             <div id="page_content">
                                 <h1 class="pagetitle" style="font-size: 30px">
@@ -187,9 +68,9 @@
                                 <div></div>
                                 <div class="box_kqxs" id="kqxs_1-16-11-2023">
                                     <div class="xsmn miennam4cot">
-                                        <div class="tenbkqxs">
+                                        <div class="tenbkqxs" style="background: #fdbb03 !important;">
                                             <div class="title">
-                                                <a href="/truc-tiep-xo-so-mien-nam-xstt-mn-xsmn"
+                                                <a href="/truc-tiep-xo-so-mien-nam-xstt-mn-xsmn" style="color: black !important"
                                                 >KẾT QUẢ XỔ SỐ Miền Nam<span class="hidemax460">
                               - KQXS MN</span
                                                 ></a
@@ -283,10 +164,10 @@
                                                                 cellpadding="0"
                                                         >
                                                             <tbody>
-                                                            <%if(Load.getProvince(Load.getListFourthDmartMN()).equals("")){%>
+                                                            <%if(Load.getProvince(Load.getListFourthDmartMN(date)).equals("")){%>
                                                             <tr>
                                                                 <td>
-                                                                    <%List<Dmart> listMN1 = new Load().getListFirstDmartMN();%>
+                                                                    <%List<Dmart> listMN1 = new Load().getListFirstDmartMN(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -301,7 +182,7 @@
                                                                                         href="/xo-so-tay-ninh"
                                                                                         title="Xổ Số  Tây Ninh"
                                                                                 ><span class="namelong"
-                                                                                ><%=Load.getProvince(Load.getListFirstDmartMN())%></span
+                                                                                ><%=Load.getProvince(Load.getListFirstDmartMN(date))%></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
                                                                                 ></a
@@ -309,7 +190,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">11K3</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -459,7 +340,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
-                                                                    <%List<Dmart> listMN2 = new Load().getListSecondDmartMN();%>
+                                                                    <%List<Dmart> listMN2 = new Load().getListSecondDmartMN(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -473,7 +354,7 @@
                                                                                 <a
                                                                                         href="/xo-so-an-giang"
                                                                                         title="Xổ Số  An Giang"
-                                                                                ><%=Load.getProvince(Load.getListSecondDmartMN())%><span class="namelong"
+                                                                                ><%=Load.getProvince(Load.getListSecondDmartMN(date))%><span class="namelong"
                                                                                 ></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
@@ -632,7 +513,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
-                                                                    <%List<Dmart> listMN3 = new Load().getListThirdDmartMN();%>
+                                                                    <%List<Dmart> listMN3 = new Load().getListThirdDmartMN(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -646,7 +527,7 @@
                                                                                 <a
                                                                                         href="/xo-so-binh-thuan"
                                                                                         title="Xổ Số  Bình Thuận"
-                                                                                ><%=Load.getProvince(Load.getListThirdDmartMN())%><span class="namelong"
+                                                                                ><%=Load.getProvince(Load.getListThirdDmartMN(date))%><span class="namelong"
                                                                                 ></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
@@ -655,7 +536,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">11K3</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -808,7 +689,7 @@
                                                             <%}else{%>
                                                             <tr>
                                                                 <td>
-                                                                    <%List<Dmart> listMN1 = new Load().getListFirstDmartMN();%>
+                                                                    <%List<Dmart> listMN1 = new Load().getListFirstDmartMN(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -823,7 +704,7 @@
                                                                                         href="/xo-so-tay-ninh"
                                                                                         title="Xổ Số  Tây Ninh"
                                                                                 ><span class="namelong"
-                                                                                ><%=Load.getProvince(Load.getListFirstDmartMN())%></span
+                                                                                ><%=Load.getProvince(Load.getListFirstDmartMN(date))%></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
                                                                                 ></a
@@ -831,7 +712,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">11K3</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -981,7 +862,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
-                                                                    <%List<Dmart> listMN2 = new Load().getListSecondDmartMN();%>
+                                                                    <%List<Dmart> listMN2 = new Load().getListSecondDmartMN(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -995,7 +876,7 @@
                                                                                 <a
                                                                                         href="/xo-so-an-giang"
                                                                                         title="Xổ Số  An Giang"
-                                                                                ><%=Load.getProvince(Load.getListSecondDmartMN())%><span class="namelong"
+                                                                                ><%=Load.getProvince(Load.getListSecondDmartMN(date))%><span class="namelong"
                                                                                 ></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
@@ -1154,7 +1035,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
-                                                                    <%List<Dmart> listMN3 = new Load().getListThirdDmartMN();%>
+                                                                    <%List<Dmart> listMN3 = new Load().getListThirdDmartMN(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -1168,7 +1049,7 @@
                                                                                 <a
                                                                                         href="/xo-so-binh-thuan"
                                                                                         title="Xổ Số  Bình Thuận"
-                                                                                ><%=Load.getProvince(Load.getListThirdDmartMN())%><span class="namelong"
+                                                                                ><%=Load.getProvince(Load.getListThirdDmartMN(date))%><span class="namelong"
                                                                                 ></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
@@ -1177,7 +1058,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">11K3</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -1327,7 +1208,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
-                                                                    <%List<Dmart> listMN4 = new Load().getListFourthDmartMN();%>
+                                                                    <%List<Dmart> listMN4 = new Load().getListFourthDmartMN(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -1341,7 +1222,7 @@
                                                                                 <a
                                                                                         href="/xo-so-binh-thuan"
                                                                                         title="Xổ Số  Bình Thuận"
-                                                                                ><%=Load.getProvince(Load.getListFourthDmartMN())%><span class="namelong"
+                                                                                ><%=Load.getProvince(Load.getListFourthDmartMN(date))%><span class="namelong"
                                                                                 ></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
@@ -1350,7 +1231,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">11K3</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -1536,9 +1417,9 @@
                                 <div class="adv_foterkqxs"><div class="clear"></div></div>
                                 <div class="box_kqxs" id="kqxs_3-16-11-2023">
                                     <div class="xsmn miennam4cot">
-                                        <div class="tenbkqxs">
+                                        <div class="tenbkqxs" style="background: #fdbb03 !important;">
                                             <div class="title">
-                                                <a href="/truc-tiep-xo-so-mien-trung-xstt-mt-xsmt"
+                                                <a href="" style="color: black !important"
                                                 >KẾT QUẢ XỔ SỐ Miền Trung<span class="hidemax460">
                               - KQXS MT</span
                                                 ></a
@@ -1631,10 +1512,10 @@
                                                                 cellpadding="0"
                                                         >
                                                             <tbody>
-                                                            <%if(Load.getProvince(Load.getListThirdDmartMT()).equals("")){%>
+                                                            <%if(Load.getProvince(Load.getListThirdDmartMT(date)).equals("")){%>
                                                             <tr>
                                                                 <td>
-                                                                    <%List<Dmart> listMT1 = new Load().getListFirstDmartMT();%>
+                                                                    <%List<Dmart> listMT1 = new Load().getListFirstDmartMT(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -1649,7 +1530,7 @@
                                                                                         href="/xo-so-binh-dinh"
                                                                                         title="Xổ Số  Bình Định"
                                                                                 ><span class="namelong"
-                                                                                ><%=Load.getProvince(Load.getListFirstDmartMT())%></span
+                                                                                ><%=Load.getProvince(Load.getListFirstDmartMT(date))%></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
                                                                                 ></a
@@ -1807,7 +1688,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
-                                                                    <%List<Dmart> listMT2 = new Load().getListSecondDmartMT();%>
+                                                                    <%List<Dmart> listMT2 = new Load().getListSecondDmartMT(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -1822,7 +1703,7 @@
                                                                                         href="/xo-so-binh-dinh"
                                                                                         title="Xổ Số  Bình Định"
                                                                                 ><span class="namelong"
-                                                                                ><%=Load.getProvince(Load.getListSecondDmartMT())%></span
+                                                                                ><%=Load.getProvince(Load.getListSecondDmartMT(date))%></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
                                                                                 ></a
@@ -1983,7 +1864,7 @@
                                                             <%}else{%>
                                                             <tr>
                                                                 <td>
-                                                                    <%List<Dmart> listMT1 = new Load().getListFirstDmartMT();%>
+                                                                    <%List<Dmart> listMT1 = new Load().getListFirstDmartMT(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -1998,7 +1879,7 @@
                                                                                         href="/xo-so-binh-dinh"
                                                                                         title="Xổ Số  Bình Định"
                                                                                 ><span class="namelong"
-                                                                                ><%=Load.getProvince(Load.getListFirstDmartMT())%></span
+                                                                                ><%=Load.getProvince(Load.getListFirstDmartMT(date))%></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
                                                                                 ></a
@@ -2156,7 +2037,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
-                                                                    <%List<Dmart> listMT2 = new Load().getListSecondDmartMT();%>
+                                                                    <%List<Dmart> listMT2 = new Load().getListSecondDmartMT(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -2171,7 +2052,7 @@
                                                                                         href="/xo-so-binh-dinh"
                                                                                         title="Xổ Số  Bình Định"
                                                                                 ><span class="namelong"
-                                                                                ><%=Load.getProvince(Load.getListSecondDmartMT())%></span
+                                                                                ><%=Load.getProvince(Load.getListSecondDmartMT(date))%></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
                                                                                 ></a
@@ -2329,7 +2210,7 @@
                                                                     </table>
                                                                 </td>
                                                                 <td>
-                                                                    <%List<Dmart> listMT3 = new Load().getListThirdDmartMT();%>
+                                                                    <%List<Dmart> listMT3 = new Load().getListThirdDmartMT(date);%>
                                                                     <table
                                                                             width="100%"
                                                                             border="0"
@@ -2344,7 +2225,7 @@
                                                                                         href="/xo-so-binh-dinh"
                                                                                         title="Xổ Số  Bình Định"
                                                                                 ><span class="namelong"
-                                                                                ><%=Load.getProvince(Load.getListThirdDmartMT())%></span
+                                                                                ><%=Load.getProvince(Load.getListThirdDmartMT(date))%></span
                                                                                 ><span class="nameshort"
                                                                                 ></span
                                                                                 ></a
@@ -2538,7 +2419,7 @@
                                 <div class="adv_foterkqxs"><div class="clear"></div></div>
                                 <div class="box_kqxs" id="kqxs_2-16-11-2023">
                                     <div class="xsmb">
-                                        <div class="tenbkqxs">
+                                        <div class="tenbkqxs" style="background: #fdbb03 !important;">
                                             <div class="ngaykqxs">
                                                 <a
                                                         href="/ket-qua-xo-so/ngay-16-11-2023"
@@ -2550,7 +2431,7 @@
                                                 >
                                             </div>
                                             <div class="title">
-                                                <a href="/truc-tiep-xo-so-mien-bac-xstt-mb-xsmb"
+                                                <a href="/truc-tiep-xo-so-mien-bac-xstt-mb-xsmb" style="color: black !important"
                                                 >KẾT QUẢ XỔ SỐ Miền Bắc<span class="hidemax460">
                               - KQXS MB</span
                                                 ></a
@@ -2570,7 +2451,7 @@
                                             /></a>
                                         </div>
                                         <div class="kqxs_content">
-                                            <%List<Dmart> listMB = new Load().getListDmartMB();
+                                            <%List<Dmart> listMB = new Load().getListDmartMB(date);
                                              String num = Load.getNumberWinningMB("db", listMB);
                                                 String[] parts = num.split("\\s+", 2);
                                                 String number = parts[0];
@@ -2592,8 +2473,8 @@
                                                     </td>
                                                     <td class="tentinh">
                                 <span class="phathanh"
-                                ><a href="/xo-so-ha-noi" title="Xổ Số  Hà Nội"
-                                ><%=Load.getProvince(Load.getListDmartMB())%></a
+                                ><a href="/xo-so-ha-noi" title="Xổ Số  Hà Nội" style="margin-right: 210px"
+                                ><%=Load.getProvince(Load.getListDmartMB(date))%></a
                                 ></span
                                 >
                                                     </td>
@@ -2698,14 +2579,13 @@
                                     </div>
                                     <div id="DDM2-16-11-2023"></div>
                                 </div>
-
                                 <div></div>
                             </div>
                         </div>
                     </div>
-                    <div id="leftmodule">
+                    <div id="leftmodule" style="margin-left:200px;margin-top: 100px">
                         <div class="modulesLR black">
-                            <h2 class="mdtitle">Tường Thuật Trực Tiếp</h2>
+                            <h2 class="mdtitle">Trang xổ số</h2>
                             <div class="mdcontent">
                                 <ul class="menu2 menuxosott">
                                     <li>
@@ -2741,499 +2621,68 @@
                         <div class="clear"></div>
                         <div class="hidemax720"></div>
                     </div>
-                    <div id="rightmodule">
-                        <div id="datepickerl" class="hasDatepicker">
-                            <div
-                                    class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
-                                    style="display: block"
-                            >
-                                <div
-                                        class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"
-                                >
-                                    <a
-                                            class="ui-datepicker-prev ui-corner-all"
-                                            data-handler="prev"
-                                            data-event="click"
-                                            title="Prev"
-                                    ><span class="ui-icon ui-icon-circle-triangle-w"
-                                    >Prev</span
-                                    ></a
-                                    ><a
-                                        class="ui-datepicker-next ui-corner-all ui-state-disabled"
-                                        title="Next"
-                                ><span class="ui-icon ui-icon-circle-triangle-e"
-                                >Next</span
-                                ></a
-                                >
-                                    <div class="ui-datepicker-title">
-                      <span class="ui-datepicker-month">November</span
-                      >&nbsp;<span class="ui-datepicker-year">2023</span>
+                    <div id="rightmodule" style="margin-right: 100px; margin-top: 100px">
+                            <div class="form-check" style="border: 5px groove #fdbb03;background-color: black;">
+                                <div class="outform" style="margin-top: 15px;">
+                                    <label class="form-check-label text-900 fs-0" style="margin-left: 75px;font-size: 19px;font-weight: bolder;color: white;">Chọn ngày xổ số</label><br>
+                                    <div class="inform" style=" margin: 10px 0 20px 40px;">
+                                        <input class="form-control inventory-attributes" id="inventory" type="date" style="max-width: 350px;padding: 5px 10px 5px 10px;border-radius: 10px;"/>
+                                        <button id="form-button" style="padding: 5px 10px 6px 10px; border-radius: 10px; background-color: #fdbb03;">Tìm kiếm</button>
                                     </div>
                                 </div>
-                                <table class="ui-datepicker-calendar">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col" class="ui-datepicker-week-end">
-                                            <span title="Sunday">Su</span>
-                                        </th>
-                                        <th scope="col"><span title="Monday">Mo</span></th>
-                                        <th scope="col"><span title="Tuesday">Tu</span></th>
-                                        <th scope="col"><span title="Wednesday">We</span></th>
-                                        <th scope="col"><span title="Thursday">Th</span></th>
-                                        <th scope="col"><span title="Friday">Fr</span></th>
-                                        <th scope="col" class="ui-datepicker-week-end">
-                                            <span title="Saturday">Sa</span>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td
-                                                class="ui-datepicker-week-end ui-datepicker-other-month"
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="9"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default ui-priority-secondary"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="29"
-                                            >29</a
-                                            >
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-other-month"
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="9"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default ui-priority-secondary"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="30"
-                                            >30</a
-                                            >
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-other-month"
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="9"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default ui-priority-secondary"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="31"
-                                            >31</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="1"
-                                            >1</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="2"
-                                            >2</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="3"
-                                            >3</a
-                                            >
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-week-end"
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="4"
-                                            >4</a
-                                            >
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td
-                                                class="ui-datepicker-week-end"
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="5"
-                                            >5</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="6"
-                                            >6</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="7"
-                                            >7</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="8"
-                                            >8</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="9"
-                                            >9</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="10"
-                                            >10</a
-                                            >
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-week-end"
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="11"
-                                            >11</a
-                                            >
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td
-                                                class="ui-datepicker-week-end"
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="12"
-                                            >12</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="13"
-                                            >13</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="14"
-                                            >14</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="15"
-                                            >15</a
-                                            >
-                                        </td>
-                                        <td
-                                                class=" "
-                                                data-handler="selectDay"
-                                                data-event="click"
-                                                data-month="10"
-                                                data-year="2023"
-                                        >
-                                            <a
-                                                    class="ui-state-default"
-                                                    href="#"
-                                                    aria-current="false"
-                                                    data-date="15"
-                                            >16</a
-                                            >
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">17</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">18</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td
-                                                class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">19</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">20</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">21</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">22</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">23</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">24</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">25</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td
-                                                class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">26</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">27</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">28</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">29</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">30</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">1</span>
-                                        </td>
-                                        <td
-                                                class="ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled"
-                                        >
-                                            <span class="ui-state-default">2</span>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
                             </div>
-                        </div>
                         <div class="clear"></div>
-                        <p style="text-align: center">
-                            <a
-                                    href="https://www.youtube.com/c/XoSoHomNay?sub_confirmation=1"
-                                    target="_blank"
-                            ><img
-                                    align="absMiddle"
-                                    alt="Subscribe Xổ Số Minh Ngọc"
-                                    border="0"
-                                    height="169"
-                                    hspace="0"
-                                    src="https://www.xosohomnay.com.vn/upload/images/icons/youtube-xshn.jpg"
-                                    vspace="0"
-                                    width="300"
-                            /></a>
-                        </p>
                         <div class="clear"></div>
                         <div class="hidemax1000"></div>
                         <div class="clear"></div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
-    <script
-            async=""
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-    ></script>
-    <script
-            async=""
-            src="https://www.googletagmanager.com/gtag/js?id=G-R1KFRQFBR2"
-    ></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
-        gtag("config", "G-R1KFRQFBR2");
-    </script>
-    <script src="https://www.xosohomnay.com.vn/template/jquery/jquery-3.6.0.min.js"></script>
-    <script src="https://www.xosohomnay.com.vn/template/jquery-ui-1.13.1.sunny/jquery-ui.min.js"></script>
-    <link
-            href="https://www.xosohomnay.com.vn/template/jquery-ui-1.13.1.sunny/jquery-ui.min.css"
-            rel="stylesheet"
-            type="text/css"
-    />
-    <script
-            type="text/javascript"
-            src="https://www.xosohomnay.com.vn/template/jquery/jquery.fullscreen-0.4.2.min.js"
-    ></script>
-    <script
-            type="text/javascript"
-            src="https://www.xosohomnay.com.vn/template/jquery/sounds/ion.sound.min.js"
-    ></script>
-    <script
-            async=""
-            type="text/javascript"
-            src="https://www.xosohomnay.com.vn/template/scripts/lazysizes.min.js"
-    ></script>
-    <script
-            async=""
-            src="https://www.xosohomnay.com.vn/template/temp/xoso_111.js"
-    ></script>
-    <div
-            id="ui-datepicker-div"
-            class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
-    ></div>
 </div>
 </body>
+<script>
+    <%@include file="./js/jquery-3.3.1.min.js"%>
+</script>
+<script>
+    var myButton = document.getElementById('form-button');
+    var myInput = document.getElementById('inventory');
+    myButton.addEventListener('click', function() {
+        if (myInput.value !== null) {
+            var formattedDate = formatDate(myInput.value);
+            var formattedDate2 = formatDate2(myInput.value);
+            searchByName(formattedDate, formattedDate2);
+        }
+    });
+    function formatDate(inputDate) {
+        var parts = inputDate.split('-');
+        var formattedDate = parts[1] + '/' + parts[2] + '/' + parts[0];
+        return formattedDate;
+    }
+    function formatDate2(inputDate) {
+        var parts = inputDate.split('-');
+        var formattedDate = parts[2] + '/' + parts[1] + '/' + parts[0];
+        return formattedDate;
+    }
+    function searchByName(param, param2) {
+        const txtSearch = param;
+        const displayDate = param2;
+        console.log(txtSearch)
+        if (txtSearch.length > 0) {
+            $.ajax({
+                url: "/Xoso_Datawarehouse_war/search",
+                type: "get",
+                data: {
+                    txt: txtSearch
+                },
+                success: function (data) {
+                    $(".mainbody").html(data)
+                },
+                error: function () {
+                    alert('Không có dữ liệu của ngày ' + displayDate);
+                }
+            });
+        }
+    }
+</script>
 </html>

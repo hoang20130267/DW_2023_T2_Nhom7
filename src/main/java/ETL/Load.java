@@ -38,58 +38,58 @@ public class Load {
             return true;
         });
     }
-    public static List<Dmart> getListFirstDmartMN() {
+    public static List<Dmart> getListFirstDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' LIMIT 18;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListSecondDmartMN() {
+    public static List<Dmart> getListSecondDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' LIMIT 18 OFFSET 18;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 18;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListThirdDmartMN() {
+    public static List<Dmart> getListThirdDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' LIMIT 18 OFFSET 36;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 36;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListFourthDmartMN() {
+    public static List<Dmart> getListFourthDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' LIMIT 18 OFFSET 54;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 54;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListFirstDmartMT() {
+    public static List<Dmart> getListFirstDmartMT(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' LIMIT 18;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListSecondDmartMT() {
+    public static List<Dmart> getListSecondDmartMT(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' LIMIT 18 OFFSET 18;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18 OFFSET 18;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListThirdDmartMT() {
+    public static List<Dmart> getListThirdDmartMT(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' LIMIT 18 OFFSET 36;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18 OFFSET 36;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListDmartMB() {
+    public static List<Dmart> getListDmartMB(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Bắc';")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Bắc' AND date = ?;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
@@ -286,7 +286,7 @@ public class Load {
                 // Kiểm tra nếu còn dòng có status = PREPARED
                 for(Log log : getListLog())
                 if(log.getStatus().equals("PREPARED")) {
-                    CrawlData.CrawlDataToFile();
+//                    CrawlData.CrawlDataToFile();
                 } else {
                     //Nếu không còn dòng có status = PREPARED
                     updateStatusInDatabase(idCurrentConfig, "FINISH");

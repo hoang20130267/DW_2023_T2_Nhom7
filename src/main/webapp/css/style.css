@@ -246,7 +246,7 @@ div.Menutool a.sound.soundoff {
 }
 .box_kqxs .tenbkqxs {
     padding: 5px 20px;
-    background-color: #b80000;
+    background-color: forestgreen;
     background-image: -webkit-gradient(
             linear,
             left top,
@@ -6762,7 +6762,7 @@ body {
 }
 #navbar {
     width: 100%;
-    background-color: #ca0000;
+    background-color: forestgreen;
 }
 #navbar.menuontop,
 #header.menuontop {
@@ -7288,7 +7288,7 @@ body {
 }
 @media (max-width: 500px) {
     .box_kqxs .tenbkqxs {
-        background: #c50000;
+        background: forestgreen;
         padding: 5px 0px 5px 10px;
     }
     .pagemaxdate,
