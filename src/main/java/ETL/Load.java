@@ -32,6 +32,18 @@ public class Load {
             return true;
         });
     }
+    private static void insertNewConfigAndLog(){
+        Object id = JDBIConnector.get("db1").withHandle(handle -> {
+            handle.createUpdate("SELECT id FROM configurations ORDER BY id DESC LIMIT 1").execute();
+            return true;
+        });
+        int newID = (int) id;
+        JDBIConnector.get("db1").withHandle(handle -> {
+            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/', 'root', '123', '1');").bind(0,newID).execute();
+            handle.createUpdate("INSERT INTO logs VALUES (?, 'log', '', '2023-09-19', '2023-09-19');").bind(0, newID).execute();
+            return true;
+        });
+    }
     private static void LoadFromXoso_dwToDmarts() {
         JDBIConnector.get("db3").withHandle(handle -> {
             handle.createUpdate("CALL TransferDataFromXoso_dwToDmart;").execute();
@@ -290,6 +302,8 @@ public class Load {
                 } else {
                     //Nếu không còn dòng có status = PREPARED
                     updateStatusInDatabase(idCurrentConfig, "FINISH");
+                    //Thêm config mới và log mới cho lần crawl tiếp theo
+                    insertNewConfigAndLog();
                     dmarts.close();
                     xoso_dw.close();
                     staging.close();
