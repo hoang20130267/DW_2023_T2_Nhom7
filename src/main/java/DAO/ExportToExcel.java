@@ -1,22 +1,25 @@
 package DAO;
 
+import Bean.Configuration;
 import Bean.LotteryResult;
 import Bean.Prize;
 import Bean.ProvinceResult;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jdbi.v3.core.Handle;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class ExportToExcel{
-    public static void writeDataToExcel(List<ProvinceResult> provinceResultsMN, List<ProvinceResult> provinceResultsMT,List<ProvinceResult> provinceResultsMB, String ngayThang) {
+    public static void writeDataToExcel(Handle handle, String currentTime, Configuration config, List<ProvinceResult> provinceResultsMN, List<ProvinceResult> provinceResultsMT, List<ProvinceResult> provinceResultsMB, String ngayThang) {
         Workbook workbook = new XSSFWorkbook();
 
         writeSheetData(workbook, "XosoMN", provinceResultsMN);
@@ -27,7 +30,11 @@ public class ExportToExcel{
         String filePath = "A:/F/2023-HK1/DataWarehouse/data/" + fileName;
         Path fileFullPath = Paths.get(filePath);
         Path parentDir = fileFullPath.getParent();
-
+        handle.createUpdate("UPDATE log SET file_name = :filename, description='Cập nhật status thành công' ,date_update = :currentTime WHERE configuration_id = :id")
+                .bind("filename", fileName)
+                .bind("currentTime", currentTime)
+                .bind("id",config.getId())
+                .execute();
         if (parentDir != null && !Files.exists(parentDir)) {
             try {
                 Files.createDirectories(parentDir);
@@ -110,9 +117,9 @@ public class ExportToExcel{
             Workbook workbook = new XSSFWorkbook();
 
             try {
-                writeSheetData(workbook, "Xoso"+title, provinceResultsMN);
+                writeSheetData(workbook, title.substring(title.length()-10), provinceResultsMN);
 
-                String fileName = ngayThang + "_xoso" +title+".xlsx";
+                String fileName = title;
                 String filePath = path + fileName;
                 Path fileFullPath = Paths.get(filePath);
                 Path parentDir = fileFullPath.getParent();

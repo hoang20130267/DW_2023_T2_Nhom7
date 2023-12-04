@@ -1,59 +1,77 @@
 package DAO;
 
+import Bean.Configuration;
 import Bean.LotteryResult;
 import Bean.Prize;
 import Bean.ProvinceResult;
+import org.jdbi.v3.core.Handle;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class XosoCrawling {
-    public static void main(String[] args) {
+public class Crawling {
+    public static String getCurrentTime() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return currentTime.format(formatter);
+    }
+
+    public static List<String> getXoSo(Handle handle, Configuration config) {
+        List<String> result = new ArrayList<>();
         try {
-            // Kết nối đến URL chứa dữ liệu xổ số
-            Document doc = Jsoup.connect("https://xosohomnay.com.vn/truc-tiep-xo-so-mien-nam-xstt-mn-xsmn").get();
+            // Kết nối với website thông qua URL
+            Document doc = Jsoup.connect(config.getUrl()).get();
+            Elements tabXstt = doc.getElementsByClass("title");
+            if (tabXstt != null) {
+                Elements links = tabXstt.select("a");
 
-            // Lấy thông tin chung
+                for (int i = 3; i < 6; i++) {
+                    String href = getHrefFromElement(links.get(i));
+                    result.add(href);
+                }
+            }
+            return result;
+        } catch (IOException e) {
+            // Cập nhật status = ERROR
+            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+                    .bind("currentTime", getCurrentTime() )
+                    .bind("id", config.getId())
+                    .execute();
+            handle.close();
+
+        }
+        return null;
+    }
+
+    private static String getHrefFromElement(Element element) {
+        return element.attr("href");
+    }
+
+    public static List<ProvinceResult>  lotteryMN(Configuration config,  Handle handle) {
+        try {
+            // Xử lý dữ liệu
+            List<LotteryResult> result = new ArrayList<>();
+            Document doc = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(0)).get();
             String title = doc.select(".title").text();
-            String ngayThang = doc.select(".ngaykqxs .date .daymonth").text().replace("/","") + "" + doc.select(".ngaykqxs .date .year").text();
-
-//            System.out.println("Title: " + title);
-//            System.out.println("Ngày tháng: " + ngayThang);
-
-            // Lấy thông tin từng tỉnh
+            String ngayThang = doc.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" + doc.select(".ngaykqxs .date .year").text();
             Elements tinhElements = doc.select(".tblKQTinh");
             List<ProvinceResult> provinceResults = new ArrayList<>();
             for (Element tinhElement : tinhElements) {
-                // Lấy tên tỉnh và loại vé để in
-//                String tenTinh = tinhElement.select(".tentinh a .namelong").text();
-//                String loaiVe = tinhElement.select(".loaive").text();
-//
-//                System.out.println("\nTỉnh: " + tenTinh);
-//                System.out.println("Loại vé: " + loaiVe);
-
-                // Lấy tên tỉnh và loại vé để lưu
                 ProvinceResult provinceResult = new ProvinceResult();
                 provinceResult.setTenTinh(tinhElement.select(".tentinh a .namelong").text());
-
                 List<Prize> prizes = new ArrayList<>();
-
-                // Lấy các phần tử chứa thông tin giải
                 Elements giaiElements = tinhElement.select("td[class^='giai_']");
-
-                // Duyệt qua các phần tử giải
                 for (Element giaiElement : giaiElements) {
-
-                    // Lấy tên giải để lưu
                     Prize prize = new Prize();
                     String tenGiai = giaiElement.attr("class").replace("giai_", "");
-
-                    // Xử lý tên giải đặc biệt
                     if (tenGiai.equals("6")) {
                         for (int i = 1; i <= 3; i++) {
                             Prize specialPrize = new Prize();
@@ -80,55 +98,41 @@ public class XosoCrawling {
                         prize.setSoTrungThuong(getSoTrungThuong(giaiElement, 0));
                         prizes.add(prize);
                     }
-
-//                    Elements soTrungThuongElements = giaiElement.select(".dayso");
-//                    for (int i = 0; i < soTrungThuongElements.size(); i++) {
-//                        Element soTrungThuongElement = soTrungThuongElements.get(i);
-//                        String soTrungThuong = soTrungThuongElement.text();
-//                        if (tenGiai.equals("tam") || tenGiai.equals("bay") || tenGiai.equals("nam")
-//                                || tenGiai.equals("nhi") || tenGiai.equals("nhat") || tenGiai.equals("dac_biet")) {
-//                            System.out.println("Giai " + tenGiai + ": " + soTrungThuong);
-//                        } else {
-//                            System.out.println("Giai " + tenGiai + "_" + (i + 1) + ": " + soTrungThuong);
-//                        }
-//                    }
-//                    System.out.println(prize);
                 }
                 provinceResult.setPrizes(prizes);
                 provinceResults.add(provinceResult);
             }
-            // Tạo đối tượng LotteryResult và gán thông tin
             LotteryResult lotteryResult = new LotteryResult();
             lotteryResult.setTitle(title);
             lotteryResult.setNgayThang(ngayThang);
             lotteryResult.setProvinceResults(provinceResults);
+            return provinceResults;
+        } catch (Exception e) {
+            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+                    .bind("currentTime", getCurrentTime())
+                            .bind("id", config.getId())
+                    .execute();
+            handle.close();
+        }
+        return null;
+    }
 
-            // Kết nối đến URL chứa dữ liệu xổ số
-            Document docMT = Jsoup.connect("https://xosohomnay.com.vn/truc-tiep-xo-so-mien-trung-xstt-mt-xsmt").get();
-            // Lấy thông tin chung
+
+    public static List<ProvinceResult> lotteryMT(Configuration config,  Handle handle) {
+        try {
+            Document docMT = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(1)).get();
             String titleMT = docMT.select(".title").text();
-            // Lấy thông tin từng tỉnh
+            String ngayThang = docMT.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" + docMT.select(".ngaykqxs .date .year").text();
             Elements tinhElementsMT = docMT.select(".tblKQTinh");
             List<ProvinceResult> provinceResultsMT = new ArrayList<>();
             for (Element tinhElementMT : tinhElementsMT) {
-
-                // Lấy tên tỉnh và loại vé để lưu
                 ProvinceResult provinceResultMT = new ProvinceResult();
                 provinceResultMT.setTenTinh(tinhElementMT.select(".tentinh a .namelong").text());
-
                 List<Prize> prizesMT = new ArrayList<>();
-
-                // Lấy các phần tử chứa thông tin giải
                 Elements giaiElementsMT = tinhElementMT.select("td[class^='giai_']");
-
-                // Duyệt qua các phần tử giải
                 for (Element giaiElementMT : giaiElementsMT) {
-
-                    // Lấy tên giải để lưu
                     Prize prizeMT = new Prize();
                     String tenGiaiMT = giaiElementMT.attr("class").replace("giai_", "");
-
-                    // Xử lý tên giải đặc biệt
                     if (tenGiaiMT.equals("6")) {
                         for (int i = 1; i <= 3; i++) {
                             Prize specialPrize = new Prize();
@@ -164,11 +168,19 @@ public class XosoCrawling {
             lotteryResultMT.setTitle(titleMT);
             lotteryResultMT.setNgayThang(ngayThang);
             lotteryResultMT.setProvinceResults(provinceResultsMT);
-
-
-            // Kết nối đến URL chứa dữ liệu xổ số
-            Document docMB = Jsoup.connect("https://xosohomnay.com.vn/truc-tiep-xo-so-mien-bac-xstt-mb-xsmb").get();
-
+            return provinceResultsMT;
+        } catch (Exception e) {
+            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+                    .bind("currentTime", getCurrentTime() )
+                    .bind("id", config.getId())
+                    .execute();
+            handle.close();
+        }
+        return null;
+    }
+    public static List<ProvinceResult> lotteryMB(Configuration config,  Handle handle) {
+        try {
+            Document docMB = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(2)).get();
             String titleMB = docMB.select("div.title").text();
             String dateMB = docMB.select("div.ngaykqxs span.daymonth").text() + "/"
                     + docMB.select("div.ngaykqxs span.year").text();
@@ -234,12 +246,12 @@ public class XosoCrawling {
                         prizesMB.add(specialPrize);
                     }
                 } else if (tenGiaiMB.equals("db")) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai(tenGiaiMB);
-                        String kyHieuDB = docMB.select("div.giaiDbmoi span.kyhieuDB1ve span").text();
-                        String soTrungThuong = getSoTrungThuong(giaiElementMB, 0) + " " + kyHieuDB;
-                        specialPrize.setSoTrungThuong(Collections.singletonList(soTrungThuong));
-                        prizesMB.add(specialPrize);
+                    Prize specialPrize = new Prize();
+                    specialPrize.setTenGiai(tenGiaiMB);
+                    String kyHieuDB = docMB.select("div.giaiDbmoi span.kyhieuDB1ve span").text();
+                    String soTrungThuong = getSoTrungThuong(giaiElementMB, 0) + " " + kyHieuDB;
+                    specialPrize.setSoTrungThuong(Collections.singletonList(soTrungThuong));
+                    prizesMB.add(specialPrize);
                 } else {
                     prizeMB.setTenGiai(tenGiaiMB);
                     prizeMB.setSoTrungThuong(getSoTrungThuong(giaiElementMB, 0));
@@ -252,11 +264,15 @@ public class XosoCrawling {
             lotteryResultMB.setTitle(titleMB);
             lotteryResultMB.setNgayThang(dateMB);
             lotteryResultMB.setProvinceResults(provinceResultsMB);
-
-           // ExportToExcel.writeDataToExcel(provinceResults, provinceResultsMT,provinceResultsMB, ngayThang);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            return provinceResultsMB;
+        } catch (Exception e) {
+            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+                    .bind("currentTime", getCurrentTime() )
+                    .bind("id", config.getId())
+                    .execute();
+            handle.close();
         }
+        return null;
     }
     private static List<String> getSoTrungThuong(Element giaiElement, int index) {
         Elements soTrungThuongElements = giaiElement.select(".dayso");
@@ -271,6 +287,4 @@ public class XosoCrawling {
 
         return soTrungThuongList;
     }
-
-
 }

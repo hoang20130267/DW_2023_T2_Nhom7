@@ -2,7 +2,7 @@ package Bean;
 
 public class Configuration {
     private int id;
-    private String file_name;
+    private String date;
     private String path;
     private String url;
     private String user_database;
@@ -12,9 +12,9 @@ public class Configuration {
     private String date_updated;
 
 
-    public Configuration(int id, String file_name, String path, String url, String user_database, String password_database, int flag, String date_created, String date_updated) {
+    public Configuration(int id, String date, String path, String url, String user_database, String password_database, int flag, String date_created, String date_updated) {
         this.id = id;
-        this.file_name = file_name;
+        this.date = date;
         this.path = path;
         this.url = url;
         this.user_database = user_database;
@@ -43,12 +43,12 @@ public class Configuration {
         this.id = id;
     }
 
-    public String getFile_name() {
-        return file_name;
+    public String getdate() {
+        return date;
     }
 
-    public void setFile_name(String file_name) {
-        this.file_name = file_name;
+    public void setdate(String date) {
+        this.date = date;
     }
 
     public String getPath() {
@@ -103,7 +103,7 @@ public class Configuration {
     public String toString() {
         return "Configuration{" +
                 "id=" + id +
-                ", file_name='" + file_name + '\'' +
+                ", date='" + date + '\'' +
                 ", path='" + path + '\'' +
                 ", url='" + url + '\'' +
                 ", user_database='" + user_database + '\'' +
