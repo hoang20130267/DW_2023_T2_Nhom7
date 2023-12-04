@@ -32,64 +32,76 @@ public class Load {
             return true;
         });
     }
+    private static void insertNewConfigAndLog(){
+        Object id = JDBIConnector.get("db1").withHandle(handle -> {
+            handle.createUpdate("SELECT id FROM configurations ORDER BY id DESC LIMIT 1").execute();
+            return true;
+        });
+        int newID = (int) id;
+        JDBIConnector.get("db1").withHandle(handle -> {
+            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/', 'root', '123', '1');").bind(0,newID).execute();
+            handle.createUpdate("INSERT INTO logs VALUES (?, 'log', '', '2023-09-19', '2023-09-19');").bind(0, newID).execute();
+            return true;
+        });
+    }
     private static void LoadFromXoso_dwToDmarts() {
         JDBIConnector.get("db3").withHandle(handle -> {
             handle.createUpdate("CALL TransferDataFromXoso_dwToDmart;").execute();
             return true;
         });
     }
-    public static List<Dmart> getListFirstDmartMN() {
+    public static List<Dmart> getListFirstDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' LIMIT 18;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListSecondDmartMN() {
+    public static List<Dmart> getListSecondDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' LIMIT 18 OFFSET 18;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 18;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListThirdDmartMN() {
+    public static List<Dmart> getListThirdDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' LIMIT 18 OFFSET 36;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 36;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListFourthDmartMN() {
+    public static List<Dmart> getListFourthDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' LIMIT 18 OFFSET 54;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 54;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListFirstDmartMT() {
+    public static List<Dmart> getListFirstDmartMT(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' LIMIT 18;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListSecondDmartMT() {
+    public static List<Dmart> getListSecondDmartMT(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' LIMIT 18 OFFSET 18;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18 OFFSET 18;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListThirdDmartMT() {
+    public static List<Dmart> getListThirdDmartMT(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' LIMIT 18 OFFSET 36;")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18 OFFSET 36;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
     }
-    public static List<Dmart> getListDmartMB() {
+    public static List<Dmart> getListDmartMB(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Bắc';")
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Bắc' AND date = ?;").bind(0, date)
                     .mapToBean(Dmart.class).stream().collect(Collectors.toList());
         });
         return listDmartMN;
@@ -286,10 +298,12 @@ public class Load {
                 // Kiểm tra nếu còn dòng có status = PREPARED
                 for(Log log : getListLog())
                 if(log.getStatus().equals("PREPARED")) {
-                  //  CrawlData.CrawlDataToFile();
+//                    CrawlData.CrawlDataToFile();
                 } else {
                     //Nếu không còn dòng có status = PREPARED
                     updateStatusInDatabase(idCurrentConfig, "FINISH");
+                    //Thêm config mới và log mới cho lần crawl tiếp theo
+                    insertNewConfigAndLog();
                     dmarts.close();
                     xoso_dw.close();
                     staging.close();
