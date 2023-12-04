@@ -286,7 +286,7 @@ public class Load {
                 // Kiểm tra nếu còn dòng có status = PREPARED
                 for(Log log : getListLog())
                 if(log.getStatus().equals("PREPARED")) {
-                    CrawlData.CrawlDataToFile();
+                  //  CrawlData.CrawlDataToFile();
                 } else {
                     //Nếu không còn dòng có status = PREPARED
                     updateStatusInDatabase(idCurrentConfig, "FINISH");

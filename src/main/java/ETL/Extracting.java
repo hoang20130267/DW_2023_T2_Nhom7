@@ -1,205 +1,78 @@
 package ETL;
 
-import Bean.Configuration;
-import Bean.LotteryResult;
-import Bean.Prize;
-import Bean.ProvinceResult;
+import Bean.*;
 import DAO.ExportToExcel;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import DAO.Crawling;
+import db.JDBIConnector;
+import org.jdbi.v3.core.Handle;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Extracting {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        // JDBC URL, username, and password for XAMPP MySQL
-        CrawlDataToFile();
+
+    public static void main(String[] args) {
+        Crawling();
     }
-    public static Connection connectDBConfiguration(String statuas) {
-        Connection connection = null;
-        try {
-            String url = "jdbc:mysql://localhost:3306/controls";
-            String user = "root";
-            String password = "";
+    public static void Crawling() {
+        // Kết nối với database controls (controls.db)
+        Handle controls = JDBIConnector.get("db1").open();
 
-            connection = null;
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("Dữ liệu ở trạng thái: " + statuas);
-            connection = DriverManager.getConnection(url, user, password);
-            return connection;
-        } catch (Exception e) {
-            // gửi mail
-            return null;
-        }
-    }
+        if(controls.getConnection() != null) {
+            // Lấy các dòng có flag = true và status = PREPARE
+            List<Configuration> configs = getConfig(controls);
+            for (int i =0; i<configs.size(); i++ ) {
+                // Lấy 1 dòng Configuration
+                Configuration config = configs.get(i);
+                String status = controls.createQuery("SELECT status FROM log WHERE configuration_id = :id")
+                        .bind("id", config.getId())
+                        .mapTo(String.class)
+                        .findOne()
+                        .orElse(null);
 
 
-
-
-
-    public static List<Configuration> updateConfiguration(){
-        List<Configuration> result = new ArrayList<>();
-        try {
-
-            // 1. Ket noi voi database control
-            Connection connection = connectDBConfiguration("PREPARED");
-            if(connection == null) {
-                // 2. gui mail
-            } else {
-                // 2. Lay tat cac dong co flags = true va status = PREPARED
-                List<Configuration> configurations = performDatabaseOperations(connection, "PREPARED");
-                // 3. Duyet qua tung dong
-                for (Configuration configuration : configurations) {
-                    // 4. Kiem tra status == error
-                    if (configuration.getStatus().equals("ERROR")) {
-
-                    } else {
-                        // 7. cap nhat status thanh CRAWLING
-                        updateStatusInDatabase(configuration.getId(), "CRAWLING", null);
-                        configuration.setStatus("CRAWLING");
-                        result.add(configuration);
-                    }
+                // Kiểm tra status = ERROR và hết dòng chưa
+                if(status == "ERROR" && i == configs.size()-1) {
+                    controls.close();
                 }
-                return result;
+                // cập nhật status = CRAWLING
+                controls.createUpdate("UPDATE log SET status = 'CRAWLING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
+                        .bind("currentTime", Crawling.getCurrentTime())
+                        .bind("id", config.getId())
+                        .execute();
+                // Xử lý dữ liệu
+                ExportToExcel.writeDataToExcel(controls,Crawling.getCurrentTime(),config,Crawling.lotteryMN(config, controls), Crawling.lotteryMT(config, controls), Crawling.lotteryMB(config, controls), config.getdate());
+                // Cập nhật status = EXTRACTING
+                controls.createUpdate("UPDATE log SET status = 'EXTRACTING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
+                        .bind("currentTime", Crawling.getCurrentTime())
+                        .bind("id", config.getId())
+                        .execute();
             }
+        } else {
+            // Gửi mail
         }
-        catch (Exception e) {
-            // 7. gửi mail
-            e.printStackTrace();
-            return null;
-        }
-
-        return result;
-    }
-    public static void CrawlDataToFile() throws SQLException, ClassNotFoundException {
-        for (Configuration configuration : updateConfiguration()) {
-            try {
-                // 8. Kết nối với URL
-                Document doc = Jsoup.connect(configuration.getUrl()).get();
-                // 8.1 Lấy dữ liệu xử lý
-
-                configuration.setFile_name(getData(doc, configuration.getPath()));
-                //11 Cập nhật
-                updateStatusInDatabase(configuration.getId(), "EXTRACTING",configuration.getFile_name());
-            } catch (Exception e) {
-                // 8.2 Cập nhật và gửi mail
-                updateStatusInDatabase(configuration.getId(), "ERROR", null);
-                // đóng database
-                connectDBConfiguration("Kết thúc").close();
-            }
-        }
-    }
-    public static String getData(Document doc, String path) {
-        String title = doc.select(".title").text();
-        String ngayThang = doc.select(".ngaykqxs .date .daymonth").text().replace("/","") + "" + doc.select(".ngaykqxs .date .year").text();
-        Elements tinhElements = doc.select(".tblKQTinh");
-        List<ProvinceResult> provinceResults = new ArrayList<>();
-        for (Element tinhElement : tinhElements) {
-            ProvinceResult provinceResult = new ProvinceResult();
-            provinceResult.setTenTinh(tinhElement.select(".tentinh a .namelong").text());
-            List<Prize> prizes = new ArrayList<>();
-            Elements giaiElements = tinhElement.select("td[class^='giai_']");
-            for (Element giaiElement : giaiElements) {
-                Prize prize = new Prize();
-                String tenGiai = giaiElement.attr("class").replace("giai_", "");
-                if (tenGiai.equals("6")) {
-                    for (int i = 1; i <= 3; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("6_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElement, i));
-                        prizes.add(specialPrize);
-                    }
-                } else if (tenGiai.equals("4")) {
-                    for (int i = 1; i <= 7; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("4_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElement, i));
-                        prizes.add(specialPrize);
-                    }
-                } else if (tenGiai.equals("3")) {
-                    for (int i = 1; i <= 2; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("3_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElement, i));
-                        prizes.add(specialPrize);
-                    }
-                } else {
-                    prize.setTenGiai(tenGiai);
-                    prize.setSoTrungThuong(getSoTrungThuong(giaiElement, 0));
-                    prizes.add(prize);
-                }
-            }
-            provinceResult.setPrizes(prizes);
-            provinceResults.add(provinceResult);
-        }
-        LotteryResult lotteryResult = new LotteryResult();
-        lotteryResult.setTitle(title);
-        lotteryResult.setNgayThang(ngayThang);
-        lotteryResult.setProvinceResults(provinceResults);
-        String titleDomain = title.substring(title.length()-2);
-        // 9 Tạo tên file
-        String fileName = ngayThang + "_xoso" +titleDomain+".xlsx";
-        // 10 Lưu vào file
-        ExportToExcel.writeDataToExcelOneURL( fileName,path,provinceResults, ngayThang);
-        return fileName;
-    }
-    private static List<String> getSoTrungThuong(Element giaiElement, int index) {
-        Elements soTrungThuongElements = giaiElement.select(".dayso");
-        List<String> soTrungThuongList = new ArrayList<>();
-        for (int i = 0; i < soTrungThuongElements.size(); i++) {
-            if (index == 0 || i == index - 1) {
-                Element soTrungThuongElement = soTrungThuongElements.get(i);
-                soTrungThuongList.add(soTrungThuongElement.text());
-            }
-        }
-        return soTrungThuongList;
     }
 
-    private static void updateStatusInDatabase(int configurationId, String newStatus, String fileName) throws SQLException, ClassNotFoundException {
-        String updateQuery = "UPDATE configurations SET status = ?, file_name = ? WHERE id = ?";
-        try (Connection connection = connectDBConfiguration(newStatus);
-             PreparedStatement updateStatement = connection.prepareStatement(updateQuery)) {
-            updateStatement.setString(1, newStatus);
-            updateStatement.setString(2, fileName);
-            updateStatement.setInt(3, configurationId);
-            updateStatement.executeUpdate();
+
+    public static List<Configuration> getConfig(Handle handle) {
+        try  {
+            // Lấy tất cả các dòng có status = PREPARE và flag = true
+            List<Configuration> result = handle.createQuery("SELECT c.* FROM configurations c " +
+                            "JOIN log l ON c.id = l.configuration_id " +
+                            "WHERE l.status = 'PREPARE' AND c.flag = 1")
+                    .mapToBean(Configuration.class)
+                    .list();
+
+            return result;
+
+
         } catch (Exception e) {
+
             e.printStackTrace();
         }
-    }
-    private static List<Configuration> performDatabaseOperations(Connection connection, String status) throws SQLException {
-        String query = "SELECT * FROM configurations";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            List<Configuration> configurations = new ArrayList<>();
-            // Process the result set
-            while (resultSet.next()) {
-                Configuration configuration = new Configuration();
-                configuration.setId(resultSet.getInt(1));
-                configuration.setFile_name(resultSet.getString(2));
-                configuration.setPath(resultSet.getString(3));
-                configuration.setUrl(resultSet.getString(4));
-                configuration.setUser_database(resultSet.getString(5));
-                configuration.setPassword_database(resultSet.getString(6));
-                configuration.setFlag(resultSet.getInt(7));
-                configuration.setStatus(resultSet.getString(8));
-                if(configuration.getFlag() ==1 && configuration.getStatus().equals(status)) {
-                    configurations.add(configuration);
-                }
-            }
-
-            return configurations;
-        }
-
+        return null;
     }
 
 
