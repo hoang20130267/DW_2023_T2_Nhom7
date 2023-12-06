@@ -3,6 +3,7 @@ package ETL;
 import Bean.Configuration;
 import Bean.Dmart;
 import Bean.Log;
+import DAO.SendEmail;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
@@ -283,12 +284,14 @@ public class Load {
         Handle xoso_dw = JDBIConnector.get("db3").open();
         Handle controls = JDBIConnector.get("db1").open();
         try {
+            int idCurrentConfig = getConfig("TRANSFORMING").getId();
             // Kết nối với database dmarts
             Handle dmarts = JDBIConnector.get("db4").open();
-            int idCurrentConfig = getConfig("TRANSFORMING").getId();
             if(dmarts == null) {
-                // Thêm dữ liệu vào control.configurations với status = ERROR
+                // Thêm dữ liệu vào control.log với status = ERROR
                 updateStatusInDatabase(idCurrentConfig, "ERROR");
+                //Gửi email thông báo lỗi
+                SendEmail.sendMailError("Kết nối Database dmarts không thành công!");
                 // Đóng kết nối với database xoso_dw
                 xoso_dw.close();
             } else {
@@ -298,15 +301,20 @@ public class Load {
                 // Kiểm tra nếu còn dòng có status = PREPARED
                 for(Log log : getListLog())
                 if(log.getStatus().equals("PREPARED")) {
-//                    CrawlData.CrawlDataToFile();
+                    Extracting.Crawling();
                 } else {
                     //Nếu không còn dòng có status = PREPARED
                     updateStatusInDatabase(idCurrentConfig, "FINISH");
                     //Thêm config mới và log mới cho lần crawl tiếp theo
                     insertNewConfigAndLog();
+
+                    // Đóng kết nối với database dmarts
                     dmarts.close();
+                    // Đóng kết nối với database xoso_dw
                     xoso_dw.close();
+                    // Đóng kết nối với database staging
                     staging.close();
+                    // Đóng kết nối với database controls
                     controls.close();
                 }
             }
@@ -317,10 +325,10 @@ public class Load {
         }
     public static void main(String[] args) {
 //        System.out.println(getListConfiguration());
-//        loadingAndUpdateConfig();
 //        System.out.println(getListSecondDmartMN());
 //        System.out.println(Load.getProvince(getListThirdDmartMT()));
 //        System.out.println(getCurrentDate());
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
+        loadingAndUpdateConfig();
     }
 }
