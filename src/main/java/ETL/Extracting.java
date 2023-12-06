@@ -3,16 +3,14 @@ package ETL;
 import Bean.*;
 import DAO.ExportToExcel;
 import DAO.Crawling;
+import DAO.SendEmail;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Extracting {
-
     public static void main(String[] args) {
         Crawling();
     }
@@ -45,7 +43,7 @@ public class Extracting {
                 results.addAll(Crawling.lotteryMB(config, controls));
                 results.addAll(Crawling.lotteryMT(config, controls));
                 System.out.println(results.get(0).getDomain());
-                ExportToExcel.test(controls,Crawling.getCurrentTime(),config,results, config.getdate());
+                ExportToExcel.writeToFileCSV(controls,Crawling.getCurrentTime(),config,results, Crawling.getCurrentTimeFileName());
                 // Cập nhật status = EXTRACTING
                 controls.createUpdate("UPDATE log SET status = 'EXTRACTING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
                         .bind("currentTime", Crawling.getCurrentTime())
@@ -53,6 +51,7 @@ public class Extracting {
                         .execute();
             }
         } else {
+            SendEmail.sendMailError("Kết nối với database controls thất bại");
             // Gửi mail
         }
     }
