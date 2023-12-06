@@ -118,7 +118,7 @@ public class Transform {
     }
 
     public static void main(String[] args) {
-        List<Staging> stagingList = readCSV("/Users/hidroxit/Desktop/readFile/test.csv");
+        List<Staging> stagingList = readCSV("A:\\F\\2023-HK1\\DataWarehouse\\Data\\2023_12_06_xoso.csv");
         for (Staging staging : stagingList) {
             System.out.println(staging);
         }

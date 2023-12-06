@@ -23,6 +23,11 @@ public class Crawling {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return currentTime.format(formatter);
     }
+    public static String getCurrentTimeFileName() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return currentTime.format(formatter);
+    }
 
     public static List<String> getXoSo(Handle handle, Configuration config) {
         List<String> result = new ArrayList<>();

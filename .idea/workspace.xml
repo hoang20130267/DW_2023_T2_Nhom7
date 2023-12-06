@@ -11,11 +11,15 @@
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/ajax/ajax-search.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/ajax/ajax-search.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Transform.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +78,33 @@
       <recent name="C:\Users\ADMIN\IdeaProjects\Xoso-Datawarehouse\src\main\webapp\js" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Extracting">
+    <configuration name="Extracting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ETL.Extracting" />
+      <module name="Xoso-Datawarehouse" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ETL.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
+      <module name="Xoso-Datawarehouse" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ETL.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 9.0.68" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.68" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
@@ -162,6 +192,12 @@
         </option>
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Extracting" />
+        <item itemvalue="Application.Transform" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -194,5 +230,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="cập nhật lại Extracting" />
+    <option name="LAST_COMMIT_MESSAGE" value="cập nhật lại Extracting" />
   </component>
 </project>
