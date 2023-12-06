@@ -70,44 +70,52 @@ public class Transform {
         });
     }
 
-    public static List<Staging> readCSV(String csvFile) {
+    private static List<Staging> readLotteryDataFromCSV(String csvFile) {
         List<Staging> stagingList = new ArrayList<>();
-
+        String line;
+        String csvSplitBy = ",";
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            String line;
-            // Bỏ qua dòng tiêu đề
-            br.readLine();
+            br.readLine(); // Bỏ qua dòng tiêu đề
+
             while ((line = br.readLine()) != null) {
-                String[] data = line.split(",");
+                String[] data = line.split(csvSplitBy);
                 Staging staging = new Staging();
-                staging.setId(Integer.parseInt(data[0].trim()));
-                staging.setPrize(data[1].trim());
-                staging.setProvince(data[2].trim());
-                staging.setDomain(data[3].trim());
-                staging.setNumber_winning(data[4].trim());
-                staging.setDate(data[5].trim());
-                staging.setDate_update(data[6].trim());
-                staging.setDate_expired(data[7].trim());
+                staging.setPrize(data[0]);
+                staging.setProvince(data[1]);
+                staging.setDomain(data[2]);
+                staging.setNumber_winning(data[3]);
+                staging.setDate(data[4]);
+                // Tính toán date_updated và date_expired
+                staging.calculateDates();
                 stagingList.add(staging);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return stagingList;
     }
 
-    public static void insertStagingDB(Staging staging, Handle handle) {
-        handle.execute("INSERT INTO your_table_name (id, prize, province, domain, number_winning, date, date_update, date_expired) " +
-                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                staging.getId(),
-                staging.getPrize(),
-                staging.getProvince(),
-                staging.getDomain(),
-                staging.getNumber_winning(),
-                staging.getDate(),
-                staging.getDate_update(),
-                staging.getDate_expired());
+    public static void insertStagingDB(Handle handle, String path){
+        String query = "INSERT INTO xo_so_stagging (prize, province, domain, number_winning, date, date_update, date_expired) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        List<Staging> stagingList = readLotteryDataFromCSV(path);
+        for(Staging staging : stagingList){
+            if(isNullOrEmpty(staging.getNumber_winning()) || isNullOrEmpty(staging.getProvince())){
+                continue;
+            }
+            handle.createUpdate(query)
+                    .bind(0, staging.getPrize())
+                    .bind(1, staging.getProvince())
+                    .bind(2, staging.getDomain())
+                    .bind(3, staging.getNumber_winning())
+                    .bind(4, staging.getDate())
+                    .bind(5, staging.getDate_updated())
+                    .bind(6, staging.getDate_expired())
+                    .execute();
+        }
+    }
+
+    public static boolean isNullOrEmpty(String value){
+        return value == null || value.trim().isEmpty();
     }
 
     public static void updateConfiguration() {
@@ -125,12 +133,8 @@ public class Transform {
             } else {
                 //Đọc dữ file csv
                 Configuration configuration = new Configuration();
-                List<Staging> stagingList = readCSV(configuration.getPath());
-                //Thêm data vào db Staging table xo_so_staging
-                for (Staging stagings : stagingList) {
-                    insertStagingDB(stagings, staging);
-                }
-//                code xoa du lieu rong
+                insertStagingDB(staging, configuration.getPath());
+
                 if (xoso_dw == null) {
                     sendMailError("Kết nối Database xoso_dw không thành công!");
                     updateStatusInDB(currentConfigID, "ERROR");
