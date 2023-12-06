@@ -2,6 +2,7 @@ package ETL;
 
 import Bean.Configuration;
 import Bean.Staging;
+import DAO.SendEmail;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
@@ -20,35 +21,6 @@ import java.util.List;
 import java.util.Properties;
 
 public class Transform {
-    public static void sendMailError(String content) {
-        String fromEmail = "20130224@st.hcmuaf.edu.vn";
-        String password = "";
-        String toEmail = "nguyenhwdat1912@gmail.com";
-
-
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
-        properties.put("mail.smtp.port", "587"); //TLS Port
-        properties.put("mail.smtp.auth", "true"); //enable authentication
-        properties.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
-
-        Session session = Session.getDefaultInstance(properties, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(fromEmail, password);
-            }
-        });
-
-        try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(fromEmail));
-            message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            message.setSubject("Thông báo lỗi");
-            message.setContent(content, "text/plain");
-            System.out.println("Gửi mail thành công");
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public static Configuration getConfigurationStatus(String currentStatus) {
         Configuration getStatus = JDBIConnector.get("db1").withHandle(handle ->
@@ -120,7 +92,7 @@ public class Transform {
             //Check kết nối db Staging
             if (staging == null) {
                 updateStatusInDB(currentConfigID, "ERROR");
-                sendMailError("Kết nối Database staging không thành công!");
+                SendEmail.sendMailError("Kết nối Database staging không thành công!");
                 controls.close();
             } else {
                 //Đọc dữ file csv
@@ -132,7 +104,7 @@ public class Transform {
                 }
 //                code xoa du lieu rong
                 if (xoso_dw == null) {
-                    sendMailError("Kết nối Database xoso_dw không thành công!");
+                    SendEmail.sendMailError("Kết nối Database xoso_dw không thành công!");
                     updateStatusInDB(currentConfigID, "ERROR");
                     staging.close();
                     controls.close();
