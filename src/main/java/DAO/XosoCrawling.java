@@ -80,19 +80,6 @@ public class XosoCrawling {
                         prize.setSoTrungThuong(getSoTrungThuong(giaiElement, 0));
                         prizes.add(prize);
                     }
-
-//                    Elements soTrungThuongElements = giaiElement.select(".dayso");
-//                    for (int i = 0; i < soTrungThuongElements.size(); i++) {
-//                        Element soTrungThuongElement = soTrungThuongElements.get(i);
-//                        String soTrungThuong = soTrungThuongElement.text();
-//                        if (tenGiai.equals("tam") || tenGiai.equals("bay") || tenGiai.equals("nam")
-//                                || tenGiai.equals("nhi") || tenGiai.equals("nhat") || tenGiai.equals("dac_biet")) {
-//                            System.out.println("Giai " + tenGiai + ": " + soTrungThuong);
-//                        } else {
-//                            System.out.println("Giai " + tenGiai + "_" + (i + 1) + ": " + soTrungThuong);
-//                        }
-//                    }
-//                    System.out.println(prize);
                 }
                 provinceResult.setPrizes(prizes);
                 provinceResults.add(provinceResult);
