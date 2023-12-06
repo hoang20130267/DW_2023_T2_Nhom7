@@ -118,6 +118,22 @@ public class Transform {
         return value == null || value.trim().isEmpty();
     }
 
+    public static void transferStagingToXoso_dw(){
+        JDBIConnector.get("db3").withHandle(handle -> {
+            handle.createUpdate("CALL sp_transfer_data_and_update_ids();")
+                    .execute();
+            return true;
+        });
+    }
+
+    public static void truncateStagingDB(){
+        JDBIConnector.get("db2").withHandle(handle -> {
+            handle.createUpdate("TRUNCATE TABLE staging.xo_so_stagging")
+                    .execute();
+            return true;
+        });
+    }
+
     public static void updateConfiguration() {
         try {
             Handle controls = JDBIConnector.get("db1").open();
@@ -131,8 +147,8 @@ public class Transform {
                 sendMailError("Kết nối Database staging không thành công!");
                 controls.close();
             } else {
-                //Đọc dữ file csv
                 Configuration configuration = new Configuration();
+                //Đọc dữ liệu từ 
                 insertStagingDB(staging, configuration.getPath());
 
                 if (xoso_dw == null) {
@@ -141,9 +157,17 @@ public class Transform {
                     staging.close();
                     controls.close();
                 } else {
-//                    code transform staging to dim of xosodw
+                    //transform dữ liệu từ staging db sang xoso_dw
+                    transferStagingToXoso_dw();
+                    updateStatusInDB(currentConfigID, "TRANSFORMING");
+                    //truncate dữ liệu trong bảng xo_so_stagging
+                    truncateStagingDB();
+                    controls.close();
+                    staging.close();
+                    xoso_dw.close();
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
