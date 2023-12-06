@@ -363,7 +363,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">AG-11K3</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -1538,7 +1538,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">XSBDI</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -1711,7 +1711,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">XSBDI</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -1887,7 +1887,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">XSBDI</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -2060,7 +2060,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">XSBDI</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -2233,7 +2233,7 @@
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
-                                                                            <td class="loaive">XSBDI</td>
+                                                                            <td class="loaive"></td>
                                                                         </tr>
                                                                         <tr align="center">
                                                                             <td class="giai_tam">
@@ -2585,13 +2585,22 @@
                     </div>
                     <div id="leftmodule" style="margin-left:200px;margin-top: 100px">
                         <div class="modulesLR black">
-                            <h2 class="mdtitle">Trang xổ số</h2>
+                            <h2 class="mdtitle" style="font-size: 16px">Trang xổ số</h2>
                             <div class="mdcontent">
                                 <ul class="menu2 menuxosott">
                                     <li>
                                         <a
-                                                href="/truc-tiep-xo-so-mien-nam-xstt-mn-xsmn"
-                                                title="Trực Tiếp Xổ Số Miền Nam"
+                                                href="index.jsp"
+                                                title="Xổ số 3 miền"
+                                        ><span id="mnxstt_tong" class="icon finnish"
+                                        >Xổ Số 3 miền</span
+                                        ></a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                                href="domain-xoso.jsp?id=1"
+                                                title="Xổ Số Miền Nam"
                                         ><span id="mnxstt_mien-nam" class="icon finnish"
                                         >Xổ Số Miền Nam</span
                                         ></a
@@ -2599,8 +2608,8 @@
                                     </li>
                                     <li>
                                         <a
-                                                href="/truc-tiep-xo-so-mien-trung-xstt-mt-xsmt"
-                                                title="Trực Tiếp Xổ Số Miền Trung"
+                                                href="domain-xoso.jsp?id=2"
+                                                title="Xổ Số Miền Trung"
                                         ><span id="mnxstt_mien-trung" class="icon finnish"
                                         >Xổ Số Miền Trung</span
                                         ></a
@@ -2608,8 +2617,8 @@
                                     </li>
                                     <li>
                                         <a
-                                                href="/truc-tiep-xo-so-mien-bac-xstt-mb-xsmb"
-                                                title="Trực Tiếp Xổ Số Miền Bắc"
+                                                href="domain-xoso.jsp?id=3"
+                                                title="Xổ Số Miền Bắc"
                                         ><span id="mnxstt_mien-bac" class="icon finnish"
                                         >Xổ Số Miền Bắc</span
                                         ></a
@@ -2641,6 +2650,30 @@
     </div>
 </div>
 </body>
+<script src="https://www.xosohomnay.com.vn/template/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://www.xosohomnay.com.vn/template/jquery-ui-1.13.1.sunny/jquery-ui.min.js"></script>
+<link
+        href="https://www.xosohomnay.com.vn/template/jquery-ui-1.13.1.sunny/jquery-ui.min.css"
+        rel="stylesheet"
+        type="text/css"
+/>
+<script
+        type="text/javascript"
+        src="https://www.xosohomnay.com.vn/template/jquery/jquery.fullscreen-0.4.2.min.js"
+></script>
+<script
+        type="text/javascript"
+        src="https://www.xosohomnay.com.vn/template/jquery/sounds/ion.sound.min.js"
+></script>
+<script
+        async=""
+        type="text/javascript"
+        src="https://www.xosohomnay.com.vn/template/scripts/lazysizes.min.js"
+></script>
+<script
+        async=""
+        src="https://www.xosohomnay.com.vn/template/temp/xoso_111.js"
+></script>
 <script>
     <%@include file="./js/jquery-3.3.1.min.js"%>
 </script>
