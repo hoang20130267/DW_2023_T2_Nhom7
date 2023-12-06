@@ -150,9 +150,6 @@ public class Transform {
     }
 
     public static void main(String[] args) {
-        List<Staging> stagingList = readCSV("/Users/hidroxit/Desktop/readFile/test.csv");
-        for (Staging staging : stagingList) {
-            System.out.println(staging);
-        }
+        updateConfiguration();
     }
 }
