@@ -14,7 +14,6 @@ import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -58,16 +57,19 @@ public class Transform {
                         .findFirst()
                         .orElse(null));
         return getStatus;
-
     }
 
     public static void updateStatusInDB(int configurationID, String newStatus) {
-        JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("UPDATE log SET status = ? FROM log INNER JOIN configurations ON log.configuration_id = configurations.id WHERE configurations.id = ?")
-                    .bind(1, newStatus)
-                    .bind(2, configurationID);
-            return true;
-        });
+        try{
+            JDBIConnector.get("db1").withHandle(handle -> {
+                handle.createUpdate("UPDATE log SET status = ? FROM log INNER JOIN configurations ON log.configuration_id = configurations.id WHERE configurations.id = ?")
+                        .bind(1, newStatus)
+                        .bind(2, configurationID);
+                return true;
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private static List<Staging> readLotteryDataFromCSV(String csvFile) {
@@ -96,21 +98,25 @@ public class Transform {
     }
 
     public static void insertStagingDB(Handle handle, String path){
-        String query = "INSERT INTO xo_so_stagging (prize, province, domain, number_winning, date, date_update, date_expired) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        List<Staging> stagingList = readLotteryDataFromCSV(path);
-        for(Staging staging : stagingList){
-            if(isNullOrEmpty(staging.getNumber_winning()) || isNullOrEmpty(staging.getProvince())){
-                continue;
+        try{
+            String query = "INSERT INTO xo_so_stagging (prize, province, domain, number_winning, date, date_update, date_expired) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            List<Staging> stagingList = readLotteryDataFromCSV(path);
+            for(Staging staging : stagingList){
+                if(isNullOrEmpty(staging.getNumber_winning()) || isNullOrEmpty(staging.getProvince())){
+                    continue;
+                }
+                handle.createUpdate(query)
+                        .bind(0, staging.getPrize())
+                        .bind(1, staging.getProvince())
+                        .bind(2, staging.getDomain())
+                        .bind(3, staging.getNumber_winning())
+                        .bind(4, staging.getDate())
+                        .bind(5, staging.getDate_updated())
+                        .bind(6, staging.getDate_expired())
+                        .execute();
             }
-            handle.createUpdate(query)
-                    .bind(0, staging.getPrize())
-                    .bind(1, staging.getProvince())
-                    .bind(2, staging.getDomain())
-                    .bind(3, staging.getNumber_winning())
-                    .bind(4, staging.getDate())
-                    .bind(5, staging.getDate_updated())
-                    .bind(6, staging.getDate_expired())
-                    .execute();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -119,19 +125,27 @@ public class Transform {
     }
 
     public static void transferStagingToXoso_dw(){
-        JDBIConnector.get("db3").withHandle(handle -> {
-            handle.createUpdate("CALL sp_transfer_data_and_update_ids();")
-                    .execute();
-            return true;
-        });
+        try{
+            JDBIConnector.get("db3").withHandle(handle -> {
+                handle.createUpdate("CALL sp_transfer_data_and_update_ids();")
+                        .execute();
+                return true;
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void truncateStagingDB(){
-        JDBIConnector.get("db2").withHandle(handle -> {
-            handle.createUpdate("TRUNCATE TABLE staging.xo_so_stagging")
-                    .execute();
-            return true;
-        });
+        try{
+            JDBIConnector.get("db2").withHandle(handle -> {
+                handle.createUpdate("TRUNCATE TABLE staging.xo_so_stagging")
+                        .execute();
+                return true;
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void updateConfiguration() {
@@ -148,7 +162,7 @@ public class Transform {
                 controls.close();
             } else {
                 Configuration configuration = new Configuration();
-                //Đọc dữ liệu từ 
+                //Đọc dữ liệu từ
                 insertStagingDB(staging, configuration.getPath());
 
                 if (xoso_dw == null) {
