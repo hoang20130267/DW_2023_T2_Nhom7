@@ -23,6 +23,11 @@ public class Crawling {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return currentTime.format(formatter);
     }
+    public static String getCurrentTimeFileName() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return currentTime.format(formatter);
+    }
 
     public static List<String> getXoSo(Handle handle, Configuration config) {
         List<String> result = new ArrayList<>();
@@ -67,6 +72,7 @@ public class Crawling {
             for (Element tinhElement : tinhElements) {
                 ProvinceResult provinceResult = new ProvinceResult();
                 provinceResult.setTenTinh(tinhElement.select(".tentinh a .namelong").text());
+                provinceResult.setDomain("Miền Nam");
                 List<Prize> prizes = new ArrayList<>();
                 Elements giaiElements = tinhElement.select("td[class^='giai_']");
                 for (Element giaiElement : giaiElements) {
@@ -128,6 +134,7 @@ public class Crawling {
             for (Element tinhElementMT : tinhElementsMT) {
                 ProvinceResult provinceResultMT = new ProvinceResult();
                 provinceResultMT.setTenTinh(tinhElementMT.select(".tentinh a .namelong").text());
+                provinceResultMT.setDomain("Miền Trung");
                 List<Prize> prizesMT = new ArrayList<>();
                 Elements giaiElementsMT = tinhElementMT.select("td[class^='giai_']");
                 for (Element giaiElementMT : giaiElementsMT) {
@@ -189,6 +196,7 @@ public class Crawling {
             List<ProvinceResult> provinceResultsMB = new ArrayList<>();
             ProvinceResult provinceResultMB = new ProvinceResult();
             provinceResultMB.setTenTinh(provinceMB);
+            provinceResultMB.setDomain("Miền bắc");
             List<Prize> prizesMB = new ArrayList<>();
 
             // Lấy các phần tử chứa thông tin giải
