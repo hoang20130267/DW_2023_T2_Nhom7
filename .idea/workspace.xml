@@ -10,7 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Bean/Staging.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bean/Staging.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Bean/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bean/Configuration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" afterDir="false" />
@@ -55,22 +58,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;NguyenHuuDat&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ADMIN/IdeaProjects/Xoso-Datawarehouse&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "NguyenHuuDat",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/hidroxit/Documents/GitHub/Xoso-DataWarehouse",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.editor",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\ADMIN\IdeaProjects\Xoso-Datawarehouse\src\main\webapp\js" />
@@ -203,6 +207,13 @@
         </option>
       </method>
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-3183f394aec4-abbd5a8d" />
+      </set>
+    </attachedChunks>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Load" />
@@ -222,11 +233,13 @@
       <workItem from="1701414773788" duration="5225000" />
       <workItem from="1701523151053" duration="50000" />
       <workItem from="1701595532884" duration="11090000" />
-      <workItem from="1701614601207" duration="6973000" />
-      <workItem from="1701664076705" duration="13000" />
-      <workItem from="1701669184328" duration="121000" />
-      <workItem from="1701840937042" duration="11545000" />
-      <workItem from="1701855325780" duration="2004000" />
+      <workItem from="1701614601207" duration="6805000" />
+      <workItem from="1701842369902" duration="46000" />
+      <workItem from="1701842425268" duration="1204000" />
+      <workItem from="1701847119498" duration="6220000" />
+      <workItem from="1702016733509" duration="611000" />
+      <workItem from="1702018112230" duration="301000" />
+      <workItem from="1702102347386" duration="170000" />
     </task>
     <servers />
   </component>
@@ -243,9 +256,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="cập nhật lại Extracting" />
-    <option name="LAST_COMMIT_MESSAGE" value="cập nhật lại Extracting" />
   </component>
 </project>
