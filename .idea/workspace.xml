@@ -11,22 +11,13 @@
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/main/java/Bean/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bean/Configuration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
-=======
       <change beforePath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Transform.class" afterDir="false" />
->>>>>>> b7db8ebf503dc686dc88d1e9b2ab71710dff1894
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,12 +76,7 @@
       <recent name="C:\Users\ADMIN\IdeaProjects\Xoso-Datawarehouse\src\main\webapp\js" />
     </key>
   </component>
-<<<<<<< HEAD
   <component name="RunManager" selected="Application.Load">
-    <configuration name="Load" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ETL.Load" />
-=======
-  <component name="RunManager" selected="Application.Extracting">
     <configuration name="Extracting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ETL.Extracting" />
       <module name="Xoso-Datawarehouse" />
@@ -104,9 +90,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Load" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ETL.Load" />
+      <module name="Xoso-Datawarehouse" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ETL.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
->>>>>>> b7db8ebf503dc686dc88d1e9b2ab71710dff1894
       <module name="Xoso-Datawarehouse" />
       <extension name="coverage">
         <pattern>
@@ -207,12 +205,9 @@
     </configuration>
     <recent_temporary>
       <list>
-<<<<<<< HEAD
         <item itemvalue="Application.Load" />
-=======
         <item itemvalue="Application.Extracting" />
         <item itemvalue="Application.Transform" />
->>>>>>> b7db8ebf503dc686dc88d1e9b2ab71710dff1894
       </list>
     </recent_temporary>
   </component>
