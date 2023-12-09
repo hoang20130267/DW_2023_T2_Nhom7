@@ -14,7 +14,7 @@ public class ExportToExcel{
 
     public static void writeToFileCSV(Handle handle, String currentTime, Configuration config, List<ProvinceResult> provinceResults, String ngayThang) {
         String fileName = ngayThang + "_xoso.csv";
-        String filePath = "A:/F/2023-HK1/DataWarehouse/data/" + fileName;
+        String filePath = "D:/Data Warehouse/Data/" + fileName;
         String csvFilePath = filePath;
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath))) {
             // Dữ liệu mẫu để viết vào CSV
