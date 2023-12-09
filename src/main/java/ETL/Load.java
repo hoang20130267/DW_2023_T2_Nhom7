@@ -27,12 +27,11 @@ public class Load {
     }
     private static void updateStatusInDatabase(int configurationId, String newStatus){
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("UPDATE `logs`\n" +
-                            "INNER JOIN configurations ON `logs`.configuration_id = configurations.id\n" +
-                            "SET `logs`.status = ?\n" +
-                            "WHERE configurations.id = ?;")
+            handle.createUpdate("UPDATE logs\n" +
+                            "SET status = ?\n" +
+                            "WHERE configuration_id = ?;")
                     .bind(0, newStatus)
-                    .bind(1, configurationId);
+                    .bind(1, configurationId).execute();
             return true;
         });
     }
@@ -47,7 +46,7 @@ public class Load {
         int newLogId = idLog + 1 ;
         JDBIConnector.get("db1").withHandle(handle -> {
             handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/', 'root', '123', 1);").bind(0,newID).execute();
-            handle.createUpdate("INSERT INTO logs VALUES (?, ?, 'log', '','PREPARED', '2023-09-19', '2023-09-19');").bind(0, newLogId).bind(1, newID).execute();
+            handle.createUpdate("INSERT INTO logs VALUES (?, ?, 'log', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
             return true;
         });
     }
@@ -287,12 +286,14 @@ public class Load {
     }
 
     private static void loadingAndUpdateConfig(){
-        String dmart = "1";
+        Handle controls = JDBIConnector.get("db1").open();
+        Handle staging = JDBIConnector.get("db2").open();
+        Handle xoso_dw = JDBIConnector.get("db3").open();
+        Handle dmart = JDBIConnector.get("db4").open();
         try {
             int idCurrentConfig = getConfig("TRANSFORMING").getId();
             // Kết nối với database dmarts
             if(dmart == null) {
-
                 // Thêm dữ liệu vào control.log với status = ERROR
                 updateStatusInDatabase(idCurrentConfig, "ERROR");
                 //Gửi email thông báo lỗi
@@ -311,6 +312,7 @@ public class Load {
                     updateStatusInDatabase(idCurrentConfig, "FINISH");
                     //Thêm config mới và log mới cho lần crawl tiếp theo
                     insertNewConfigAndLog();
+                    break;
                 }
             }
         }
@@ -325,6 +327,7 @@ public class Load {
 //        System.out.println(getCurrentDate());
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
 //        System.out.println(getConfig("TRANSFORMING"));
+//        updateStatusInDatabase(47, "EXTRACTING");
         loadingAndUpdateConfig();
     }
 }
