@@ -11,23 +11,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Transform {
 
     public static Configuration getConfigurationStatus(String currentStatus) {
-        Configuration getStatus = JDBIConnector.get("db1").withHandle(handle ->
-                handle.createQuery("SELECT * FROM configurations INNER JOIN log ON configurations.id = log.configuration_id WHERE log.status = ?")
-                        .bind(1, currentStatus)
-                        .mapToBean(Configuration.class)
-                        .findFirst()
-                        .orElse(null));
-        return getStatus;
-    }
+            Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
+                    .bind(0, currentStatus)
+                    .mapToBean(Configuration.class)
+                    .findFirst());
+            return configDetail.orElse(null);
+        }
 
     public static void updateStatusInDB(int configurationID, String newStatus) {
         try{
             JDBIConnector.get("db1").withHandle(handle -> {
-                handle.createUpdate("UPDATE log SET status = ? FROM log INNER JOIN configurations ON log.configuration_id = configurations.id WHERE configurations.id = ?")
+                handle.createUpdate("UPDATE logs SET status = ? FROM logs INNER JOIN configurations ON logs.configuration_id = configurations.id WHERE configurations.id = ?")
                         .bind(1, newStatus)
                         .bind(2, configurationID);
                 return true;
@@ -64,7 +63,7 @@ public class Transform {
 
     public static void insertStagingDB(Handle handle, String path){
         try{
-            String query = "INSERT INTO xo_so_stagging (prize, province, domain, number_winning, date, date_update, date_expired) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO xo_so_staging (prize, province, `domain`, number_winning, `date`, date_update, date_expired) VALUES (?, ?, ?, ?, ?, ?, ?)";
             List<Staging> stagingList = readLotteryDataFromCSV(path);
             for(Staging staging : stagingList){
                 if(isNullOrEmpty(staging.getNumber_winning()) || isNullOrEmpty(staging.getProvince())){
@@ -92,7 +91,7 @@ public class Transform {
     public static void transferStagingToXoso_dw(){
         try{
             JDBIConnector.get("db3").withHandle(handle -> {
-                handle.createUpdate("CALL sp_transfer_data_and_update_ids();")
+                handle.createUpdate("CALL xoso_dw.sp_transfer_data_and_update_ids();")
                         .execute();
                 return true;
             });
@@ -104,7 +103,7 @@ public class Transform {
     public static void truncateStagingDB(){
         try{
             JDBIConnector.get("db2").withHandle(handle -> {
-                handle.createUpdate("TRUNCATE TABLE staging.xo_so_stagging")
+                handle.createUpdate("TRUNCATE TABLE staging.xo_so_staging")
                         .execute();
                 return true;
             });
@@ -139,7 +138,7 @@ public class Transform {
                     //transform dữ liệu từ staging db sang xoso_dw
                     transferStagingToXoso_dw();
                     updateStatusInDB(currentConfigID, "TRANSFORMING");
-                    //truncate dữ liệu trong bảng xo_so_stagging
+                    //truncate dữ liệu trong bảng xo_so_staging
                     truncateStagingDB();
                     controls.close();
                     staging.close();

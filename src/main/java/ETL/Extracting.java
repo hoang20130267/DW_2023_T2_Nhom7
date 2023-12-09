@@ -23,7 +23,7 @@ public class Extracting {
             for (int i =0; i<configs.size(); i++ ) {
                 // Lấy 1 dòng Configuration
                 Configuration config = configs.get(i);
-                String status = controls.createQuery("SELECT status FROM log WHERE configuration_id = :id")
+                String status = controls.createQuery("SELECT status FROM logs WHERE configuration_id = :id")
                         .bind("id", config.getId())
                         .mapTo(String.class)
                         .findOne()
@@ -33,7 +33,7 @@ public class Extracting {
                     controls.close();
                 }
                 // cập nhật status = CRAWLING
-                controls.createUpdate("UPDATE log SET status = 'CRAWLING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
+                controls.createUpdate("UPDATE logs SET status = 'CRAWLING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
                         .bind("currentTime", Crawling.getCurrentTime())
                         .bind("id", config.getId())
                         .execute();
@@ -45,7 +45,7 @@ public class Extracting {
                 System.out.println(results.get(0).getDomain());
                 ExportToExcel.writeToFileCSV(controls,Crawling.getCurrentTime(),config,results, Crawling.getCurrentTimeFileName());
                 // Cập nhật status = EXTRACTING
-                controls.createUpdate("UPDATE log SET status = 'EXTRACTING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
+                controls.createUpdate("UPDATE logs SET status = 'EXTRACTING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
                         .bind("currentTime", Crawling.getCurrentTime())
                         .bind("id", config.getId())
                         .execute();
@@ -59,7 +59,7 @@ public class Extracting {
         try  {
             // Lấy tất cả các dòng có status = PREPARE và flag = true
             List<Configuration> result = handle.createQuery("SELECT c.* FROM configurations c " +
-                            "JOIN log l ON c.id = l.configuration_id " +
+                            "JOIN logs l ON c.id = l.configuration_id " +
                             "WHERE l.status = 'PREPARE' AND c.flag = 1")
                     .mapToBean(Configuration.class)
                     .list();

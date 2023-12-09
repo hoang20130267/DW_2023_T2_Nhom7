@@ -45,7 +45,7 @@ public class Load {
         int newID = id + 1 ;
         int newLogId = idLog + 1 ;
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/', 'root', '123', 1);").bind(0,newID).execute();
+            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/', 'root', '', 1);").bind(0,newID).execute();
             handle.createUpdate("INSERT INTO logs VALUES (?, ?, 'log', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
             return true;
         });
@@ -306,7 +306,7 @@ public class Load {
                 // Kiểm tra nếu còn dòng có status = PREPARED
                 for(Log log : getListLog())
                 if(log.getStatus().equals("PREPARED")) {
-//                    Extracting.Crawling();
+                    Extracting.Crawling();
                 } else {
                     //Nếu không còn dòng có status = PREPARED
                     updateStatusInDatabase(idCurrentConfig, "FINISH");
