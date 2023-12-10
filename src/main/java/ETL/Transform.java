@@ -16,8 +16,11 @@ public class Transform {
 
     public static Configuration getConfigurationStatus(String currentStatus) {
         Configuration getStatus = JDBIConnector.get("db1").withHandle(handle ->
-                handle.createQuery("SELECT * FROM configurations INNER JOIN log ON configurations.id = log.configuration_id WHERE log.status = ?")
-                        .bind(1, currentStatus)
+                handle.createQuery("SELECT * FROM configurations " +
+                                "INNER JOIN logs ON configurations.id = logs.configuration_id " +
+                                "WHERE logs.status = ? " +
+                                "LIMIT 1")
+                        .bind(0, currentStatus)
                         .mapToBean(Configuration.class)
                         .findFirst()
                         .orElse(null));
@@ -27,9 +30,11 @@ public class Transform {
     public static void updateStatusInDB(int configurationID, String newStatus) {
         try{
             JDBIConnector.get("db1").withHandle(handle -> {
-                handle.createUpdate("UPDATE log SET status = ? FROM log INNER JOIN configurations ON log.configuration_id = configurations.id WHERE configurations.id = ?")
-                        .bind(1, newStatus)
-                        .bind(2, configurationID);
+                handle.createUpdate("UPDATE logs" +
+                                "SET logs.status = ?" +
+                                "WHERE logs.configuration_id IN (SELECT id FROM configurations WHERE id = ?)")
+                        .bind(0, newStatus)
+                        .bind(1, configurationID);
                 return true;
             });
         }catch (Exception e){
