@@ -10,38 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/db/ConnectToDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Bean/Log.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bean/Log.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Configuration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Dmart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Dmart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Log.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Log.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/LotteryResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/LotteryResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Prize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Prize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/ProvinceResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/ProvinceResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Staging.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Staging.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/Crawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/Crawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/ExportToExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/ExportToExcel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/XosoCrawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/XosoCrawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Extracting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Load.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Transform.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/DBProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/DBProperties.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/JDBIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/JDBIConnector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/ajax/ajax-search-domain.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/ajax/ajax-search-domain.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/ajax/ajax-search.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/ajax/ajax-search.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Log.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Log.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Staging.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Staging.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Transform.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Jsp File" />
         <option value="Class" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -85,7 +63,8 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;NguyenHuuDat&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ADMIN/IdeaProjects/Xoso-Datawarehouse&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hidroxit/Documents/GitHub/Xoso-DataWarehouse&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -127,19 +106,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DAO.Test" />
-      <module name="Xoso-Datawarehouse" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="db.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
       <module name="Xoso-Datawarehouse" />
@@ -158,7 +124,7 @@
       <deployment>
         <artifact name="Xoso-Datawarehouse:war">
           <settings>
-            <option name="CONTEXT_PATH" value="/" />
+            <option name="CONTEXT_PATH" value="/Xoso_Datawarehouse_war" />
           </settings>
         </artifact>
       </deployment>
@@ -240,18 +206,23 @@
         </option>
       </method>
     </configuration>
-    <list>
-      <item itemvalue="Application.Load" />
-      <item itemvalue="Application.Test" />
-      <item itemvalue="Application.Extracting" />
-      <item itemvalue="Application.Transform" />
-      <item itemvalue="Tomcat Server.Tomcat 9.0.68" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Extracting" />
+        <item itemvalue="Application.Transform" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-3183f394aec4-abbd5a8d" />
+      </set>
+    </attachedChunks>
+    <recent_temporary>
+      <list>
         <item itemvalue="Application.Load" />
-        <item itemvalue="Application.Test" />
+        <item itemvalue="Application.Extracting" />
         <item itemvalue="Application.Transform" />
       </list>
     </recent_temporary>
@@ -267,20 +238,14 @@
       <workItem from="1701414773788" duration="5225000" />
       <workItem from="1701523151053" duration="50000" />
       <workItem from="1701595532884" duration="11090000" />
-      <workItem from="1701614601207" duration="6973000" />
-      <workItem from="1701664076705" duration="13000" />
-      <workItem from="1701669184328" duration="121000" />
-      <workItem from="1701840937042" duration="5583000" />
-      <workItem from="1702172765229" duration="1740000" />
+      <workItem from="1701614601207" duration="6805000" />
+      <workItem from="1701842369902" duration="46000" />
+      <workItem from="1701842425268" duration="1204000" />
+      <workItem from="1701847119498" duration="6220000" />
+      <workItem from="1702016733509" duration="611000" />
+      <workItem from="1702018112230" duration="301000" />
+      <workItem from="1702102347386" duration="170000" />
     </task>
-    <task id="LOCAL-00001" summary="cập nhật lại Extracting">
-      <created>1701850097724</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1701850097724</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -296,9 +261,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="cập nhật lại Extracting" />
-    <option name="LAST_COMMIT_MESSAGE" value="cập nhật lại Extracting" />
   </component>
 </project>

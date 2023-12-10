@@ -11,9 +11,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Load {
-
     private static Configuration getConfig(String currentStatus){
-        Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT * FROM configurations INNER JOIN log ON configurations.id = log.configuration_id WHERE log.status = ?")
+        Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
                 .bind(0, currentStatus)
                 .mapToBean(Configuration.class)
                 .findFirst());
@@ -21,36 +20,42 @@ public class Load {
     }
     private static List<Log> getListLog() {
         List<Log> listLog = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM log")
+            return handle.createQuery("SELECT * FROM logs")
                     .mapToBean(Log.class).stream().collect(Collectors.toList());
         });
         return listLog;
     }
     private static void updateStatusInDatabase(int configurationId, String newStatus){
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("UPDATE log SET status = ? FROM log INNER JOIN configurations ON log.configuration_id = configurations.id WHERE configurations.id = ?")
-                    .bind(1, newStatus)
-                    .bind(2, configurationId);
+            handle.createUpdate("UPDATE logs\n" +
+                            "SET status = ?\n" +
+                            "WHERE configuration_id = ?;")
+                    .bind(0, newStatus)
+                    .bind(1, configurationId).execute();
             return true;
         });
     }
     private static void insertNewConfigAndLog(){
-        Object id = JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("SELECT id FROM configurations ORDER BY id DESC LIMIT 1").execute();
-            return true;
+        Integer id = JDBIConnector.get("db1").withHandle(handle -> {
+            return handle.createQuery("SELECT id FROM configurations ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
         });
-        int newID = (int) id;
+        Integer idLog = JDBIConnector.get("db1").withHandle(handle -> {
+            return handle.createQuery("SELECT id FROM logs ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
+        });
+        int newID = id + 1 ;
+        int newLogId = idLog + 1 ;
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/', 'root', '123', '1');").bind(0,newID).execute();
-            handle.createUpdate("INSERT INTO logs VALUES (?, 'log', '', '2023-09-19', '2023-09-19');").bind(0, newID).execute();
+            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/', 'root', '', 1);").bind(0,newID).execute();
+            handle.createUpdate("INSERT INTO logs VALUES (?, ?, 'log', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
             return true;
         });
     }
     private static void LoadFromXoso_dwToDmarts() {
-        JDBIConnector.get("db3").withHandle(handle -> {
-            handle.createUpdate("CALL TransferDataFromXoso_dwToDmart;").execute();
-            return true;
-        });
+        try (Handle handle = JDBIConnector.get("db3").open()) {
+            handle.createUpdate("CALL xoso_dw.TransferDataFromXoso_dwToDmart;").execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public static List<Dmart> getListFirstDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
@@ -281,20 +286,19 @@ public class Load {
     }
 
     private static void loadingAndUpdateConfig(){
+        Handle controls = JDBIConnector.get("db1").open();
         Handle staging = JDBIConnector.get("db2").open();
         Handle xoso_dw = JDBIConnector.get("db3").open();
-        Handle controls = JDBIConnector.get("db1").open();
+        Handle dmart = JDBIConnector.get("db4").open();
         try {
             int idCurrentConfig = getConfig("TRANSFORMING").getId();
             // Kết nối với database dmarts
-            Handle dmarts = JDBIConnector.get("db4").open();
-            if(dmarts == null) {
+            if(dmart == null) {
                 // Thêm dữ liệu vào control.log với status = ERROR
                 updateStatusInDatabase(idCurrentConfig, "ERROR");
                 //Gửi email thông báo lỗi
                 SendEmail.sendMailError("Kết nối Database dmarts không thành công!");
                 // Đóng kết nối với database xoso_dw
-                xoso_dw.close();
             } else {
                 // Load dữ liệu từ xoso_dw vào dmarts
                 LoadFromXoso_dwToDmarts();
@@ -308,15 +312,7 @@ public class Load {
                     updateStatusInDatabase(idCurrentConfig, "FINISH");
                     //Thêm config mới và log mới cho lần crawl tiếp theo
                     insertNewConfigAndLog();
-
-                    // Đóng kết nối với database dmarts
-                    dmarts.close();
-                    // Đóng kết nối với database xoso_dw
-                    xoso_dw.close();
-                    // Đóng kết nối với database staging
-                    staging.close();
-                    // Đóng kết nối với database controls
-                    controls.close();
+                    break;
                 }
             }
         }
@@ -330,6 +326,8 @@ public class Load {
 //        System.out.println(Load.getProvince(getListThirdDmartMT()));
 //        System.out.println(getCurrentDate());
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
-        getConfig("PREPARE");
+//        System.out.println(getConfig("TRANSFORMING"));
+//        updateStatusInDatabase(47, "EXTRACTING");
+        loadingAndUpdateConfig();
     }
 }
