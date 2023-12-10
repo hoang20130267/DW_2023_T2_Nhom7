@@ -11,6 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="cập nhật lại Extracting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +75,7 @@
       <recent name="C:\Users\ADMIN\IdeaProjects\Xoso-Datawarehouse\src\main\webapp\js" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Extracting">
+  <component name="RunManager" selected="Application.Transform">
     <configuration name="Extracting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ETL.Extracting" />
       <module name="Xoso-Datawarehouse" />
@@ -205,8 +210,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Extracting" />
         <item itemvalue="Application.Transform" />
+        <item itemvalue="Application.Extracting" />
+        <item itemvalue="Application.Load" />
       </list>
     </recent_temporary>
   </component>
@@ -242,6 +248,7 @@
       <workItem from="1702016733509" duration="611000" />
       <workItem from="1702018112230" duration="301000" />
       <workItem from="1702102347386" duration="170000" />
+      <workItem from="1702186829901" duration="12343000" />
     </task>
     <servers />
   </component>

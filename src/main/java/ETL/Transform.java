@@ -26,9 +26,11 @@ public class Transform {
     public static void updateStatusInDB(int configurationID, String newStatus) {
         try{
             JDBIConnector.get("db1").withHandle(handle -> {
-                handle.createUpdate("UPDATE logs SET status = ? FROM logs INNER JOIN configurations ON logs.configuration_id = configurations.id WHERE configurations.id = ?")
-                        .bind(1, newStatus)
-                        .bind(2, configurationID);
+                handle.createUpdate("UPDATE logs\n" +
+                                "SET status = ?\n" +
+                                "WHERE configuration_id = ?;")
+                        .bind(0, newStatus)
+                        .bind(1, configurationID).execute();
                 return true;
             });
         }catch (Exception e){
@@ -63,7 +65,7 @@ public class Transform {
 
     public static void insertStagingDB(Handle handle, String path){
         try{
-            String query = "INSERT INTO xo_so_staging (prize, province, `domain`, number_winning, `date`, date_update, date_expired) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO staging.xo_so_staging (prize, province, `domain`, number_winning, `date`, date_update, date_expired) VALUES (?, ?, ?, ?, ?, ?, ?)";
             List<Staging> stagingList = readLotteryDataFromCSV(path);
             for(Staging staging : stagingList){
                 if(isNullOrEmpty(staging.getNumber_winning()) || isNullOrEmpty(staging.getProvince())){
@@ -125,7 +127,7 @@ public class Transform {
                 SendEmail.sendMailError("Kết nối Database staging không thành công!");
                 controls.close();
             } else {
-                Configuration configuration = new Configuration();
+                Configuration configuration = getConfigurationStatus("EXTRACTING");
                 //Đọc dữ liệu từ
                 insertStagingDB(staging, configuration.getPath());
 
