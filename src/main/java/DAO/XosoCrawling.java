@@ -11,6 +11,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class XosoCrawling {
@@ -178,55 +179,13 @@ public class XosoCrawling {
                 String tenGiaiMB = giaiElementMB.attr("class").replace("giai_", "");
 
                 // Xử lý tên giải đặc biệt
-                if (tenGiaiMB.equals("7")) {
-                    for (int i = 1; i <= 4; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("7_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("6")) {
-                    for (int i = 1; i <= 3; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("6_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("5")) {
-                    for (int i = 1; i <= 6; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("5_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("4")) {
-                    for (int i = 1; i <= 4; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("4_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("3")) {
-                    for (int i = 1; i <= 6; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("3_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("2")) {
-                    for (int i = 1; i <= 2; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("2_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("db")) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai(tenGiaiMB);
-                        String kyHieuDB = docMB.select("div.giaiDbmoi span.kyhieuDB1ve span").text();
-                        String soTrungThuong = getSoTrungThuong(giaiElementMB, 0) + " " + kyHieuDB;
-                        specialPrize.setSoTrungThuong(Collections.singletonList(soTrungThuong));
-                        prizesMB.add(specialPrize);
+                    if (tenGiaiMB.equals("dac_biet")) {
+                    Prize specialPrize = new Prize();
+                    specialPrize.setTenGiai(tenGiaiMB);
+                    String kyHieuDB = docMB.select("div.giaiDbmoi span.kyhieuDB1ve span").text();
+                    String soTrungThuong = getSoTrungThuong(giaiElementMB, 0) + " " +kyHieuDB;
+                    specialPrize.setSoTrungThuong(Collections.singletonList(soTrungThuong.replace("[", "").replace("]", "")));
+                    prizesMB.add(specialPrize);
                 } else {
                     prizeMB.setTenGiai(tenGiaiMB);
                     prizeMB.setSoTrungThuong(getSoTrungThuong(giaiElementMB, 0));
@@ -240,6 +199,7 @@ public class XosoCrawling {
             lotteryResultMB.setNgayThang(dateMB);
             lotteryResultMB.setProvinceResults(provinceResultsMB);
 
+            System.out.println(lotteryResultMB);
            // ExportToExcel.writeDataToExcel(provinceResults, provinceResultsMT,provinceResultsMB, ngayThang);
         } catch (IOException e) {
             throw new RuntimeException(e);

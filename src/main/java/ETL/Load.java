@@ -290,7 +290,7 @@ public class Load {
         Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
         Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
         Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
-        Handle dmart = ConnectToDB.connectionToDB("dmart","root","").open();
+        Handle dmart = ConnectToDB.connectionToDB("dmarts","root","").open();
         try {
             int idCurrentConfig = getConfig("TRANSFORMING").getId();
             // Kết nối với database dmarts
@@ -327,7 +327,7 @@ public class Load {
         }
     public static void main(String[] args) {
 //        System.out.println(getListConfiguration());
-//        System.out.println(getListSecondDmartMN());
+//        System.out.println(getListFirstDmartMN("12/10/2023"));
 //        System.out.println(Load.getProvince(getListThirdDmartMT()));
 //        System.out.println(getCurrentDate());
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
