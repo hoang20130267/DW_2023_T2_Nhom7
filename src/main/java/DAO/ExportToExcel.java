@@ -6,6 +6,8 @@ import Bean.ProvinceResult;
 import com.opencsv.CSVWriter;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -32,12 +34,12 @@ public class ExportToExcel{
                 for(int j =0;j < p.getPrizes().size();j++) {
                     Prize pz = p.getPrizes().get(j);
                     for(int k =0; k< pz.getSoTrungThuong().size(); k++) {
+                        String soTrungThuong = pz.getSoTrungThuong().get(k);
                         checkProvince(p.getTenTinh(), p.getDomain());
-                        String[] data = {tenGiai(pz.getTenGiai()), p.getTenTinh(), p.getDomain(), pz.getSoTrungThuong().get(k), formatDate(ngayThang)};
+                        String[] data = {tenGiai(pz.getTenGiai()), p.getTenTinh(), p.getDomain(), soTrungThuong, formatDate(ngayThang)};
                         writer.writeNext(data);
                     }
                 }
-
             }
             handle.createUpdate("UPDATE logs SET file_name = :filename, description='Cập nhật status thành công' ,date_update = :currentTime WHERE configuration_id = :id")
                     .bind("filename", fileName)
