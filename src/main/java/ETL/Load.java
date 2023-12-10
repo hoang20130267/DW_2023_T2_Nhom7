@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Load {
+
     private static Configuration getConfig(String currentStatus){
         Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT * FROM configurations INNER JOIN log ON configurations.id = log.configuration_id WHERE log.status = ?")
                 .bind(0, currentStatus)
@@ -329,6 +330,6 @@ public class Load {
 //        System.out.println(Load.getProvince(getListThirdDmartMT()));
 //        System.out.println(getCurrentDate());
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
-        loadingAndUpdateConfig();
+        getConfig("PREPARE");
     }
 }

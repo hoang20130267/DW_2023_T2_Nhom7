@@ -14,7 +14,7 @@ public class ExportToExcel{
 
     public static void writeToFileCSV(Handle handle, String currentTime, Configuration config, List<ProvinceResult> provinceResults, String ngayThang) {
         String fileName = ngayThang + "_xoso.csv";
-        String filePath = "A:/F/2023-HK1/DataWarehouse/data/" + fileName;
+        String filePath = config.getPath() + fileName;
         String csvFilePath = filePath;
         try (CSVWriter writer = new CSVWriter(new FileWriter(csvFilePath))) {
             // Dữ liệu mẫu để viết vào CSV
@@ -25,25 +25,29 @@ public class ExportToExcel{
                 for(int j =0;j < p.getPrizes().size();j++) {
                     Prize pz = p.getPrizes().get(j);
                     for(int k =0; k< pz.getSoTrungThuong().size(); k++) {
-                        String[] data = {pz.getTenGiai(), p.getTenTinh(), p.getDomain(), "\"" + pz.getSoTrungThuong().get(k) + "\"",ngayThang};
+                        String[] data = {"giai_"+pz.getTenGiai(), p.getTenTinh(), p.getDomain(), "\"" + pz.getSoTrungThuong().get(k) + "\"",ngayThang};
                         writer.writeNext(data);
 
                     }
                 }
 
             }
-            handle.createUpdate("UPDATE log SET file_name = :filename, description='Cập nhật status thành công' ,date_update = :currentTime WHERE configuration_id = :id")
-                    .bind("filename", fileName)
+            handle.createUpdate("UPDATE logs SET  description='Cập nhật status thành công' ,date_update = :currentTime WHERE configuration_id = :id")
                     .bind("currentTime", currentTime)
                     .bind("id",config.getId())
                     .execute();
+
+            handle.createUpdate("UPDATE configurations SET date = :ngayThang WHERE id = :id")
+                    .bind("ngayThang", Crawling.getCurrentTimeDB() )
+                    .bind("id", config.getId())
+                    .execute();
             System.out.println("Dữ liệu đã được viết vào " + csvFilePath);
         } catch (IOException e) {
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+            handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
                     .bind("currentTime", Crawling.getCurrentTime() )
                     .bind("id", config.getId())
                     .execute();
-            SendEmail.sendMailError("Lỗi: "+e);
+            //SendEmail.sendMailError("Lỗi: "+e);
             e.printStackTrace();
         }
     }

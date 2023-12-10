@@ -28,7 +28,11 @@ public class Crawling {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return currentTime.format(formatter);
     }
-
+    public static String getCurrentTimeDB() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return currentTime.format(formatter);
+    }
     public static List<String> getXoSo(Handle handle, Configuration config) {
         List<String> result = new ArrayList<>();
         try {
@@ -41,6 +45,7 @@ public class Crawling {
                 for (int i = 3; i < 6; i++) {
                     String href = getHrefFromElement(links.get(i));
                     result.add(href);
+                    System.out.println(href);
                 }
             }
             return result;
