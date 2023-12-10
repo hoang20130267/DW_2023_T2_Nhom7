@@ -4,6 +4,7 @@ import Bean.*;
 import DAO.ExportToExcel;
 import DAO.Crawling;
 import DAO.SendEmail;
+import db.ConnectToDB;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
@@ -16,7 +17,9 @@ public class Extracting {
     }
     public static void Crawling() {
         // Kết nối với database controls (controls.db)
-        Handle controls = JDBIConnector.get("db1").open();
+        Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
+
+        System.out.println("Ket noi thanh cong");
         if(controls.getConnection() != null) {
             // Lấy các dòng có flag = true và status = PREPARE
             List<Configuration> configs = getConfig(controls);
@@ -42,7 +45,6 @@ public class Extracting {
                 results.addAll(Crawling.lotteryMN(config, controls));
                 results.addAll(Crawling.lotteryMB(config, controls));
                 results.addAll(Crawling.lotteryMT(config, controls));
-                System.out.println(results.get(0).getDomain());
                 ExportToExcel.writeToFileCSV(controls,Crawling.getCurrentTime(),config,results, Crawling.getCurrentTimeFileName());
                 // Cập nhật status = EXTRACTING
                 controls.createUpdate("UPDATE logs SET status = 'EXTRACTING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
@@ -51,7 +53,7 @@ public class Extracting {
                         .execute();
             }
         } else {
-            SendEmail.sendMailError("Kết nối với database controls thất bại");
+           // SendEmail.sendMailError("Kết nối với database controls thất bại");
             // Gửi mail
         }
     }
