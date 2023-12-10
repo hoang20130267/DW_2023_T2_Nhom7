@@ -4,7 +4,7 @@ public class Log {
     private int id;
     private int configuration_id;
     private String name;
-    private String filename;
+
     private String description;
     private String status;
     private String date_created;
@@ -14,11 +14,11 @@ public class Log {
     public Log() {
     }
 
-    public Log(int id, int configuration_id, String name, String filename, String description, String status, String date_created, String date_updated) {
+    public Log(int id, int configuration_id, String name,  String description, String status, String date_created, String date_updated) {
         this.id = id;
         this.configuration_id = configuration_id;
         this.name = name;
-        this.filename = filename;
+
         this.description = description;
         this.status = status;
         this.date_created = date_created;
@@ -49,13 +49,7 @@ public class Log {
         this.name = name;
     }
 
-    public String getFilename() {
-        return filename;
-    }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
 
     public String getDescription() {
         return description;

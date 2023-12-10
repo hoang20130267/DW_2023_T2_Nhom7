@@ -197,6 +197,12 @@
         </option>
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Load" />
+      <item itemvalue="Application.Extracting" />
+      <item itemvalue="Application.Transform" />
+      <item itemvalue="Tomcat Server.Tomcat 9.0.68" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Extracting" />
