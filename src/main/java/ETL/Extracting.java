@@ -18,9 +18,8 @@ public class Extracting {
     public static void Crawling() {
         // Kết nối với database controls (controls.db)
         Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
-
         System.out.println("Ket noi thanh cong");
-        if(controls.getConnection() != null) {
+        if(controls != null) {
             // Lấy các dòng có flag = true và status = PREPARE
             List<Configuration> configs = getConfig(controls);
             for (int i =0; i<configs.size(); i++ ) {
@@ -40,17 +39,19 @@ public class Extracting {
                         .bind("currentTime", Crawling.getCurrentTime())
                         .bind("id", config.getId())
                         .execute();
+                System.out.println("Cap nhat status = crawling");
                 // Xử lý dữ liệu
                 List<ProvinceResult> results = new ArrayList<>();
                 results.addAll(Crawling.lotteryMN(config, controls));
-                results.addAll(Crawling.lotteryMB(config, controls));
                 results.addAll(Crawling.lotteryMT(config, controls));
+                results.addAll(Crawling.lotteryMB(config, controls));
                 ExportToExcel.writeToFileCSV(controls,Crawling.getCurrentTime(),config,results, Crawling.getCurrentTimeFileName());
                 // Cập nhật status = EXTRACTING
                 controls.createUpdate("UPDATE logs SET status = 'EXTRACTING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
                         .bind("currentTime", Crawling.getCurrentTime())
                         .bind("id", config.getId())
                         .execute();
+                System.out.println("Cap nhat status = extracting");
             }
         } else {
            // SendEmail.sendMailError("Kết nối với database controls thất bại");
@@ -62,7 +63,7 @@ public class Extracting {
             // Lấy tất cả các dòng có status = PREPARE và flag = true
             List<Configuration> result = handle.createQuery("SELECT c.* FROM configurations c " +
                             "JOIN logs l ON c.id = l.configuration_id " +
-                            "WHERE l.status = 'PREPARE' AND c.flag = 1")
+                            "WHERE l.status = 'PREPARED' AND c.flag = 1")
                     .mapToBean(Configuration.class)
                     .list();
 

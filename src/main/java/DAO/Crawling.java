@@ -77,7 +77,7 @@ public class Crawling {
             for (Element tinhElement : tinhElements) {
                 ProvinceResult provinceResult = new ProvinceResult();
                 provinceResult.setTenTinh(tinhElement.select(".tentinh a .namelong").text());
-                provinceResult.setDomain("Miền Nam");
+                provinceResult.setDomain("Nam");
                 List<Prize> prizes = new ArrayList<>();
                 Elements giaiElements = tinhElement.select("td[class^='giai_']");
                 for (Element giaiElement : giaiElements) {
@@ -139,7 +139,7 @@ public class Crawling {
             for (Element tinhElementMT : tinhElementsMT) {
                 ProvinceResult provinceResultMT = new ProvinceResult();
                 provinceResultMT.setTenTinh(tinhElementMT.select(".tentinh a .namelong").text());
-                provinceResultMT.setDomain("Miền Trung");
+                provinceResultMT.setDomain("Trung");
                 List<Prize> prizesMT = new ArrayList<>();
                 Elements giaiElementsMT = tinhElementMT.select("td[class^='giai_']");
                 for (Element giaiElementMT : giaiElementsMT) {
@@ -201,7 +201,7 @@ public class Crawling {
             List<ProvinceResult> provinceResultsMB = new ArrayList<>();
             ProvinceResult provinceResultMB = new ProvinceResult();
             provinceResultMB.setTenTinh(provinceMB);
-            provinceResultMB.setDomain("Miền bắc");
+            provinceResultMB.setDomain("Bắc");
             List<Prize> prizesMB = new ArrayList<>();
 
             // Lấy các phần tử chứa thông tin giải
