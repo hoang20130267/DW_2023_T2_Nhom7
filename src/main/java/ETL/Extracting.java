@@ -8,6 +8,8 @@ import db.ConnectToDB;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,16 @@ public class Extracting {
                 if(status == "ERROR" && i == configs.size()-1) {
                     controls.close();
                 }
+                LocalDate currentDate = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                String formattedDate = currentDate.format(formatter);
+                String fileName = Crawling.getCurrentTimeFileName() + "_xoso.csv";
+                String filePath = "D:/Data Warehouse/Data/" + fileName;
+                controls.createUpdate("UPDATE configurations SET `date` = ?, `path` = ? WHERE id = ?")
+                        .bind(0, formattedDate)
+                        .bind(1,filePath)
+                        .bind(2, config.getId())
+                        .execute();
                 // cập nhật status = CRAWLING
                 controls.createUpdate("UPDATE logs SET status = 'CRAWLING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
                         .bind("currentTime", Crawling.getCurrentTime())
