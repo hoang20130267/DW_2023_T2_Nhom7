@@ -63,7 +63,7 @@
                                     KẾT QUẢ XỔ SỐ MỚI NHẤT
                                 </h1>
                                 <h1 class="pagetitle1" style="font-size: 30px">
-                                    NGÀY <%=Load.getCurrentDate()%>
+                                    NGÀY <%=formattedDate%>
                                 </h1>
                                 <div></div>
                                 <div class="box_kqxs" id="kqxs_1-16-11-2023">
@@ -2697,7 +2697,7 @@
         var formattedDate = parts[2] + '/' + parts[1] + '/' + parts[0];
         return formattedDate;
     }
-    function searchByName(param, param2) {
+    function searchByName(param2, param) {
         const txtSearch = param;
         const displayDate = param2;
         console.log(txtSearch)
