@@ -18,22 +18,24 @@ public class Extracting {
         Crawling();
     }
     public static void Crawling() {
-        // Kết nối với database controls (controls.db)
+        // 2. Kết nối với database controls (controls.db)
         Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
+        // 3. Kết nối thành công
         System.out.println("Ket noi thanh cong");
         if(controls != null) {
-            // Lấy các dòng có flag = true và status = PREPARE
+            // 3.1 Lấy các dòng có flag = true và status = PREPARE
             List<Configuration> configs = getConfig(controls);
             for (int i =0; i<configs.size(); i++ ) {
-                // Lấy 1 dòng Configuration
+                // 4. Lấy 1 dòng Configuration
                 Configuration config = configs.get(i);
                 String status = controls.createQuery("SELECT status FROM logs WHERE configuration_id = :id")
                         .bind("id", config.getId())
                         .mapTo(String.class)
                         .findOne()
                         .orElse(null);
-                // Kiểm tra status = ERROR và hết dòng chưa
+                // 5. Kiểm tra status = ERROR và hết dòng chưa
                 if(status == "ERROR" && i == configs.size()-1) {
+                    // 30. Đóng kết nối database controls
                     controls.close();
                 }
                 LocalDate currentDate = LocalDate.now();
@@ -41,24 +43,25 @@ public class Extracting {
                 String formattedDate = currentDate.format(formatter);
                 String fileName = Crawling.getCurrentTimeFileName() + "_xoso.csv";
                 String filePath = "D:/Data Warehouse/Data/" + fileName;
+
                 controls.createUpdate("UPDATE configurations SET `date` = ?, `path` = ? WHERE id = ?")
                         .bind(0, formattedDate)
                         .bind(1,filePath)
                         .bind(2, config.getId())
                         .execute();
-                // cập nhật status = CRAWLING
+                // 5.1 cập nhật status = CRAWLING
                 controls.createUpdate("UPDATE logs SET status = 'CRAWLING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
                         .bind("currentTime", Crawling.getCurrentTime())
                         .bind("id", config.getId())
                         .execute();
                 System.out.println("Cap nhat status = crawling");
-                // Xử lý dữ liệu
+
                 List<ProvinceResult> results = new ArrayList<>();
                 results.addAll(Crawling.lotteryMN(config, controls));
                 results.addAll(Crawling.lotteryMT(config, controls));
                 results.addAll(Crawling.lotteryMB(config, controls));
                 ExportToExcel.writeToFileCSV(controls,Crawling.getCurrentTime(),config,results, Crawling.getCurrentTimeFileName());
-                // Cập nhật status = EXTRACTING
+                //10. Thêm vào bảng control.log với status = EXTRACTING
                 controls.createUpdate("UPDATE logs SET status = 'EXTRACTING', description='Cập nhật status thành công', date_update = :currentTime WHERE configuration_id = :id")
                         .bind("currentTime", Crawling.getCurrentTime())
                         .bind("id", config.getId())
@@ -66,8 +69,9 @@ public class Extracting {
                 System.out.println("Cap nhat status = extracting");
             }
         } else {
-           // SendEmail.sendMailError("Kết nối với database controls thất bại");
-            // Gửi mail
+            // 3.2 Gửi mail thông báo lỗi
+            SendEmail.sendMailError("Kết nối với database controls thất bại");
+
         }
     }
     public static List<Configuration> getConfig(Handle handle) {

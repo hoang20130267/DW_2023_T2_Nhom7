@@ -9,16 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="cập nhật lại Extracting">
+    <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/ajax/ajax-search.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/ajax/ajax-search.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Extracting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/ajax/ajax-search.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/ajax/ajax-search.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

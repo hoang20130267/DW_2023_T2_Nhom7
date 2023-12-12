@@ -22,9 +22,11 @@ import java.util.List;
 public class ExportToExcel{
 
     public static void writeToFileCSV(Handle handle, String currentTime, Configuration config, List<ProvinceResult> provinceResults, String ngayThang) {
+        //8. Tạo file excel tên <current_day>_xoso trong thư mục theo địa chỉ trong control.configurations
         String fileName = ngayThang + "_xoso.csv";
         String filePath = "D:/Data Warehouse/Data/" + fileName;
         String csvFilePath = filePath;
+        //9. Lấy dữ liệu đã xử lý lưu vào file vừa tạo
         try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(csvFilePath), StandardCharsets.UTF_8), ',', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
             // Dữ liệu mẫu để viết vào CSV
             String[] header = {"prize", "province", "domain","number_winning","date"};
