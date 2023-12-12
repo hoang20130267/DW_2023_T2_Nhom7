@@ -37,8 +37,10 @@ public class Crawling {
     public static List<String> getXoSo(Handle handle, Configuration config) {
         List<String> result = new ArrayList<>();
         try {
-            // Kết nối với website thông qua URL
+            // 6. Kết nối với website từ path trong controls configurations
             Document doc = Jsoup.connect(config.getUrl()).get();
+            // 7 .Kết nối thành công
+
             Elements tabXstt = doc.getElementsByClass("title");
             if (tabXstt != null) {
                 Elements links = tabXstt.select("a");
@@ -51,11 +53,15 @@ public class Crawling {
             }
             return result;
         } catch (IOException e) {
-            // Cập nhật status = ERROR
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
-                    .bind("currentTime", getCurrentTime() )
+            // 7.2 cập nhật status = error
+            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với địa chỉ của website', date_update = :currentTime WHERE configuration_id = :id")
+                    .bind("currentTime", getCurrentTime())
                     .bind("id", config.getId())
                     .execute();
+            handle.close();
+            // 8. gửi mail thông báo
+            SendEmail.sendMailError("Lỗi kết nối với địa chỉ của website");
+            // 30. Đóng kết nối database
             handle.close();
 
         }
@@ -68,9 +74,10 @@ public class Crawling {
 
     public static List<ProvinceResult>  lotteryMN(Configuration config,  Handle handle) {
         try {
-            // Xử lý dữ liệu
+
             List<LotteryResult> result = new ArrayList<>();
             Document doc = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(0)).get();
+            // 7.1 Bắt đầu lấy dữ liệu
             String title = doc.select(".title").text();
             String ngayThang = doc.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" + doc.select(".ngaykqxs .date .year").text();
             Elements tinhElements = doc.select(".tblKQTinh");
@@ -120,10 +127,15 @@ public class Crawling {
             lotteryResult.setProvinceResults(provinceResults);
             return provinceResults;
         } catch (Exception e) {
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+            // 7.2 cập nhật status = error
+            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với địa chỉ của website', date_update = :currentTime WHERE configuration_id = :id")
                     .bind("currentTime", getCurrentTime())
                             .bind("id", config.getId())
                     .execute();
+            handle.close();
+            // 8. gửi mail thông báo
+            SendEmail.sendMailError("Lỗi kết nối với địa chỉ của website");
+            // 30. Đóng kết nối database
             handle.close();
         }
         return null;
