@@ -9,18 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Staging.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Staging.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Transform.class" afterDir="false" />
-    </list>
+    <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,6 +25,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="5ad37340-362f-4a95-b8cb-f816b1719281" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -252,6 +244,14 @@
       <workItem from="1702018112230" duration="301000" />
       <workItem from="1702102347386" duration="170000" />
     </task>
+    <task id="LOCAL-00001" summary="commit de push">
+      <created>1702175110524</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702175110524</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,5 +267,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="commit de push" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit de push" />
   </component>
 </project>

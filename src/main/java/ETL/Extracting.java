@@ -16,9 +16,9 @@ public class Extracting {
         Crawling();
     }
     public static void Crawling() {
-        // Kết nối với database controls (controls.db)
+        // 2.Kết nối với database controls (controls.db)
         Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
-
+        // 3.Kết nối thành công
         System.out.println("Ket noi thanh cong");
         if(controls.getConnection() != null) {
             // Lấy các dòng có flag = true và status = PREPARE
