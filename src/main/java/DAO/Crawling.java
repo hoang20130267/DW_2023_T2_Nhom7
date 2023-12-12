@@ -4,6 +4,7 @@ import Bean.Configuration;
 import Bean.LotteryResult;
 import Bean.Prize;
 import Bean.ProvinceResult;
+import db.ConnectToDB;
 import org.jdbi.v3.core.Handle;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -77,7 +78,7 @@ public class Crawling {
             for (Element tinhElement : tinhElements) {
                 ProvinceResult provinceResult = new ProvinceResult();
                 provinceResult.setTenTinh(tinhElement.select(".tentinh a .namelong").text());
-                provinceResult.setDomain("Miền Nam");
+                provinceResult.setDomain("Nam");
                 List<Prize> prizes = new ArrayList<>();
                 Elements giaiElements = tinhElement.select("td[class^='giai_']");
                 for (Element giaiElement : giaiElements) {
@@ -139,7 +140,7 @@ public class Crawling {
             for (Element tinhElementMT : tinhElementsMT) {
                 ProvinceResult provinceResultMT = new ProvinceResult();
                 provinceResultMT.setTenTinh(tinhElementMT.select(".tentinh a .namelong").text());
-                provinceResultMT.setDomain("Miền Trung");
+                provinceResultMT.setDomain("Trung");
                 List<Prize> prizesMT = new ArrayList<>();
                 Elements giaiElementsMT = tinhElementMT.select("td[class^='giai_']");
                 for (Element giaiElementMT : giaiElementsMT) {
@@ -201,7 +202,7 @@ public class Crawling {
             List<ProvinceResult> provinceResultsMB = new ArrayList<>();
             ProvinceResult provinceResultMB = new ProvinceResult();
             provinceResultMB.setTenTinh(provinceMB);
-            provinceResultMB.setDomain("Miền bắc");
+            provinceResultMB.setDomain("Bắc");
             List<Prize> prizesMB = new ArrayList<>();
 
             // Lấy các phần tử chứa thông tin giải
@@ -216,54 +217,12 @@ public class Crawling {
                 String tenGiaiMB = giaiElementMB.attr("class").replace("giai_", "");
 
                 // Xử lý tên giải đặc biệt
-                if (tenGiaiMB.equals("7")) {
-                    for (int i = 1; i <= 4; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("7_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("6")) {
-                    for (int i = 1; i <= 3; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("6_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("5")) {
-                    for (int i = 1; i <= 6; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("5_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("4")) {
-                    for (int i = 1; i <= 4; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("4_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("3")) {
-                    for (int i = 1; i <= 6; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("3_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("2")) {
-                    for (int i = 1; i <= 2; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("2_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("db")) {
+                if (tenGiaiMB.equals("dac_biet")) {
                     Prize specialPrize = new Prize();
                     specialPrize.setTenGiai(tenGiaiMB);
                     String kyHieuDB = docMB.select("div.giaiDbmoi span.kyhieuDB1ve span").text();
-                    String soTrungThuong = getSoTrungThuong(giaiElementMB, 0) + " " + kyHieuDB;
-                    specialPrize.setSoTrungThuong(Collections.singletonList(soTrungThuong));
+                    String soTrungThuong = getSoTrungThuong(giaiElementMB, 0) + " " +kyHieuDB;
+                    specialPrize.setSoTrungThuong(Collections.singletonList(soTrungThuong.replace("[", "").replace("]", "")));
                     prizesMB.add(specialPrize);
                 } else {
                     prizeMB.setTenGiai(tenGiaiMB);

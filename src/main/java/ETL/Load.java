@@ -4,6 +4,7 @@ import Bean.Configuration;
 import Bean.Dmart;
 import Bean.Log;
 import DAO.SendEmail;
+import db.ConnectToDB;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
@@ -45,8 +46,8 @@ public class Load {
         int newID = id + 1 ;
         int newLogId = idLog + 1 ;
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/', 'root', '', 1);").bind(0,newID).execute();
-            handle.createUpdate("INSERT INTO logs VALUES (?, ?, 'log', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
+            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/','https://xosohomnay.com.vn', 'root', '', 1);").bind(0,newID).execute();
+            handle.createUpdate("INSERT INTO logs VALUES (?, ?, '', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
             return true;
         });
     }
@@ -286,10 +287,10 @@ public class Load {
     }
 
     private static void loadingAndUpdateConfig(){
-        Handle controls = JDBIConnector.get("db1").open();
-        Handle staging = JDBIConnector.get("db2").open();
-        Handle xoso_dw = JDBIConnector.get("db3").open();
-        Handle dmart = JDBIConnector.get("db4").open();
+        Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
+        Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
+        Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
+        Handle dmart = ConnectToDB.connectionToDB("dmarts","root","").open();
         try {
             int idCurrentConfig = getConfig("TRANSFORMING").getId();
             // Kết nối với database dmarts
@@ -312,6 +313,10 @@ public class Load {
                     updateStatusInDatabase(idCurrentConfig, "FINISH");
                     //Thêm config mới và log mới cho lần crawl tiếp theo
                     insertNewConfigAndLog();
+                    dmart.close();
+                    controls.close();
+                    staging.close();
+                    xoso_dw.close();
                     break;
                 }
             }
@@ -322,7 +327,7 @@ public class Load {
         }
     public static void main(String[] args) {
 //        System.out.println(getListConfiguration());
-//        System.out.println(getListSecondDmartMN());
+//        System.out.println(getListFirstDmartMN("12/10/2023"));
 //        System.out.println(Load.getProvince(getListThirdDmartMT()));
 //        System.out.println(getCurrentDate());
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
