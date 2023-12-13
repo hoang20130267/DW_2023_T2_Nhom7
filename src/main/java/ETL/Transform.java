@@ -16,6 +16,7 @@ import java.util.Optional;
 public class Transform {
 
     public static Configuration getConfigurationStatus(String currentStatus) {
+        //Lấy trạng thái trong 1 dòng dữ liệu của configuration
             Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
                     .bind(0, currentStatus)
                     .mapToBean(Configuration.class)
@@ -24,6 +25,7 @@ public class Transform {
         }
 
     public static void updateStatusInDB(int configurationID, String newStatus) {
+        //Cập nhật trạng thái mới
         try{
             JDBIConnector.get("db1").withHandle(handle -> {
                 handle.createUpdate("UPDATE logs\n" +
@@ -39,6 +41,7 @@ public class Transform {
     }
 
     private static List<Staging> readLotteryDataFromCSV(String csvFile) {
+        //Lấy dữ liệu kết quả xổ số từ file csv
         List<Staging> stagingList = new ArrayList<>();
         String line;
         String csvSplitBy = ",";
@@ -64,10 +67,14 @@ public class Transform {
     }
 
     public static void insertStagingDB(Handle handle, String path){
+        //Chèn dữ liệu từ file csv vào database staging
         try{
             String query = "INSERT INTO staging.xo_so_staging (prize, province, `domain`, number_winning, `date`, date_update, date_expired) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            //Gọi phương thức lấy dữ liệu từ file csv
             List<Staging> stagingList = readLotteryDataFromCSV(path);
             for(Staging staging : stagingList){
+                //Kiểm tra dữ liệu số trúng thưởng và tỉnh có trống hay không
+                //Nếu trống thì bỏ qua dòng đó
                 if(isNullOrEmpty(staging.getNumber_winning()) || isNullOrEmpty(staging.getProvince())){
                     continue;
                 }
@@ -86,11 +93,13 @@ public class Transform {
         }
     }
 
+    //Phương thức kiểm tra dữ liệu có rỗng hay không và trả về true false
     public static boolean isNullOrEmpty(String value){
         return value == null || value.trim().isEmpty();
     }
 
     public static void transferStagingToXoso_dw(){
+        //Viết câu query update kết nối db3 gọi function chuyển đổi dữ liệu từ db staging vào xoso_dw theo id
         try{
             JDBIConnector.get("db3").withHandle(handle -> {
                 handle.createUpdate("CALL xoso_dw.sp_transfer_data_and_update_ids();")
@@ -103,6 +112,7 @@ public class Transform {
     }
 
     public static void truncateStagingDB(){
+        //Viết câu query update kết nối db2 xoá dữ liệu trong bảng xo_so_staging của db staging
         try{
             JDBIConnector.get("db2").withHandle(handle -> {
                 handle.createUpdate("TRUNCATE TABLE staging.xo_so_staging")
@@ -116,23 +126,28 @@ public class Transform {
 
     public static void updateConfiguration() {
         try {
+            //Kết nối database
             Handle controls = JDBIConnector.get("db1").open();
             Handle staging = JDBIConnector.get("db2").open();
             Handle xoso_dw = JDBIConnector.get("db3").open();
             //Lấy ID của Configuration hiện tại
             int currentConfigID = getConfigurationStatus("EXTRACTING").getId();
-            //Check kết nối db Staging
+            //Kiểm tra kết nối db Staging
             if (staging == null) {
+                //Cập nhật trạng thái ERROR
                 updateStatusInDB(currentConfigID, "ERROR");
+                //Gửi mail khi kết nối không thành công
                 SendEmail.sendMailError("Kết nối Database staging không thành công!");
                 controls.close();
             } else {
                 Configuration configuration = getConfigurationStatus("EXTRACTING");
-                //Đọc dữ liệu từ
+                //Chèn dữ liệu vào db stating
                 insertStagingDB(staging, configuration.getPath());
-
+                //Kiểm tra kết nối db xoso_dw
                 if (xoso_dw == null) {
+                    //Gửi mail khi kết nối không thành công
                     SendEmail.sendMailError("Kết nối Database xoso_dw không thành công!");
+                    //Cập nhật trạng thái ERROR
                     updateStatusInDB(currentConfigID, "ERROR");
                     staging.close();
                     controls.close();
