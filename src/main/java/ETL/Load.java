@@ -21,7 +21,7 @@ public class Load {
     }
     private static List<Log> getListLog() {
         List<Log> listLog = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM logs")
+            return handle.createQuery("SELECT l.id, l.configuration_id, l.file_name, l.description, l.status FROM logs l INNER JOIN configurations con ON con.id = l.configuration_id WHERE con.flag = 1")
                     .mapToBean(Log.class).stream().collect(Collectors.toList());
         });
         return listLog;
@@ -58,6 +58,8 @@ public class Load {
             e.printStackTrace();
         }
     }
+
+//    24. Hiển thị dữ liệu từ dmart lên UI
     public static List<Dmart> getListFirstDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
             return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18;").bind(0, date)
@@ -124,7 +126,7 @@ public class Load {
         return result;
     }
     public static String getCurrentDate(){
-        Optional<Dmart> lastestDmart = JDBIConnector.get("db4").withHandle(handle -> handle.createQuery("SELECT * FROM data ORDER BY `date` DESC LIMIT 1")
+        Optional<Dmart> lastestDmart = JDBIConnector.get("db4").withHandle(handle -> handle.createQuery("SELECT `date` FROM data ORDER BY `date` DESC LIMIT 1")
                 .mapToBean(Dmart.class)
                 .findFirst());
         String result = lastestDmart.get().getDate();
@@ -290,34 +292,54 @@ public class Load {
         Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
         Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
         Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
+
+        // 21. Kết nối với database dmarts
         Handle dmart = ConnectToDB.connectionToDB("dmarts","root","").open();
         try {
             int idCurrentConfig = getConfig("TRANSFORMING").getId();
-            // Kết nối với database dmarts
+            //22. Kết nối không thành công
             if(dmart == null) {
-                // Thêm dữ liệu vào control.log với status = ERROR
+                // 22.2 Thêm dữ liệu vào control.log với status = ERROR
                 updateStatusInDatabase(idCurrentConfig, "ERROR");
-                //Gửi email thông báo lỗi
+                // 23. Gửi email thông báo lỗi
                 SendEmail.sendMailError("Kết nối Database dmarts không thành công!");
-                // Đóng kết nối với database xoso_dw
+                // 28. Đóng kết nối với database xoso_dw
+                xoso_dw.close();
+                //29. Đóng kết nối với database Staging
+                staging.close();
+                //30. Đóng kết nối với database control
+                controls.close();
+
+                // 22. Kết nối dmart thành công
             } else {
-                // Load dữ liệu từ xoso_dw vào dmarts
+                // 22.1 Load dữ liệu từ xoso_dw.xo_so_fact vào dmart.data
                 LoadFromXoso_dwToDmarts();
+                //23. Thêm vào bảng control.logs với status = LOADING
                 updateStatusInDatabase(idCurrentConfig, "LOADING");
-                // Kiểm tra nếu còn dòng có status = PREPARED
-                for(Log log : getListLog())
-                if(log.getStatus().equals("PREPARED")) {
-                    Extracting.Crawling();
-                } else {
-                    //Nếu không còn dòng có status = PREPARED
-                    updateStatusInDatabase(idCurrentConfig, "FINISH");
-                    //Thêm config mới và log mới cho lần crawl tiếp theo
-                    insertNewConfigAndLog();
-                    dmart.close();
-                    controls.close();
-                    staging.close();
-                    xoso_dw.close();
-                    break;
+
+                for(Log log : getListLog()) {
+                    //25. Kiểm tra nếu còn dòng có status = PREPARED và flag = 1 trong database controls
+                    if (log.getStatus().equals("PREPARED")) {
+                        // Quay lại bắt đầu bước 4
+                        Extracting.Crawling();
+
+                        //25. Nếu không còn dòng có status = PREPARED và flag = 1 trong database controls
+                    } else {
+                        //25.1 Thêm dữ liệu vào control.log với status = FINISH
+                        updateStatusInDatabase(idCurrentConfig, "FINISH");
+                        //26. Tạo config và log mới với status = PREPARED và flag = 1 trong control.db cho lần crawl tiếp theo
+                        insertNewConfigAndLog();
+
+                        //27. Đóng kết nối với database dmarts
+                        dmart.close();
+                        //28. Đóng kết nối với database xoso_dw
+                        xoso_dw.close();
+                        //29. Đóng kết nối với database Staging
+                        staging.close();
+                        //30. Đóng kết nối với database control
+                        controls.close();
+                        break;
+                    }
                 }
             }
         }
