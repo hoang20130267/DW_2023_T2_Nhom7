@@ -22,12 +22,15 @@ import java.util.List;
 public class ExportToExcel{
 
     public static void writeToFileCSV(Handle handle, String currentTime, Configuration config, List<ProvinceResult> provinceResults, String ngayThang) {
+
         //8. Tạo file excel tên <current_day>_xoso trong thư mục theo địa chỉ trong control.configurations
         String fileName = ngayThang + "_xoso.csv";
-        String filePath = "D:/Data Warehouse/Data/" + fileName;
+        String filePath = config.getPath()+"/" + fileName;
         String csvFilePath = filePath;
+
         //9. Lấy dữ liệu đã xử lý lưu vào file vừa tạo
-        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(csvFilePath), StandardCharsets.UTF_8), ',', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
+        try (CSVWriter writer = new CSVWriter(new OutputStreamWriter(new FileOutputStream(csvFilePath), StandardCharsets.UTF_8),
+                ',', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.NO_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
             // Dữ liệu mẫu để viết vào CSV
             String[] header = {"prize", "province", "domain","number_winning","date"};
             writer.writeNext(header);
@@ -38,16 +41,20 @@ public class ExportToExcel{
                     for(int k =0; k< pz.getSoTrungThuong().size(); k++) {
                         String soTrungThuong = pz.getSoTrungThuong().get(k);
                         checkProvince(p.getTenTinh(), p.getDomain());
-                        String[] data = {tenGiai(pz.getTenGiai()), p.getTenTinh(), p.getDomain(), soTrungThuong, formatDate(ngayThang)};
+                        String[] data = {tenGiai(pz.getTenGiai()), p.getTenTinh(), p.getDomain(), soTrungThuong,
+                               ngayThang};
                         writer.writeNext(data);
                     }
                 }
             }
-            handle.createUpdate("UPDATE logs SET file_name = :filename, description='Cập nhật status thành công' ,date_update = :currentTime WHERE configuration_id = :id")
+
+            handle.createUpdate("UPDATE logs SET file_name = :filename, description='Cập nhật status thành công' ," +
+                            "date_update = :currentTime WHERE configuration_id = :id")
                     .bind("filename", fileName)
                     .bind("currentTime", currentTime)
                     .bind("id",config.getId())
                     .execute();
+
             System.out.println("Dữ liệu đã được viết vào " + csvFilePath);
         } catch (IOException e) {
             handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
