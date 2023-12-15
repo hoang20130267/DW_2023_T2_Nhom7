@@ -8,6 +8,7 @@ import db.ConnectToDB;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
+import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -325,7 +326,7 @@ public class Load {
             e.printStackTrace();
             }
         }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 //        System.out.println(getListConfiguration());
 //        System.out.println(getListFirstDmartMN("12/10/2023"));
 //        System.out.println(Load.getProvince(getListThirdDmartMT()));
@@ -333,6 +334,8 @@ public class Load {
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
 //        System.out.println(getConfig("TRANSFORMING"));
 //        updateStatusInDatabase(47, "EXTRACTING");
+        Extracting.Crawling();
+        Transform.updateConfiguration();
         loadingAndUpdateConfig();
     }
 }

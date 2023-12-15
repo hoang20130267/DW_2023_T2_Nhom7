@@ -2,13 +2,16 @@ package ETL;
 
 import Bean.Configuration;
 import Bean.Staging;
+import DAO.Crawling;
 import DAO.SendEmail;
+import db.ConnectToDB;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,19 +52,22 @@ public class Transform {
             br.readLine(); // Bỏ qua dòng tiêu đề
 
             while ((line = br.readLine()) != null) {
+
                 String[] data = line.split(csvSplitBy);
                 Staging staging = new Staging();
                 staging.setPrize(data[0]);
                 staging.setProvince(data[1]);
                 staging.setDomain(data[2]);
                 staging.setNumber_winning(data[3]);
-                staging.setDate(data[4]);
+                staging.setDate(Crawling.getCurrentTimeDB(data[4]));
                 // Tính toán date_updated và date_expired
                 staging.calculateDates();
                 stagingList.add(staging);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return stagingList;
     }
@@ -87,6 +93,7 @@ public class Transform {
                         .bind(5, staging.getDate_updated())
                         .bind(6, staging.getDate_expired())
                         .execute();
+                System.out.println(staging.getDate());
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -132,6 +139,7 @@ public class Transform {
             Handle xoso_dw = JDBIConnector.get("db3").open();
             //Lấy ID của Configuration hiện tại
             int currentConfigID = getConfigurationStatus("EXTRACTING").getId();
+            System.out.println(currentConfigID);
             //Kiểm tra kết nối db Staging
             if (staging == null) {
                 //Cập nhật trạng thái ERROR
@@ -142,7 +150,7 @@ public class Transform {
             } else {
                 Configuration configuration = getConfigurationStatus("EXTRACTING");
                 //Chèn dữ liệu vào db stating
-                insertStagingDB(staging, configuration.getPath());
+                insertStagingDB(staging, getFile(currentConfigID));
                 //Kiểm tra kết nối db xoso_dw
                 if (xoso_dw == null) {
                     //Gửi mail khi kết nối không thành công
@@ -167,6 +175,20 @@ public class Transform {
             e.printStackTrace();
         }
     }
+    public static String getFile(int id) {
+        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
+            String file = handle.createQuery("SELECT CONCAT(c.path, '/', l.file_name) AS full_path " +
+                            "FROM configurations c " +
+                            "JOIN logs l ON c.id = l.configuration_id WHERE c.id = ?")
+                    .bind(0, id)  // Use positional parameter (index 0) for "id"
+                    .mapTo(String.class)
+                    .findOne()
+                    .orElse(null);
+            return file;
+        }
+    }
+
+
 
     public static void main(String[] args) {
         updateConfiguration();

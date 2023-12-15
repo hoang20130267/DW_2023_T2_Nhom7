@@ -10,7 +10,7 @@
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     LocalDate dateBefore = LocalDate.parse(searchDate, formatter);
 
-    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
     String formattedDate = dateBefore.format(outputFormatter);
 
     int indexOfLastSlash = searchDate.lastIndexOf("/");
