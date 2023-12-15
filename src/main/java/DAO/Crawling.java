@@ -12,10 +12,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class Crawling {
@@ -26,19 +29,25 @@ public class Crawling {
     }
     public static String getCurrentTimeFileName() {
         LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
         return currentTime.format(formatter);
     }
-    public static String getCurrentTimeDB() {
-        LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return currentTime.format(formatter);
+    public static String getCurrentTimeDB(String input) throws ParseException {
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = inputFormat.parse(input);
+        String outputDate = outputFormat.format(date);
+        return outputDate;
     }
     public static List<String> getXoSo(Handle handle, Configuration config) {
         List<String> result = new ArrayList<>();
         try {
-            // Kết nối với website thông qua URL
+
+            // 6. Kết nối với website từ path trong controls configurations
             Document doc = Jsoup.connect(config.getUrl()).get();
+            // 7 .Kết nối thành công
+
             Elements tabXstt = doc.getElementsByClass("title");
             if (tabXstt != null) {
                 Elements links = tabXstt.select("a");
@@ -51,11 +60,17 @@ public class Crawling {
             }
             return result;
         } catch (IOException e) {
-            // Cập nhật status = ERROR
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
-                    .bind("currentTime", getCurrentTime() )
+
+            // 7.2 cập nhật status = error
+            handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với địa chỉ của website', " +
+                            "date_update = :currentTime WHERE configuration_id = :id")
+                    .bind("currentTime", getCurrentTime())
                     .bind("id", config.getId())
                     .execute();
+            handle.close();
+            // 8. gửi mail thông báo
+            SendEmail.sendMailError("Lỗi kết nối với địa chỉ của website");
+            // 30. Đóng kết nối database
             handle.close();
 
         }
@@ -68,11 +83,17 @@ public class Crawling {
 
     public static List<ProvinceResult>  lotteryMN(Configuration config,  Handle handle) {
         try {
-            // Xử lý dữ liệu
+
             List<LotteryResult> result = new ArrayList<>();
             Document doc = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(0)).get();
+            SimpleDateFormat inputFormat = new SimpleDateFormat("ddMMyyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
+            // 7.1 Bắt đầu lấy dữ liệu
             String title = doc.select(".title").text();
-            String ngayThang = doc.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" + doc.select(".ngaykqxs .date .year").text();
+            String ngayThang = doc.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" +
+                    doc.select(".ngaykqxs .date .year").text();
+            Date date = inputFormat.parse(ngayThang);
+            String outputDate = outputFormat.format(date);
             Elements tinhElements = doc.select(".tblKQTinh");
             List<ProvinceResult> provinceResults = new ArrayList<>();
             for (Element tinhElement : tinhElements) {
@@ -112,18 +133,21 @@ public class Crawling {
                     }
                 }
                 provinceResult.setPrizes(prizes);
+                provinceResult.setDate(outputDate);
                 provinceResults.add(provinceResult);
             }
-            LotteryResult lotteryResult = new LotteryResult();
-            lotteryResult.setTitle(title);
-            lotteryResult.setNgayThang(ngayThang);
-            lotteryResult.setProvinceResults(provinceResults);
+
             return provinceResults;
         } catch (Exception e) {
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+            // 7.2 cập nhật status = error
+            handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với địa chỉ của website', date_update = :currentTime WHERE configuration_id = :id")
                     .bind("currentTime", getCurrentTime())
                             .bind("id", config.getId())
                     .execute();
+            handle.close();
+            // 8. gửi mail thông báo
+            SendEmail.sendMailError("Lỗi kết nối với địa chỉ của website");
+            // 30. Đóng kết nối database
             handle.close();
         }
         return null;
@@ -134,7 +158,13 @@ public class Crawling {
         try {
             Document docMT = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(1)).get();
             String titleMT = docMT.select(".title").text();
-            String ngayThang = docMT.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" + docMT.select(".ngaykqxs .date .year").text();
+            SimpleDateFormat inputFormat = new SimpleDateFormat("ddMMyyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
+            // 7.1 Bắt đầu lấy dữ liệu
+            String ngayThang = docMT.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" +
+                    docMT.select(".ngaykqxs .date .year").text();
+            Date date = inputFormat.parse(ngayThang);
+            String outputDate = outputFormat.format(date);
             Elements tinhElementsMT = docMT.select(".tblKQTinh");
             List<ProvinceResult> provinceResultsMT = new ArrayList<>();
             for (Element tinhElementMT : tinhElementsMT) {
@@ -174,16 +204,15 @@ public class Crawling {
                     }
                 }
                 provinceResultMT.setPrizes(prizesMT);
+                provinceResultMT.setDate(outputDate);
                 provinceResultsMT.add(provinceResultMT);
+
             }
             // Tạo đối tượng LotteryResult và gán thông tin
-            LotteryResult lotteryResultMT = new LotteryResult();
-            lotteryResultMT.setTitle(titleMT);
-            lotteryResultMT.setNgayThang(ngayThang);
-            lotteryResultMT.setProvinceResults(provinceResultsMT);
+
             return provinceResultsMT;
         } catch (Exception e) {
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+            handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
                     .bind("currentTime", getCurrentTime() )
                     .bind("id", config.getId())
                     .execute();
@@ -195,10 +224,15 @@ public class Crawling {
         try {
             Document docMB = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(2)).get();
             String titleMB = docMB.select("div.title").text();
+
             String dateMB = docMB.select("div.ngaykqxs span.daymonth").text() + "/"
                     + docMB.select("div.ngaykqxs span.year").text();
+            System.out.println(dateMB);
             String provinceMB = docMB.select("td.tentinh span.phathanh a").text();
-
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
+            Date date = inputFormat.parse(dateMB);
+            String outputDate = outputFormat.format(date);
             List<ProvinceResult> provinceResultsMB = new ArrayList<>();
             ProvinceResult provinceResultMB = new ProvinceResult();
             provinceResultMB.setTenTinh(provinceMB);
@@ -231,14 +265,15 @@ public class Crawling {
                 }
             }
             provinceResultMB.setPrizes(prizesMB);
+            provinceResultMB.setDate(outputDate);
             provinceResultsMB.add(provinceResultMB);
             LotteryResult lotteryResultMB = new LotteryResult();
             lotteryResultMB.setTitle(titleMB);
-            lotteryResultMB.setNgayThang(dateMB);
+            lotteryResultMB.setNgayThang(outputDate);
             lotteryResultMB.setProvinceResults(provinceResultsMB);
             return provinceResultsMB;
         } catch (Exception e) {
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+            handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
                     .bind("currentTime", getCurrentTime() )
                     .bind("id", config.getId())
                     .execute();

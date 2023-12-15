@@ -5,6 +5,7 @@ import java.util.List;
 public class ProvinceResult {
     private String tenTinh;
     private String domain;
+    private String date;
     private List<Prize> prizes;
 
     public ProvinceResult() {
@@ -13,6 +14,13 @@ public class ProvinceResult {
     public ProvinceResult(String tenTinh,  String domain, List<Prize> prizes) {
         this.tenTinh = tenTinh;
         this.domain = domain;
+        this.prizes = prizes;
+    }
+
+    public ProvinceResult(String tenTinh, String domain, String date, List<Prize> prizes) {
+        this.tenTinh = tenTinh;
+        this.domain = domain;
+        this.date = date;
         this.prizes = prizes;
     }
 
@@ -39,6 +47,14 @@ public class ProvinceResult {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
