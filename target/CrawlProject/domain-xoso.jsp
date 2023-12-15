@@ -63,7 +63,7 @@
                 KẾT QUẢ XỔ SỐ MỚI NHẤT
               </h1>
               <h1 class="pagetitle1" style="font-size: 30px">
-                NGÀY <%=Load.getCurrentDate()%>
+                NGÀY <%=formattedDate%>
               </h1>
               <div></div>
               <%String domainId= request.getParameter("id");%>
@@ -2697,10 +2697,9 @@
     var formattedDate = parts[2] + '/' + parts[1] + '/' + parts[0];
     return formattedDate;
   }
-  function searchByName(param, param2) {
+  function searchByName(param2, param) {
     var domain = document.getElementById('domain-id').value;
     const txtSearch = param;
-    const displayDate = param2;
     console.log(txtSearch)
     if (txtSearch.length > 0) {
       $.ajax({
@@ -2714,7 +2713,7 @@
           $(".mainbody").html(data)
         },
         error: function () {
-          alert('Không có dữ liệu của ngày ' + displayDate);
+          alert('Không có dữ liệu của ngày ' + txtSearch);
         }
       });
     }
