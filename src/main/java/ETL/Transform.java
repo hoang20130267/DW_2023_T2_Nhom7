@@ -134,6 +134,7 @@ public class Transform {
                 Configuration configuration = new Configuration();
                 //Đọc dữ liệu từ
                 insertStagingDB(staging, configuration.getPath());
+                updateStatusInDB(currentConfigID, "CLEANING");
 
                 if (xoso_dw == null) {
                     SendEmail.sendMailError("Kết nối Database xoso_dw không thành công!");
