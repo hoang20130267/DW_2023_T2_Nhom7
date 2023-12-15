@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Load {
     private static Configuration getConfig(String currentStatus){
-        Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
+        Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM controls.configurations con INNER JOIN controls.logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
                 .bind(0, currentStatus)
                 .mapToBean(Configuration.class)
                 .findFirst());
@@ -21,14 +21,14 @@ public class Load {
     }
     private static List<Log> getListLog() {
         List<Log> listLog = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT l.id, l.configuration_id, l.file_name, l.description, l.status FROM logs l INNER JOIN configurations con ON con.id = l.configuration_id WHERE con.flag = 1")
+            return handle.createQuery("SELECT l.id, l.configuration_id, l.file_name, l.description, l.status FROM controls.logs l INNER JOIN controls.configurations con ON con.id = l.configuration_id WHERE con.flag = 1")
                     .mapToBean(Log.class).stream().collect(Collectors.toList());
         });
         return listLog;
     }
     private static void updateStatusInDatabase(int configurationId, String newStatus){
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("UPDATE logs\n" +
+            handle.createUpdate("UPDATE controls.logs\n" +
                             "SET status = ?\n" +
                             "WHERE configuration_id = ?;")
                     .bind(0, newStatus)
@@ -38,16 +38,16 @@ public class Load {
     }
     private static void insertNewConfigAndLog(){
         Integer id = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT id FROM configurations ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
+            return handle.createQuery("SELECT id FROM controls.configurations ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
         });
         Integer idLog = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT id FROM logs ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
+            return handle.createQuery("SELECT id FROM controls.logs ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
         });
         int newID = id + 1 ;
         int newLogId = idLog + 1 ;
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/','https://xosohomnay.com.vn', 'root', '', 1);").bind(0,newID).execute();
-            handle.createUpdate("INSERT INTO logs VALUES (?, ?, '', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
+            handle.createUpdate("INSERT INTO controls.configurations VALUES (?,'', 'D:/Data Warehouse/Data/','https://xosohomnay.com.vn', 'root', '', 1);").bind(0,newID).execute();
+            handle.createUpdate("INSERT INTO controls.logs VALUES (?, ?, '', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
             return true;
         });
     }
@@ -288,7 +288,7 @@ public class Load {
         return results.toString().replaceAll("\\[|\\]", "");
     }
 
-    private static void loadingAndUpdateConfig(){
+    public static void loadingAndUpdateConfig(){
         Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
         Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
         Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
