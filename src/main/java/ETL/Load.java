@@ -13,108 +13,175 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Load {
-    private static Configuration getConfig(String currentStatus){
-        Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
-                .bind(0, currentStatus)
-                .mapToBean(Configuration.class)
-                .findFirst());
-        return configDetail.orElse(null);
+    private static Configuration getConfig(String currentStatus) {
+        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
+            Optional<Configuration> configDetail = handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
+                    .bind(0, currentStatus)
+                    .mapToBean(Configuration.class)
+                    .findFirst();
+
+            return configDetail.orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
     private static List<Log> getListLog() {
-        List<Log> listLog = JDBIConnector.get("db1").withHandle(handle -> {
+        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
             return handle.createQuery("SELECT * FROM logs")
-                    .mapToBean(Log.class).stream().collect(Collectors.toList());
-        });
-        return listLog;
+                    .mapToBean(Log.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList(); // Return an empty list in case of an exception
+        }
     }
-    private static void updateStatusInDatabase(int configurationId, String newStatus){
-        JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("UPDATE logs\n" +
-                            "SET status = ?\n" +
-                            "WHERE configuration_id = ?;")
-                    .bind(0, newStatus)
-                    .bind(1, configurationId).execute();
+
+    private static boolean updateStatusInDatabase(int configurationId, String newStatus) {
+        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
+            handle.createUpdate("UPDATE logs SET status = :newStatus WHERE configuration_id = :configurationId")
+                    .bind("newStatus", newStatus)
+                    .bind("configurationId", configurationId)
+                    .execute();
             return true;
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-    private static void insertNewConfigAndLog(){
-        Integer id = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT id FROM configurations ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
-        });
-        Integer idLog = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT id FROM logs ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
-        });
-        int newID = id + 1 ;
-        int newLogId = idLog + 1 ;
-        JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/','https://xosohomnay.com.vn', 'root', '', 1);").bind(0,newID).execute();
-            handle.createUpdate("INSERT INTO logs VALUES (?, ?, '', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
+
+    private static boolean insertNewConfigAndLog() {
+        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
+            Integer id = handle.createQuery("SELECT id FROM configurations ORDER BY id DESC LIMIT 1")
+                    .mapTo(Integer.class)
+                    .one();
+
+            Integer idLog = handle.createQuery("SELECT id FROM logs ORDER BY id DESC LIMIT 1")
+                            .mapTo(Integer.class)
+                            .one();
+            int newID = id + 1;
+            int newLogId = idLog + 1;
+
+            handle.createUpdate("INSERT INTO configurations VALUES (?, '', 'D:/Data Warehouse/Data/', 'https://xosohomnay.com.vn', 'root', '', 1);")
+                    .bind(0, newID)
+                    .execute();
+
+            handle.createUpdate("INSERT INTO logs VALUES (?, ?, '', '', 'PREPARED', current_date, '2026-12-31');")
+                    .bind(0, newLogId)
+                    .bind(1, newID)
+                    .execute();
+
             return true;
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
     private static void LoadFromXoso_dwToDmarts() {
-        try (Handle handle = JDBIConnector.get("db3").open()) {
+        try (Handle handle = ConnectToDB.connectionToDB("xoso_dw","root","").open()) {
             handle.createUpdate("CALL xoso_dw.TransferDataFromXoso_dwToDmart;").execute();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public static List<Dmart> getListFirstDmartMN(String date) {
-        List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18;").bind(0, date)
-                    .mapToBean(Dmart.class).stream().collect(Collectors.toList());
-        });
-        return listDmartMN;
+        try (Handle handle = ConnectToDB.connectionToDB("dmarts", "root", "").open()) {
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18;")
+                    .bind(0, date)
+                    .mapToBean(Dmart.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider using a logging framework instead
+            return Collections.emptyList();
+        }
     }
+
     public static List<Dmart> getListSecondDmartMN(String date) {
-        List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 18;").bind(0, date)
-                    .mapToBean(Dmart.class).stream().collect(Collectors.toList());
-        });
-        return listDmartMN;
+        try (Handle handle = ConnectToDB.connectionToDB("dmarts", "root", "").open()) {
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 18;")
+                    .bind(0, date)
+                    .mapToBean(Dmart.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider using a logging framework instead
+            return Collections.emptyList();
+        }
     }
+
     public static List<Dmart> getListThirdDmartMN(String date) {
-        List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 36;").bind(0, date)
-                    .mapToBean(Dmart.class).stream().collect(Collectors.toList());
-        });
-        return listDmartMN;
+        try (Handle handle = ConnectToDB.connectionToDB("dmarts", "root", "").open()) {
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 36;")
+                    .bind(0, date)
+                    .mapToBean(Dmart.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider using a logging framework instead
+            return Collections.emptyList();
+        }
     }
+
     public static List<Dmart> getListFourthDmartMN(String date) {
-        List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 54;").bind(0, date)
-                    .mapToBean(Dmart.class).stream().collect(Collectors.toList());
-        });
-        return listDmartMN;
+        try (Handle handle = ConnectToDB.connectionToDB("dmarts", "root", "").open()) {
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18 OFFSET 54;")
+                    .bind(0, date)
+                    .mapToBean(Dmart.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider using a logging framework instead
+            return Collections.emptyList();
+        }
     }
+
     public static List<Dmart> getListFirstDmartMT(String date) {
-        List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18;").bind(0, date)
-                    .mapToBean(Dmart.class).stream().collect(Collectors.toList());
-        });
-        return listDmartMN;
+        try (Handle handle = ConnectToDB.connectionToDB("dmarts", "root", "").open()) {
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18;")
+                    .bind(0, date)
+                    .mapToBean(Dmart.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider using a logging framework instead
+            return Collections.emptyList();
+        }
     }
+
     public static List<Dmart> getListSecondDmartMT(String date) {
-        List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18 OFFSET 18;").bind(0, date)
-                    .mapToBean(Dmart.class).stream().collect(Collectors.toList());
-        });
-        return listDmartMN;
+        try (Handle handle = ConnectToDB.connectionToDB("dmarts", "root", "").open()) {
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18 OFFSET 18;")
+                    .bind(0, date)
+                    .mapToBean(Dmart.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider using a logging framework instead
+            return Collections.emptyList();
+        }
     }
+
     public static List<Dmart> getListThirdDmartMT(String date) {
-        List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18 OFFSET 36;").bind(0, date)
-                    .mapToBean(Dmart.class).stream().collect(Collectors.toList());
-        });
-        return listDmartMN;
+        try (Handle handle = ConnectToDB.connectionToDB("dmarts", "root", "").open()) {
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Trung' AND date = ? LIMIT 18 OFFSET 36;")
+                    .bind(0, date)
+                    .mapToBean(Dmart.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider using a logging framework instead
+            return Collections.emptyList();
+        }
     }
+
     public static List<Dmart> getListDmartMB(String date) {
-        List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM data WHERE domain = 'Bắc' AND date = ?;").bind(0, date)
-                    .mapToBean(Dmart.class).stream().collect(Collectors.toList());
-        });
-        return listDmartMN;
+        try (Handle handle = ConnectToDB.connectionToDB("dmarts", "root", "").open()) {
+            return handle.createQuery("SELECT * FROM data WHERE domain = 'Bắc' AND date = ?;")
+                    .bind(0, date)
+                    .mapToBean(Dmart.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider using a logging framework instead
+            return Collections.emptyList();
+        }
     }
+
 
     public static String getProvince(List<Dmart> listDmart) {
         Dmart dmart = new Dmart(listDmart);
@@ -124,13 +191,19 @@ public class Load {
         }
         return result;
     }
-    public static String getCurrentDate(){
-        Optional<Dmart> lastestDmart = JDBIConnector.get("db4").withHandle(handle -> handle.createQuery("SELECT * FROM data ORDER BY `date` DESC LIMIT 1")
-                .mapToBean(Dmart.class)
-                .findFirst());
-        String result = lastestDmart.get().getDate();
-        return result;
+    public static String getCurrentDate() {
+        try (Handle handle = ConnectToDB.connectionToDB("dmarts", "root", "").open()) {
+            Optional<Dmart> lastestDmart = handle.createQuery("SELECT * FROM data ORDER BY `date` DESC LIMIT 1")
+                    .mapToBean(Dmart.class)
+                    .findFirst();
+
+            return lastestDmart.map(Dmart::getDate).orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace(); // Consider using a logging framework instead
+            return null;
+        }
     }
+
     public static String getNumberWinning(String giai, List<Dmart> listDmart) {
         Dmart dmart = new Dmart(listDmart);
         List<String> results = new ArrayList<>();
