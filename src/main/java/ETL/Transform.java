@@ -19,27 +19,27 @@ import java.util.Optional;
 public class Transform {
 
     public static Configuration getConfigurationStatus(String currentStatus) {
-        //Lấy trạng thái trong 1 dòng dữ liệu của configuration
-            Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
-                    .bind(0, currentStatus)
+        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
+            Optional<Configuration> configDetail = handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = :status LIMIT 1")
+                    .bind("status", currentStatus)
                     .mapToBean(Configuration.class)
-                    .findFirst());
+                    .findFirst();
+
             return configDetail.orElse(null);
         }
+    }
 
-    public static void updateStatusInDB(int configurationID, String newStatus) {
-        //Cập nhật trạng thái mới
-        try{
-            JDBIConnector.get("db1").withHandle(handle -> {
-                handle.createUpdate("UPDATE logs\n" +
-                                "SET status = ?\n" +
-                                "WHERE configuration_id = ?;")
-                        .bind(0, newStatus)
-                        .bind(1, configurationID).execute();
-                return true;
-            });
-        }catch (Exception e){
+    public static boolean updateStatusInDB(int configurationID, String newStatus) {
+        // Cập nhật trạng thái mới
+        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
+            handle.createUpdate("UPDATE logs SET status = :newStatus WHERE configuration_id = :configurationID")
+                    .bind("newStatus", newStatus)
+                    .bind("configurationID", configurationID)
+                    .execute();
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -134,9 +134,9 @@ public class Transform {
     public static void updateConfiguration() {
         try {
             //Kết nối database
-            Handle controls = JDBIConnector.get("db1").open();
-            Handle staging = JDBIConnector.get("db2").open();
-            Handle xoso_dw = JDBIConnector.get("db3").open();
+            Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
+            Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
+            Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
             //Lấy ID của Configuration hiện tại
             int currentConfigID = getConfigurationStatus("EXTRACTING").getId();
             System.out.println(currentConfigID);
