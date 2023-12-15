@@ -27,7 +27,7 @@
   </h1>
   <%}%>
   <h1 class="pagetitle1" style="font-size: 30px">
-    NGÀY <%=Load.getCurrentDate()%>
+    NGÀY <%=searchDate%>
   </h1>
   <div></div>
     <%String domain = (String) request.getAttribute("domain");%>

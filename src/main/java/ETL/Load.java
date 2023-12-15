@@ -4,6 +4,7 @@ import Bean.Configuration;
 import Bean.Dmart;
 import Bean.Log;
 import DAO.SendEmail;
+import db.ConnectToDB;
 import db.JDBIConnector;
 import org.jdbi.v3.core.Handle;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Load {
     private static Configuration getConfig(String currentStatus){
-        Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
+        Optional<Configuration> configDetail = JDBIConnector.get("db1").withHandle(handle -> handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM controls.configurations con INNER JOIN controls.logs l ON con.id = l.configuration_id WHERE l.status = ? LIMIT 1")
                 .bind(0, currentStatus)
                 .mapToBean(Configuration.class)
                 .findFirst());
@@ -20,14 +21,14 @@ public class Load {
     }
     private static List<Log> getListLog() {
         List<Log> listLog = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT * FROM logs")
+            return handle.createQuery("SELECT l.id, l.configuration_id, l.file_name, l.description, l.status FROM controls.logs l INNER JOIN controls.configurations con ON con.id = l.configuration_id WHERE con.flag = 1")
                     .mapToBean(Log.class).stream().collect(Collectors.toList());
         });
         return listLog;
     }
     private static void updateStatusInDatabase(int configurationId, String newStatus){
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("UPDATE logs\n" +
+            handle.createUpdate("UPDATE controls.logs\n" +
                             "SET status = ?\n" +
                             "WHERE configuration_id = ?;")
                     .bind(0, newStatus)
@@ -37,16 +38,16 @@ public class Load {
     }
     private static void insertNewConfigAndLog(){
         Integer id = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT id FROM configurations ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
+            return handle.createQuery("SELECT id FROM controls.configurations ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
         });
         Integer idLog = JDBIConnector.get("db1").withHandle(handle -> {
-            return handle.createQuery("SELECT id FROM logs ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
+            return handle.createQuery("SELECT id FROM controls.logs ORDER BY id DESC LIMIT 1").mapTo(Integer.class).one();
         });
         int newID = id + 1 ;
         int newLogId = idLog + 1 ;
         JDBIConnector.get("db1").withHandle(handle -> {
-            handle.createUpdate("INSERT INTO configurations VALUES (?,'', 'D:/Data Warehouse/Data/', 'root', '123', 1);").bind(0,newID).execute();
-            handle.createUpdate("INSERT INTO logs VALUES (?, ?, 'log', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
+            handle.createUpdate("INSERT INTO controls.configurations VALUES (?,'', 'D:/Data Warehouse/Data/','https://xosohomnay.com.vn', 'root', '', 1);").bind(0,newID).execute();
+            handle.createUpdate("INSERT INTO controls.logs VALUES (?, ?, '', '','PREPARED', current_date, '2026-12-31');").bind(0, newLogId).bind(1, newID).execute();
             return true;
         });
     }
@@ -57,6 +58,8 @@ public class Load {
             e.printStackTrace();
         }
     }
+
+//    24. Hiển thị dữ liệu từ dmart lên UI
     public static List<Dmart> getListFirstDmartMN(String date) {
         List<Dmart> listDmartMN = JDBIConnector.get("db4").withHandle(handle -> {
             return handle.createQuery("SELECT * FROM data WHERE domain = 'Nam' AND date = ? LIMIT 18;").bind(0, date)
@@ -123,7 +126,7 @@ public class Load {
         return result;
     }
     public static String getCurrentDate(){
-        Optional<Dmart> lastestDmart = JDBIConnector.get("db4").withHandle(handle -> handle.createQuery("SELECT * FROM data ORDER BY `date` DESC LIMIT 1")
+        Optional<Dmart> lastestDmart = JDBIConnector.get("db4").withHandle(handle -> handle.createQuery("SELECT `date` FROM data ORDER BY `date` DESC LIMIT 1")
                 .mapToBean(Dmart.class)
                 .findFirst());
         String result = lastestDmart.get().getDate();
@@ -285,34 +288,58 @@ public class Load {
         return results.toString().replaceAll("\\[|\\]", "");
     }
 
-    private static void loadingAndUpdateConfig(){
-        Handle controls = JDBIConnector.get("db1").open();
-        Handle staging = JDBIConnector.get("db2").open();
-        Handle xoso_dw = JDBIConnector.get("db3").open();
-        Handle dmart = JDBIConnector.get("db4").open();
+    public static void loadingAndUpdateConfig(){
+        Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
+        Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
+        Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
+
+        // 21. Kết nối với database dmarts
+        Handle dmart = ConnectToDB.connectionToDB("dmarts","root","").open();
         try {
             int idCurrentConfig = getConfig("TRANSFORMING").getId();
-            // Kết nối với database dmarts
+            //22. Kết nối không thành công
             if(dmart == null) {
-                // Thêm dữ liệu vào control.log với status = ERROR
+                // 22.2 Thêm dữ liệu vào control.log với status = ERROR
                 updateStatusInDatabase(idCurrentConfig, "ERROR");
-                //Gửi email thông báo lỗi
+                // 23. Gửi email thông báo lỗi
                 SendEmail.sendMailError("Kết nối Database dmarts không thành công!");
-                // Đóng kết nối với database xoso_dw
+                // 28. Đóng kết nối với database xoso_dw
+                xoso_dw.close();
+                //29. Đóng kết nối với database Staging
+                staging.close();
+                //30. Đóng kết nối với database control
+                controls.close();
+
+                // 22. Kết nối dmart thành công
             } else {
-                // Load dữ liệu từ xoso_dw vào dmarts
+                // 22.1 Load dữ liệu từ xoso_dw.xo_so_fact vào dmart.data
                 LoadFromXoso_dwToDmarts();
+                //23. Thêm vào bảng control.logs với status = LOADING
                 updateStatusInDatabase(idCurrentConfig, "LOADING");
-                // Kiểm tra nếu còn dòng có status = PREPARED
-                for(Log log : getListLog())
-                if(log.getStatus().equals("PREPARED")) {
-//                    Extracting.Crawling();
-                } else {
-                    //Nếu không còn dòng có status = PREPARED
-                    updateStatusInDatabase(idCurrentConfig, "FINISH");
-                    //Thêm config mới và log mới cho lần crawl tiếp theo
-                    insertNewConfigAndLog();
-                    break;
+
+                for(Log log : getListLog()) {
+                    //25. Kiểm tra nếu còn dòng có status = PREPARED và flag = 1 trong database controls
+                    if (log.getStatus().equals("PREPARED")) {
+                        // Quay lại bắt đầu bước 4
+                        Extracting.Crawling();
+
+                        //25. Nếu không còn dòng có status = PREPARED và flag = 1 trong database controls
+                    } else {
+                        //25.1 Thêm dữ liệu vào control.log với status = FINISH
+                        updateStatusInDatabase(idCurrentConfig, "FINISH");
+                        //26. Tạo config và log mới với status = PREPARED và flag = 1 trong control.db cho lần crawl tiếp theo
+                        insertNewConfigAndLog();
+
+                        //27. Đóng kết nối với database dmarts
+                        dmart.close();
+                        //28. Đóng kết nối với database xoso_dw
+                        xoso_dw.close();
+                        //29. Đóng kết nối với database Staging
+                        staging.close();
+                        //30. Đóng kết nối với database control
+                        controls.close();
+                        break;
+                    }
                 }
             }
         }
@@ -322,7 +349,7 @@ public class Load {
         }
     public static void main(String[] args) {
 //        System.out.println(getListConfiguration());
-//        System.out.println(getListSecondDmartMN());
+//        System.out.println(getListFirstDmartMN("12/10/2023"));
 //        System.out.println(Load.getProvince(getListThirdDmartMT()));
 //        System.out.println(getCurrentDate());
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));

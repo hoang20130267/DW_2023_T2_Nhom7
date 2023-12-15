@@ -27,7 +27,7 @@
   </h1>
   <%}%>
   <h1 class="pagetitle1" style="font-size: 30px">
-    NGÀY <%=Load.getCurrentDate()%>
+    NGÀY <%=searchDate%>
   </h1>
   <div></div>
     <%String domain = (String) request.getAttribute("domain");%>
@@ -329,7 +329,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="loaive">AG-11K3</td>
+                        <td class="loaive"></td>
                       </tr>
                       <tr align="center">
                         <td class="giai_tam">
@@ -851,7 +851,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="loaive">AG-11K3</td>
+                        <td class="loaive"></td>
                       </tr>
                       <tr align="center">
                         <td class="giai_tam">
@@ -1502,7 +1502,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="loaive">XSBDI</td>
+                        <td class="loaive"></td>
                       </tr>
                       <tr align="center">
                         <td class="giai_tam">
@@ -1675,7 +1675,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="loaive">XSBDI</td>
+                        <td class="loaive"></td>
                       </tr>
                       <tr align="center">
                         <td class="giai_tam">
@@ -1851,7 +1851,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="loaive">XSBDI</td>
+                        <td class="loaive"></td>
                       </tr>
                       <tr align="center">
                         <td class="giai_tam">
@@ -2024,7 +2024,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="loaive">XSBDI</td>
+                        <td class="loaive"></td>
                       </tr>
                       <tr align="center">
                         <td class="giai_tam">
@@ -2197,7 +2197,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td class="loaive">XSBDI</td>
+                        <td class="loaive"></td>
                       </tr>
                       <tr align="center">
                         <td class="giai_tam">
@@ -2545,3 +2545,27 @@
   <%}%>
   <div></div>
 </div>
+<script src="https://www.xosohomnay.com.vn/template/jquery/jquery-3.6.0.min.js"></script>
+<script src="https://www.xosohomnay.com.vn/template/jquery-ui-1.13.1.sunny/jquery-ui.min.js"></script>
+<link
+        href="https://www.xosohomnay.com.vn/template/jquery-ui-1.13.1.sunny/jquery-ui.min.css"
+        rel="stylesheet"
+        type="text/css"
+/>
+<script
+        type="text/javascript"
+        src="https://www.xosohomnay.com.vn/template/jquery/jquery.fullscreen-0.4.2.min.js"
+></script>
+<script
+        type="text/javascript"
+        src="https://www.xosohomnay.com.vn/template/jquery/sounds/ion.sound.min.js"
+></script>
+<script
+        async=""
+        type="text/javascript"
+        src="https://www.xosohomnay.com.vn/template/scripts/lazysizes.min.js"
+></script>
+<script
+        async=""
+        src="https://www.xosohomnay.com.vn/template/temp/xoso_111.js"
+></script>

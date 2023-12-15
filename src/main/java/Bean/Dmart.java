@@ -7,7 +7,7 @@ public class Dmart {
     int id;
     String date;
     String domain;
-    String provice;
+    String province;
     String prize;
     String number_winning;
 
@@ -20,11 +20,11 @@ public class Dmart {
         this.dmartList = dmartList;
     }
 
-    public Dmart(int id, String date, String domain, String provice, String prize, String number_winning) {
+    public Dmart(int id, String date, String domain, String province, String prize, String number_winning) {
         this.id = id;
         this.date = date;
         this.domain = domain;
-        this.provice = provice;
+        this.province = province;
         this.prize = prize;
         this.number_winning = number_winning;
     }
@@ -42,7 +42,7 @@ public class Dmart {
     public List<String> getListProvince() {
         List<String> results = new ArrayList<>();
         for (Dmart dmart : dmartList) {
-            results.add(dmart.getProvice());
+            results.add(dmart.getprovince());
         }
         return results.isEmpty() ? null : results;
     }
@@ -76,12 +76,12 @@ public class Dmart {
         this.domain = domain;
     }
 
-    public String getProvice() {
-        return provice;
+    public String getprovince() {
+        return province;
     }
 
-    public void setProvice(String provice) {
-        this.provice = provice;
+    public void setprovince(String province) {
+        this.province = province;
     }
 
     public String getPrize() {
@@ -106,7 +106,7 @@ public class Dmart {
                 "id=" + id +
                 ", date='" + date + '\'' +
                 ", domain='" + domain + '\'' +
-                ", provice='" + provice + '\'' +
+                ", province='" + province + '\'' +
                 ", prize='" + prize + '\'' +
                 ", number_winning='" + number_winning + '\'' +
                 '}';

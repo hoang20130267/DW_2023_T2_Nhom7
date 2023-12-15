@@ -4,6 +4,7 @@ import Bean.Configuration;
 import Bean.LotteryResult;
 import Bean.Prize;
 import Bean.ProvinceResult;
+import db.ConnectToDB;
 import org.jdbi.v3.core.Handle;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,10 +12,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class Crawling {
@@ -25,15 +29,25 @@ public class Crawling {
     }
     public static String getCurrentTimeFileName() {
         LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
         return currentTime.format(formatter);
     }
+    public static String getCurrentTimeDB(String input) throws ParseException {
 
+        SimpleDateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = inputFormat.parse(input);
+        String outputDate = outputFormat.format(date);
+        return outputDate;
+    }
     public static List<String> getXoSo(Handle handle, Configuration config) {
         List<String> result = new ArrayList<>();
         try {
-            // Kết nối với website thông qua URL
+
+            // 6. Kết nối với website từ path trong controls configurations
             Document doc = Jsoup.connect(config.getUrl()).get();
+            // 7 .Kết nối thành công
+
             Elements tabXstt = doc.getElementsByClass("title");
             if (tabXstt != null) {
                 Elements links = tabXstt.select("a");
@@ -41,15 +55,22 @@ public class Crawling {
                 for (int i = 3; i < 6; i++) {
                     String href = getHrefFromElement(links.get(i));
                     result.add(href);
+                    System.out.println(href);
                 }
             }
             return result;
         } catch (IOException e) {
-            // Cập nhật status = ERROR
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
-                    .bind("currentTime", getCurrentTime() )
+
+            // 7.2 cập nhật status = error
+            handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với địa chỉ của website', " +
+                            "date_update = :currentTime WHERE configuration_id = :id")
+                    .bind("currentTime", getCurrentTime())
                     .bind("id", config.getId())
                     .execute();
+            handle.close();
+            // 8. gửi mail thông báo
+            SendEmail.sendMailError("Lỗi kết nối với địa chỉ của website");
+            // 30. Đóng kết nối database
             handle.close();
 
         }
@@ -62,17 +83,23 @@ public class Crawling {
 
     public static List<ProvinceResult>  lotteryMN(Configuration config,  Handle handle) {
         try {
-            // Xử lý dữ liệu
+
             List<LotteryResult> result = new ArrayList<>();
             Document doc = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(0)).get();
+            SimpleDateFormat inputFormat = new SimpleDateFormat("ddMMyyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
+            // 7.1 Bắt đầu lấy dữ liệu
             String title = doc.select(".title").text();
-            String ngayThang = doc.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" + doc.select(".ngaykqxs .date .year").text();
+            String ngayThang = doc.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" +
+                    doc.select(".ngaykqxs .date .year").text();
+            Date date = inputFormat.parse(ngayThang);
+            String outputDate = outputFormat.format(date);
             Elements tinhElements = doc.select(".tblKQTinh");
             List<ProvinceResult> provinceResults = new ArrayList<>();
             for (Element tinhElement : tinhElements) {
                 ProvinceResult provinceResult = new ProvinceResult();
                 provinceResult.setTenTinh(tinhElement.select(".tentinh a .namelong").text());
-                provinceResult.setDomain("Miền Nam");
+                provinceResult.setDomain("Nam");
                 List<Prize> prizes = new ArrayList<>();
                 Elements giaiElements = tinhElement.select("td[class^='giai_']");
                 for (Element giaiElement : giaiElements) {
@@ -106,18 +133,21 @@ public class Crawling {
                     }
                 }
                 provinceResult.setPrizes(prizes);
+                provinceResult.setDate(outputDate);
                 provinceResults.add(provinceResult);
             }
-            LotteryResult lotteryResult = new LotteryResult();
-            lotteryResult.setTitle(title);
-            lotteryResult.setNgayThang(ngayThang);
-            lotteryResult.setProvinceResults(provinceResults);
+
             return provinceResults;
         } catch (Exception e) {
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+            // 7.2 cập nhật status = error
+            handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với địa chỉ của website', date_update = :currentTime WHERE configuration_id = :id")
                     .bind("currentTime", getCurrentTime())
                             .bind("id", config.getId())
                     .execute();
+            handle.close();
+            // 8. gửi mail thông báo
+            SendEmail.sendMailError("Lỗi kết nối với địa chỉ của website");
+            // 30. Đóng kết nối database
             handle.close();
         }
         return null;
@@ -128,13 +158,19 @@ public class Crawling {
         try {
             Document docMT = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(1)).get();
             String titleMT = docMT.select(".title").text();
-            String ngayThang = docMT.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" + docMT.select(".ngaykqxs .date .year").text();
+            SimpleDateFormat inputFormat = new SimpleDateFormat("ddMMyyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
+            // 7.1 Bắt đầu lấy dữ liệu
+            String ngayThang = docMT.select(".ngaykqxs .date .daymonth").text().replace("/", "") + "" +
+                    docMT.select(".ngaykqxs .date .year").text();
+            Date date = inputFormat.parse(ngayThang);
+            String outputDate = outputFormat.format(date);
             Elements tinhElementsMT = docMT.select(".tblKQTinh");
             List<ProvinceResult> provinceResultsMT = new ArrayList<>();
             for (Element tinhElementMT : tinhElementsMT) {
                 ProvinceResult provinceResultMT = new ProvinceResult();
                 provinceResultMT.setTenTinh(tinhElementMT.select(".tentinh a .namelong").text());
-                provinceResultMT.setDomain("Miền Trung");
+                provinceResultMT.setDomain("Trung");
                 List<Prize> prizesMT = new ArrayList<>();
                 Elements giaiElementsMT = tinhElementMT.select("td[class^='giai_']");
                 for (Element giaiElementMT : giaiElementsMT) {
@@ -168,16 +204,15 @@ public class Crawling {
                     }
                 }
                 provinceResultMT.setPrizes(prizesMT);
+                provinceResultMT.setDate(outputDate);
                 provinceResultsMT.add(provinceResultMT);
+
             }
             // Tạo đối tượng LotteryResult và gán thông tin
-            LotteryResult lotteryResultMT = new LotteryResult();
-            lotteryResultMT.setTitle(titleMT);
-            lotteryResultMT.setNgayThang(ngayThang);
-            lotteryResultMT.setProvinceResults(provinceResultsMT);
+
             return provinceResultsMT;
         } catch (Exception e) {
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+            handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
                     .bind("currentTime", getCurrentTime() )
                     .bind("id", config.getId())
                     .execute();
@@ -189,14 +224,19 @@ public class Crawling {
         try {
             Document docMB = Jsoup.connect(config.getUrl() + getXoSo(handle, config).get(2)).get();
             String titleMB = docMB.select("div.title").text();
+
             String dateMB = docMB.select("div.ngaykqxs span.daymonth").text() + "/"
                     + docMB.select("div.ngaykqxs span.year").text();
+            System.out.println(dateMB);
             String provinceMB = docMB.select("td.tentinh span.phathanh a").text();
-
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("MM-dd-yyyy");
+            Date date = inputFormat.parse(dateMB);
+            String outputDate = outputFormat.format(date);
             List<ProvinceResult> provinceResultsMB = new ArrayList<>();
             ProvinceResult provinceResultMB = new ProvinceResult();
             provinceResultMB.setTenTinh(provinceMB);
-            provinceResultMB.setDomain("Miền bắc");
+            provinceResultMB.setDomain("Bắc");
             List<Prize> prizesMB = new ArrayList<>();
 
             // Lấy các phần tử chứa thông tin giải
@@ -211,54 +251,12 @@ public class Crawling {
                 String tenGiaiMB = giaiElementMB.attr("class").replace("giai_", "");
 
                 // Xử lý tên giải đặc biệt
-                if (tenGiaiMB.equals("7")) {
-                    for (int i = 1; i <= 4; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("7_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("6")) {
-                    for (int i = 1; i <= 3; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("6_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("5")) {
-                    for (int i = 1; i <= 6; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("5_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("4")) {
-                    for (int i = 1; i <= 4; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("4_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("3")) {
-                    for (int i = 1; i <= 6; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("3_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("2")) {
-                    for (int i = 1; i <= 2; i++) {
-                        Prize specialPrize = new Prize();
-                        specialPrize.setTenGiai("2_" + i);
-                        specialPrize.setSoTrungThuong(getSoTrungThuong(giaiElementMB, i));
-                        prizesMB.add(specialPrize);
-                    }
-                } else if (tenGiaiMB.equals("db")) {
+                if (tenGiaiMB.equals("dac_biet")) {
                     Prize specialPrize = new Prize();
                     specialPrize.setTenGiai(tenGiaiMB);
                     String kyHieuDB = docMB.select("div.giaiDbmoi span.kyhieuDB1ve span").text();
-                    String soTrungThuong = getSoTrungThuong(giaiElementMB, 0) + " " + kyHieuDB;
-                    specialPrize.setSoTrungThuong(Collections.singletonList(soTrungThuong));
+                    String soTrungThuong = getSoTrungThuong(giaiElementMB, 0) + " " +kyHieuDB;
+                    specialPrize.setSoTrungThuong(Collections.singletonList(soTrungThuong.replace("[", "").replace("]", "")));
                     prizesMB.add(specialPrize);
                 } else {
                     prizeMB.setTenGiai(tenGiaiMB);
@@ -267,14 +265,15 @@ public class Crawling {
                 }
             }
             provinceResultMB.setPrizes(prizesMB);
+            provinceResultMB.setDate(outputDate);
             provinceResultsMB.add(provinceResultMB);
             LotteryResult lotteryResultMB = new LotteryResult();
             lotteryResultMB.setTitle(titleMB);
-            lotteryResultMB.setNgayThang(dateMB);
+            lotteryResultMB.setNgayThang(outputDate);
             lotteryResultMB.setProvinceResults(provinceResultsMB);
             return provinceResultsMB;
         } catch (Exception e) {
-            handle.createUpdate("UPDATE log SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
+            handle.createUpdate("UPDATE logs SET status = 'ERROR', description = 'Lỗi kết nối với dữ liệu', date_update = :currentTime WHERE configuration_id = :id")
                     .bind("currentTime", getCurrentTime() )
                     .bind("id", config.getId())
                     .execute();

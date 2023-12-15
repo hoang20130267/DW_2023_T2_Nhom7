@@ -89,6 +89,12 @@
             <version>1.4.7</version> <!-- Thay đổi phiên bản nếu cần -->
         </dependency>
         <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version> <!-- Use the latest version available -->
+        </dependency>
+
+        <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>5.5</version> <!-- Thay đổi phiên bản nếu cần -->
