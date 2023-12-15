@@ -63,7 +63,7 @@ public class Load {
             int newID = id + 1;
             int newLogId = idLog + 1;
 
-            handle.createUpdate("INSERT INTO configurations VALUES (?, '', 'D:/Data Warehouse/Data/', 'https://xosohomnay.com.vn', 'root', '', 1);")
+            handle.createUpdate("INSERT INTO configurations VALUES (?, '', 'A:/F/2023-HK1/DataWarehouse/Data', 'https://xosohomnay.com.vn', 'root', '', 1);")
                     .bind(0, newID)
                     .execute();
 
@@ -360,7 +360,7 @@ public class Load {
         return results.toString().replaceAll("\\[|\\]", "");
     }
 
-    private static void loadingAndUpdateConfig(){
+    public static void loadingAndUpdateConfig(){
         Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
         Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
         Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
