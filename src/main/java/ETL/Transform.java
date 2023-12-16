@@ -109,7 +109,7 @@ public class Transform {
         //Viết câu query update kết nối db3 gọi function chuyển đổi dữ liệu từ db staging vào xoso_dw theo id
         try{
             JDBIConnector.get("db3").withHandle(handle -> {
-                handle.createUpdate("CALL xoso_dw.sp_transfer_data_and_update_ids();")
+                handle.createUpdate("CALL xoso_dw.transfer_data_and_update_ids();")
                         .execute();
                 return true;
             });
