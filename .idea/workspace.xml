@@ -11,40 +11,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="cập nhật lại Extracting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ExportToExcel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/CrawlProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Configuration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Dmart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Dmart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Log.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Log.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/LotteryResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/LotteryResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Prize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Prize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/ProvinceResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/ProvinceResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Staging.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Staging.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/Crawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/Crawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/ExportToExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/ExportToExcel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/XosoCrawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/XosoCrawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Extracting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Transform.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/ConnectToDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/ConnectToDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/DBProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/DBProperties.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/JDBIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/JDBIConnector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Dmart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Dmart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Log.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Log.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/LotteryResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/LotteryResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Prize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Prize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/ProvinceResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/ProvinceResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Staging.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Staging.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/XosoCrawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/XosoCrawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Transform.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/ConnectToDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/ConnectToDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/DBProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/DBProperties.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Load.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +74,7 @@
       <recent name="C:\Users\ADMIN\IdeaProjects\Xoso-Datawarehouse\src\main\webapp\js" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.FulProcessETL">
+  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.68">
     <configuration name="Extracting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ETL.Extracting" />
       <module name="Xoso-Datawarehouse" />
@@ -267,10 +237,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.FulProcessETL" />
         <item itemvalue="Application.Load" />
-        <item itemvalue="Application.Extracting" />
         <item itemvalue="Application.Transform" />
+        <item itemvalue="Application.Extracting" />
+        <item itemvalue="Application.FulProcessETL" />
         <item itemvalue="Application.XosoCrawling" />
       </list>
     </recent_temporary>
@@ -314,6 +284,9 @@
       <workItem from="1702390151907" duration="199000" />
       <workItem from="1702429983139" duration="2131000" />
       <workItem from="1702609261004" duration="8452000" />
+      <workItem from="1702630717267" duration="1035000" />
+      <workItem from="1702636819186" duration="746000" />
+      <workItem from="1702730708280" duration="2589000" />
     </task>
     <task id="LOCAL-00001" summary="Ghi chú lại các bước trong workflow">
       <created>1702386484734</created>
