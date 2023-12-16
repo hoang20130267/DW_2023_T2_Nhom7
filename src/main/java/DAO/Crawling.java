@@ -35,7 +35,7 @@ public class Crawling {
     public static String getCurrentTimeDB(String input) throws ParseException {
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("M/d/yyyy");
         Date date = inputFormat.parse(input);
         String outputDate = outputFormat.format(date);
         return outputDate;
