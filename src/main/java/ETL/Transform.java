@@ -79,6 +79,7 @@ public class Transform {
             //Gọi phương thức lấy dữ liệu từ file csv
             List<Staging> stagingList = readLotteryDataFromCSV(path);
             for(Staging staging : stagingList){
+                // 14. Xoá dữ liệu bị rỗng
                 //Kiểm tra dữ liệu số trúng thưởng và tỉnh có trống hay không
                 //Nếu trống thì bỏ qua dòng đó
                 if(isNullOrEmpty(staging.getNumber_winning()) || isNullOrEmpty(staging.getProvince())){
@@ -133,37 +134,49 @@ public class Transform {
 
     public static void updateConfiguration() {
         try {
-            //Kết nối database
+            // 11.Kết nối database staging
             Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
             Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
-            Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
+
             //Lấy ID của Configuration hiện tại
             int currentConfigID = getConfigurationStatus("EXTRACTING").getId();
             System.out.println(currentConfigID);
             //Kiểm tra kết nối db Staging
             if (staging == null) {
-                //Cập nhật trạng thái ERROR
+                // 12.2 Thêm dữ liệu vào control.log với status = ERROR
                 updateStatusInDB(currentConfigID, "ERROR");
-                //Gửi mail khi kết nối không thành công
+                // 12.3 Gửi mail thông báo lỗi
                 SendEmail.sendMailError("Kết nối Database staging không thành công!");
                 controls.close();
+                // 12. Kết nối thành công
             } else {
-                Configuration configuration = getConfigurationStatus("EXTRACTING");
-                //Chèn dữ liệu vào db stating
-                insertStagingDB(staging, getFile(currentConfigID));
+                // 12.1 Truy cập vào thư mục theo đường dẫn trong control.configuration để lấy ra file csv mới nhất
+                String getFile = getFile(currentConfigID);
+                // 13. Đọc file excel và thêm dữ liệu vào Staging.xo_so_staging
+                insertStagingDB(staging, getFile);
+                // 15. Thêm dữ liệu vào control.log với file_name = tên file và status = CLEANING
+                updateStatusInDB(currentConfigID, "CLEANING");
+
+                // 16. Kết nối với database xoso_dw(xoso_dw.db)
+                Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
+
                 //Kiểm tra kết nối db xoso_dw
                 if (xoso_dw == null) {
-                    //Gửi mail khi kết nối không thành công
-                    SendEmail.sendMailError("Kết nối Database xoso_dw không thành công!");
-                    //Cập nhật trạng thái ERROR
+                    //17.2 Thêm dữ liệu vào control.log với status = ERROR
                     updateStatusInDB(currentConfigID, "ERROR");
+                    // 17.3 Gửi mail thông báo lỗi
+                    SendEmail.sendMailError("Kết nối Database xoso_dw không thành công!");
+                    // 17.4 Đóng kết nối với database Staging
                     staging.close();
                     controls.close();
                 } else {
-                    //transform dữ liệu từ staging db sang xoso_dw
+                    // 17. Kết nối thành công
+                    // 17.1 Chuyển đổi dữ liệu từ staging.xo_so_staging sang xoso_dw.xo_so_fact
+                    // 18. Transform dữ liệu theo các bảng dim trong xoso_dw
                     transferStagingToXoso_dw();
+                    // 19. Thêm dữ liệu vào control.log với status = TRANSFORMING
                     updateStatusInDB(currentConfigID, "TRANSFORMING");
-                    //truncate dữ liệu trong bảng xo_so_staging
+                    // 20. Truncate bảng staging.xo_so_staging
                     truncateStagingDB();
                     controls.close();
                     staging.close();
