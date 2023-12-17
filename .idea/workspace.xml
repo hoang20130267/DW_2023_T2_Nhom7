@@ -9,42 +9,121 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="cập nhật lại Extracting">
+    <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject.war" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Configuration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Dmart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Dmart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Log.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Log.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/LotteryResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/LotteryResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Prize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Prize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/ProvinceResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/ProvinceResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Staging.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Staging.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/Crawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/Crawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/ExportToExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/ExportToExcel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/XosoCrawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/XosoCrawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Extracting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Transform.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/ConnectToDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/ConnectToDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/DBProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/DBProperties.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/JDBIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/JDBIConnector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Dmart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Dmart.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Log.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Log.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/LotteryResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/LotteryResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Prize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Prize.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/ProvinceResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/ProvinceResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Staging.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Staging.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DAO/XosoCrawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/XosoCrawling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/FulProcessETL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/FulProcessETL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject.war" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/Images/mainpic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Configuration.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Dmart.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Log.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/LotteryResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Prize.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/ProvinceResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Bean/Staging.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Controller/SeachDomainController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/Controller/SearchController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/Crawling.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/ExportToExcel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/SendEmail$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/SendEmail.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/DAO/XosoCrawling.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Extracting.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Load.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/ETL/Transform.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/ConnectToDB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/DBProperties.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/classes/db/JDBIConnector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/SparseBitSet-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/activation-1.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-all-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-anim-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-awt-util-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-bridge-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-codec-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-constants-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-css-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-dom-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-ext-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-extension-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-gui-util-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-gvt-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-i18n-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-parser-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-rasterizer-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-rasterizer-ext-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-script-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-shared-resources-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-slideshow-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-squiggle-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-squiggle-ext-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-svg-dom-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-svgbrowser-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-svggen-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-svgpp-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-svgrasterizer-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-swing-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-transcoder-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-ttf2svg-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-util-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/batik-xml-1.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/bcpkix-jdk15on-1.68.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/bcprov-jdk15on-1.68.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/caffeine-3.0.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-beanutils-1.9.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-codec-1.14.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-collections-3.2.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-collections4-4.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-compress-1.20.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-io-1.3.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-lang3-3.12.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-logging-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-math3-3.6.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/commons-text-1.9.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/curvesapi-1.06.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/fontbox-2.0.22.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/geantyref-1.3.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/graphics2d-0.30.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/jakarta.activation-api-1.2.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/jakarta.xml.bind-api-2.3.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/javax.mail-1.6.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/javax.mail-api-1.6.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/jcl-over-slf4j-1.7.30.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/jdbi3-core-3.34.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/jsoup-1.16.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/logback-classic-1.4.7.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/logback-core-1.4.7.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/mysql-connector-java-8.0.28.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/opencsv-5.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/pdfbox-2.0.22.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/poi-5.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/poi-ooxml-5.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/poi-ooxml-lite-5.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/protobuf-java-3.11.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/serializer-2.7.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/slf4j-api-2.0.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/stax2-api-4.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/woodstox-core-5.2.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/xalan-2.7.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/xml-apis-1.4.01.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/xml-apis-ext-1.3.04.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/xmlbeans-4.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/xmlgraphics-commons-2.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/lib/xmlsec-2.2.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/ajax/ajax-search-domain.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/ajax/ajax-search.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/domain-xoso.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/CrawlProject/js/jquery-3.3.1.min.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Transform.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/ConnectToDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/ConnectToDB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/DBProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/DBProperties.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,6 +165,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;NguyenHuuDat&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -144,8 +224,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ETL.Main" />
       <module name="Xoso-Datawarehouse" />
       <extension name="coverage">
         <pattern>
@@ -157,12 +237,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="XosoCrawling" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DAO.XosoCrawling" />
+    <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
       <module name="Xoso-Datawarehouse" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="DAO.*" />
+          <option name="PATTERN" value="ETL.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -258,8 +338,8 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.Main" />
       <item itemvalue="Application.FulProcessETL" />
-      <item itemvalue="Application.XosoCrawling" />
       <item itemvalue="Application.Load" />
       <item itemvalue="Application.Extracting" />
       <item itemvalue="Application.Transform" />
@@ -268,10 +348,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.FulProcessETL" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Load" />
         <item itemvalue="Application.Extracting" />
         <item itemvalue="Application.Transform" />
-        <item itemvalue="Application.XosoCrawling" />
       </list>
     </recent_temporary>
   </component>
@@ -314,6 +394,13 @@
       <workItem from="1702390151907" duration="199000" />
       <workItem from="1702429983139" duration="2131000" />
       <workItem from="1702609261004" duration="8452000" />
+      <workItem from="1702636354789" duration="606000" />
+      <workItem from="1702637521470" duration="1004000" />
+      <workItem from="1702781833985" duration="648000" />
+      <workItem from="1702782500069" duration="927000" />
+      <workItem from="1702784261786" duration="2247000" />
+      <workItem from="1702786904999" duration="680000" />
+      <workItem from="1702787883403" duration="1469000" />
     </task>
     <task id="LOCAL-00001" summary="Ghi chú lại các bước trong workflow">
       <created>1702386484734</created>

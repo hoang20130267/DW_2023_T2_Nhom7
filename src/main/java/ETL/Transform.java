@@ -151,6 +151,11 @@ public class Transform {
                 Configuration configuration = getConfigurationStatus("EXTRACTING");
                 //Chèn dữ liệu vào db stating
                 insertStagingDB(staging, getFile(currentConfigID));
+                controls.createUpdate("UPDATE logs SET status = 'CLEANING', description='Cập nhật status thành công', " +
+                                "date_update = :currentTime WHERE configuration_id = :id")
+                        .bind("currentTime", Crawling.getCurrentTime())
+                        .bind("id", configuration.getId())
+                        .execute();
                 //Kiểm tra kết nối db xoso_dw
                 if (xoso_dw == null) {
                     //Gửi mail khi kết nối không thành công

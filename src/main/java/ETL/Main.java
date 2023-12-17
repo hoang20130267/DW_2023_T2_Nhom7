@@ -4,8 +4,8 @@ import java.text.ParseException;
 
 public class Main {
     public static void main(String[] args) throws ParseException {
-        Extracting.Crawling();
+       // Extracting.Crawling();
        // Transform.updateConfiguration();
-       // Load.loadingAndUpdateConfig();
+        Load.loadingAndUpdateConfig();
     }
 }
