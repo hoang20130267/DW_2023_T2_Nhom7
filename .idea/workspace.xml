@@ -10,11 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="cập nhật lại Extracting">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Bean/Staging.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Bean/Staging.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/Crawling.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +70,7 @@
       <recent name="C:\Users\ADMIN\IdeaProjects\Xoso-Datawarehouse\src\main\webapp\js" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.FulProcessETL">
+  <component name="RunManager" selected="Application.Load">
     <configuration name="Extracting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ETL.Extracting" />
       <module name="Xoso-Datawarehouse" />
@@ -237,9 +233,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.FulProcessETL" />
-        <item itemvalue="Application.Transform" />
         <item itemvalue="Application.Load" />
+        <item itemvalue="Application.Transform" />
+        <item itemvalue="Application.FulProcessETL" />
         <item itemvalue="Application.Extracting" />
         <item itemvalue="Application.XosoCrawling" />
       </list>
@@ -287,7 +283,10 @@
       <workItem from="1702630717267" duration="1035000" />
       <workItem from="1702636819186" duration="746000" />
       <workItem from="1702730708280" duration="3011000" />
-      <workItem from="1702741668108" duration="2113000" />
+      <workItem from="1702741668108" duration="2727000" />
+      <workItem from="1702790714881" duration="1916000" />
+      <workItem from="1702825254216" duration="52000" />
+      <workItem from="1702826060465" duration="496000" />
     </task>
     <task id="LOCAL-00001" summary="Ghi chú lại các bước trong workflow">
       <created>1702386484734</created>
