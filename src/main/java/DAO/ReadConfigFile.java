@@ -1,6 +1,7 @@
 package DAO;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,9 +9,10 @@ import java.util.Map;
 
 public class ReadConfigFile {
     public static Map<String, String> getConfig() {
-        String fileName = "A:/F/2023-HK1/DataWarehouse/FileConfig/config.txt";
+        File configFile = new File("src/main/resources/config.txt");
+        String filePath = configFile.getAbsolutePath();
         Map<String, String> result = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.contains("=")) {

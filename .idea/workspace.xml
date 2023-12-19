@@ -10,13 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/ReadConfigFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/FulProcessETL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/FulProcessETL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ReadConfigFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ReadConfigFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/SendEmail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/SendEmail.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/db/ConnectToDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ConnectToDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/DBProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/DBProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/ReadConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Bean/Dmart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Dmart.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/Bean/Log.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Log.class" afterDir="false" />
@@ -30,9 +31,12 @@
       <change beforePath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Transform.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/db/ConnectToDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/ConnectToDB.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/db/DBProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/DBProperties.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/ReadConfig.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,29 +74,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;NguyenHuuDat&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;A:/F/2023-HK2/Xoso-DataWarehouse&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "NguyenHuuDat",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/ADMIN/IdeaProjects/Xoso-Datawarehouse/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.editor",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ADMIN\IdeaProjects\Xoso-Datawarehouse\src\main\resources" />
       <recent name="C:\Users\ADMIN\IdeaProjects\Xoso-Datawarehouse\src\main\webapp\js" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.FulProcessETL">
+  <component name="RunManager" selected="Application.Load">
     <configuration name="Extracting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ETL.Extracting" />
       <module name="Xoso-Datawarehouse" />
@@ -145,12 +150,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
+    <configuration name="SendEmail" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DAO.SendEmail" />
       <module name="Xoso-Datawarehouse" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ETL.*" />
+          <option name="PATTERN" value="DAO.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -246,20 +251,20 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.SendEmail" />
       <item itemvalue="Application.ReadConfigFile" />
       <item itemvalue="Application.FulProcessETL" />
       <item itemvalue="Application.Load" />
       <item itemvalue="Application.Extracting" />
-      <item itemvalue="Application.Transform" />
       <item itemvalue="Tomcat Server.Tomcat 9.0.68" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.FulProcessETL" />
-        <item itemvalue="Application.ReadConfigFile" />
-        <item itemvalue="Application.Extracting" />
-        <item itemvalue="Application.Transform" />
         <item itemvalue="Application.Load" />
+        <item itemvalue="Application.SendEmail" />
+        <item itemvalue="Application.ReadConfigFile" />
+        <item itemvalue="Application.FulProcessETL" />
+        <item itemvalue="Application.Extracting" />
       </list>
     </recent_temporary>
   </component>
