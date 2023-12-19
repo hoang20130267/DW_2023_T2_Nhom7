@@ -21,7 +21,7 @@ import java.util.Optional;
 public class Transform {
 
     public static Configuration getConfigurationStatus(String currentStatus) {
-        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
+        try (Handle handle = ConnectToDB.connectionToDB("controls").open()) {
             Optional<Configuration> configDetail = handle.createQuery("SELECT con.id, con.date, con.path, con.user_database, con.password_database, con.flag FROM configurations con INNER JOIN logs l ON con.id = l.configuration_id WHERE l.status = :status LIMIT 1")
                     .bind("status", currentStatus)
                     .mapToBean(Configuration.class)
@@ -33,7 +33,7 @@ public class Transform {
 
     public static boolean updateStatusInDB(int configurationID, String newStatus) {
         // Cập nhật trạng thái mới
-        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
+        try (Handle handle = ConnectToDB.connectionToDB("controls").open()) {
             handle.createUpdate("UPDATE logs SET status = :newStatus WHERE configuration_id = :configurationID")
                     .bind("newStatus", newStatus)
                     .bind("configurationID", configurationID)
@@ -52,7 +52,6 @@ public class Transform {
         String csvSplitBy = ",";
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             br.readLine(); // Bỏ qua dòng tiêu đề
-
             while ((line = br.readLine()) != null) {
 
                 String[] data = line.split(csvSplitBy);
@@ -137,8 +136,8 @@ public class Transform {
     public static void updateConfiguration() {
         try {
             // 11.Kết nối database staging
-            Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
-            Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
+            Handle controls = ConnectToDB.connectionToDB("controls").open();
+            Handle staging = ConnectToDB.connectionToDB("staging").open();
 
             //Lấy ID của Configuration hiện tại
             int currentConfigID = getConfigurationStatus("EXTRACTING").getId();
@@ -160,7 +159,7 @@ public class Transform {
                 updateStatusInDB(currentConfigID, "CLEANING");
 
                 // 16. Kết nối với database xoso_dw(xoso_dw.db)
-                Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
+                Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw").open();
 
                 //Kiểm tra kết nối db xoso_dw
                 if (xoso_dw == null) {
@@ -191,7 +190,7 @@ public class Transform {
         }
     }
     public static String getFile(int id) {
-        try (Handle handle = ConnectToDB.connectionToDB("controls", "root", "").open()) {
+        try (Handle handle = ConnectToDB.connectionToDB("controls").open()) {
             String file = handle.createQuery("SELECT CONCAT(c.path, '/', l.file_name) AS full_path " +
                             "FROM configurations c " +
                             "JOIN logs l ON c.id = l.configuration_id WHERE c.id = ?")
