@@ -28,9 +28,9 @@ public class JDBIConnector {
 
     private static DataSource createDataSource(String dbName) throws SQLException {
         MysqlDataSource dataSource = new MysqlDataSource();
-        dataSource.setURL("jdbc:mysql://" + DBProperties.getDbHost(dbName) + ":" + DBProperties.getDbPort(dbName) + "/" + DBProperties.getDbName(dbName));
-        dataSource.setUser(DBProperties.getUsername(dbName));
-        dataSource.setPassword(DBProperties.getPassword(dbName));
+        dataSource.setURL("jdbc:mysql://" + DBProperties.getDbHost() + ":" + DBProperties.getDbPort() + "/" + DBProperties.getDbName(dbName));
+        dataSource.setUser(DBProperties.getUsername());
+        dataSource.setPassword(DBProperties.getPassword());
         dataSource.setUseSSL(false);
         dataSource.setAutoReconnect(true);
         return dataSource;

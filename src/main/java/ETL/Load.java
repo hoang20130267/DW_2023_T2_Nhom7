@@ -6,6 +6,7 @@ import Bean.Log;
 import DAO.SendEmail;
 import db.ConnectToDB;
 import db.JDBIConnector;
+import db.ReadConfig;
 import org.jdbi.v3.core.Handle;
 
 import java.util.*;
@@ -289,12 +290,13 @@ public class Load {
     }
 
     public static void loadingAndUpdateConfig(){
-        Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
-        Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
-        Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
+        ReadConfig config = new ReadConfig();
+        Handle controls = ConnectToDB.connectionToDB("controls", config.getConfig("username"),config.getConfig("password")).open();
+        Handle staging = ConnectToDB.connectionToDB("staging",config.getConfig("username"),config.getConfig("password")).open();
+        Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw",config.getConfig("username"),config.getConfig("password")).open();
 
         // 21. Kết nối với database dmarts
-        Handle dmart = ConnectToDB.connectionToDB("dmarts","root","").open();
+        Handle dmart = ConnectToDB.connectionToDB("dmarts",config.getConfig("username"),config.getConfig("password")).open();
         try {
             int idCurrentConfig = getConfig("TRANSFORMING").getId();
             //22. Kết nối không thành công
@@ -351,10 +353,10 @@ public class Load {
 //        System.out.println(getListConfiguration());
 //        System.out.println(getListFirstDmartMN("12/10/2023"));
 //        System.out.println(Load.getProvince(getListThirdDmartMT()));
-//        System.out.println(getCurrentDate());
+        System.out.println(getCurrentDate());
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
 //        System.out.println(getConfig("TRANSFORMING"));
 //        updateStatusInDatabase(47, "EXTRACTING");
-        loadingAndUpdateConfig();
+//        loadingAndUpdateConfig();
     }
 }

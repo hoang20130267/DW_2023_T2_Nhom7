@@ -9,12 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="cập nhật lại Extracting">
-=======
-    <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
->>>>>>> 20679e0c2a00696e5c06ae2119fd98a7963827d1
+    <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="fix error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/DBProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/DBProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/JDBIConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/JDBIConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/db.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/DBProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/DBProperties.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,12 +118,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
+    <configuration name="ReadConfig" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="db.ReadConfig" />
       <module name="Xoso-Datawarehouse" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ETL.*" />
+          <option name="PATTERN" value="db.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -127,12 +131,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="XosoCrawling" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DAO.XosoCrawling" />
+    <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
       <module name="Xoso-Datawarehouse" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="DAO.*" />
+          <option name="PATTERN" value="ETL.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -228,8 +232,8 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.ReadConfig" />
       <item itemvalue="Application.FulProcessETL" />
-      <item itemvalue="Application.XosoCrawling" />
       <item itemvalue="Application.Load" />
       <item itemvalue="Application.Extracting" />
       <item itemvalue="Application.Transform" />
@@ -238,10 +242,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Load" />
+        <item itemvalue="Application.ReadConfig" />
         <item itemvalue="Application.Transform" />
         <item itemvalue="Application.FulProcessETL" />
         <item itemvalue="Application.Extracting" />
-        <item itemvalue="Application.XosoCrawling" />
       </list>
     </recent_temporary>
   </component>
@@ -291,6 +295,7 @@
       <workItem from="1702790714881" duration="1916000" />
       <workItem from="1702825254216" duration="52000" />
       <workItem from="1702826060465" duration="496000" />
+      <workItem from="1702994719956" duration="1261000" />
     </task>
     <task id="LOCAL-00001" summary="Ghi chú lại các bước trong workflow">
       <created>1702386484734</created>

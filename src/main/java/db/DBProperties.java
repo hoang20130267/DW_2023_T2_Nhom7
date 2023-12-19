@@ -13,21 +13,21 @@ public class DBProperties {
             ioException.printStackTrace();
         }
     }
-
-    public static String getDbHost(String dbName) {
-        return prop.get(dbName + ".host").toString();
+    static ReadConfig config = new ReadConfig();
+    public static String getDbHost() {
+        return config.getConfig("host");
     }
 
-    public static String getDbPort(String dbName) {
-        return prop.get(dbName + ".port").toString();
+    public static String getDbPort() {
+        return config.getConfig("port");
     }
 
-    public static String getUsername(String dbName) {
-        return prop.get(dbName + ".username").toString();
+    public static String getUsername() {
+        return config.getConfig("username");
     }
 
-    public static String getPassword(String dbName) {
-        return prop.get(dbName + ".password").toString();
+    public static String getPassword() {
+        return config.getConfig("password");
     }
 
     public static String getDbName(String dbName) {
