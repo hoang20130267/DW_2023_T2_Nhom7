@@ -355,6 +355,6 @@ public class Load {
 //        System.out.println(getNumberWinning("sau2", getListFirstDmartMN()));
 //        System.out.println(getConfig("TRANSFORMING"));
 //        updateStatusInDatabase(47, "EXTRACTING");
-        loadingAndUpdateConfig();
+//        loadingAndUpdateConfig();
     }
 }

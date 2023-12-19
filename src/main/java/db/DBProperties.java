@@ -1,9 +1,13 @@
 package db;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Properties;
 
+import static DAO.ReadConfigFile.getConfig;
+
 public class DBProperties {
+    private static Map<String, String> config = getConfig();
     private static Properties prop = new Properties();
 
     static {
@@ -13,21 +17,21 @@ public class DBProperties {
             ioException.printStackTrace();
         }
     }
-    static ReadConfig config = new ReadConfig();
+
     public static String getDbHost() {
-        return config.getConfig("host");
+        return config.get("url");
     }
 
     public static String getDbPort() {
-        return config.getConfig("port");
+        return config.get("port");
     }
 
     public static String getUsername() {
-        return config.getConfig("username");
+        return config.get("user_name");
     }
 
     public static String getPassword() {
-        return config.getConfig("password");
+        return config.get("password");
     }
 
     public static String getDbName(String dbName) {
