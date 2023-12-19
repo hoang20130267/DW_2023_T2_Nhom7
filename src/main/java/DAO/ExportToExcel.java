@@ -24,8 +24,8 @@ public class ExportToExcel{
     public static void writeToFileCSV(Handle handle, String currentTime, Configuration config, List<ProvinceResult> provinceResults, String ngayThang) {
 
         //8. Tạo file excel tên <current_day>_xoso trong thư mục theo địa chỉ trong control.configurations
-        String fileName = ngayThang + "_xoso.csv";
-        String filePath = config.getPath()+"/" + fileName;
+        String fileName = formatDate(ngayThang) + "_xoso.csv";
+        String filePath = config.getPath()+ fileName;
         String csvFilePath = filePath;
 
         //9. Lấy dữ liệu đã xử lý lưu vào file vừa tạo
@@ -101,10 +101,10 @@ public class ExportToExcel{
         return formartGiai;
     }
     private static String formatDate(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
         LocalDate dateBefore = LocalDate.parse(date, formatter);
 
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String formattedDate = dateBefore.format(outputFormatter);
         return formattedDate;
     }

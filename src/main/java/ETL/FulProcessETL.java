@@ -7,7 +7,7 @@ public class FulProcessETL {
         try {
             Extracting.Crawling();
             Transform.updateConfiguration();
-            Load.loadingAndUpdateConfig();
+           Load.loadingAndUpdateConfig();
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

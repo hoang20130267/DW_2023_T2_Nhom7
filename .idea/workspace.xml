@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -71,9 +70,22 @@
       <recent name="C:\Users\ADMIN\IdeaProjects\Xoso-Datawarehouse\src\main\webapp\js" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Load">
+  <component name="RunManager" selected="Application.FulProcessETL">
     <configuration name="Extracting" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ETL.Extracting" />
+      <module name="Xoso-Datawarehouse" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ETL.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FulProcessETL" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ETL.FulProcessETL" />
       <module name="Xoso-Datawarehouse" />
       <extension name="coverage">
         <pattern>
@@ -104,6 +116,19 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="ETL.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="XosoCrawling" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DAO.XosoCrawling" />
+      <module name="Xoso-Datawarehouse" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="DAO.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -198,6 +223,23 @@
         </option>
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.FulProcessETL" />
+      <item itemvalue="Application.XosoCrawling" />
+      <item itemvalue="Application.Load" />
+      <item itemvalue="Application.Extracting" />
+      <item itemvalue="Application.Transform" />
+      <item itemvalue="Tomcat Server.Tomcat 9.0.68" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.FulProcessETL" />
+        <item itemvalue="Application.Transform" />
+        <item itemvalue="Application.Load" />
+        <item itemvalue="Application.Extracting" />
+        <item itemvalue="Application.XosoCrawling" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -205,6 +247,13 @@
         <option value="jdk-21.0.1-openjdk-21.0.1-3183f394aec4-abbd5a8d" />
       </set>
     </attachedChunks>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Load" />
+        <item itemvalue="Application.Extracting" />
+        <item itemvalue="Application.Transform" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -224,8 +273,33 @@
       <workItem from="1702016733509" duration="611000" />
       <workItem from="1702018112230" duration="301000" />
       <workItem from="1702102347386" duration="170000" />
-      <workItem from="1702166823844" duration="166000" />
+      <workItem from="1702186829901" duration="12599000" />
+      <workItem from="1702210702031" duration="9064000" />
+      <workItem from="1702280662829" duration="5362000" />
+      <workItem from="1702388646525" duration="23000" />
+      <workItem from="1702390151907" duration="199000" />
+      <workItem from="1702429983139" duration="2131000" />
+      <workItem from="1702609261004" duration="8452000" />
+      <workItem from="1702630717267" duration="1035000" />
+      <workItem from="1702636819186" duration="746000" />
+      <workItem from="1702730708280" duration="3011000" />
+      <workItem from="1702741668108" duration="2113000" />
     </task>
+    <task id="LOCAL-00001" summary="Ghi chú lại các bước trong workflow">
+      <created>1702386484734</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702386484734</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix error">
+      <created>1702615229880</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702615229880</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -241,5 +315,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Ghi chú lại các bước trong workflow" />
+    <MESSAGE value="fix error" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix error" />
   </component>
 </project>

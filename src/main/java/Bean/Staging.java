@@ -96,7 +96,7 @@ public class Staging {
     }
 
     public void calculateDates() {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
         try {
             Date parsedDate = sdf.parse(this.date);
             // Set date_updated
