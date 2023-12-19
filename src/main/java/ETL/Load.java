@@ -289,12 +289,12 @@ public class Load {
     }
 
     public static void loadingAndUpdateConfig(){
-        Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
-        Handle staging = ConnectToDB.connectionToDB("staging","root","").open();
-        Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw","root","").open();
+        Handle controls = ConnectToDB.connectionToDB("controls").open();
+        Handle staging = ConnectToDB.connectionToDB("staging").open();
+        Handle xoso_dw = ConnectToDB.connectionToDB("xoso_dw").open();
 
         // 21. Kết nối với database dmarts
-        Handle dmart = ConnectToDB.connectionToDB("dmarts","root","").open();
+        Handle dmart = ConnectToDB.connectionToDB("dmarts").open();
         try {
             int idCurrentConfig = getConfig("TRANSFORMING").getId();
             //22. Kết nối không thành công
