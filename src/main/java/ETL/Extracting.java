@@ -3,6 +3,7 @@ package ETL;
 import Bean.*;
 import DAO.ExportToExcel;
 import DAO.Crawling;
+import DAO.ReadConfigFile;
 import DAO.SendEmail;
 import db.ConnectToDB;
 import db.JDBIConnector;
@@ -13,16 +14,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Extracting {
     public static void main(String[] args) throws ParseException {
         Crawling();
     }
     public static void Crawling() throws ParseException {
-
         // 2. Kết nối với database controls (controls.db)
-        Handle controls = ConnectToDB.connectionToDB("controls","root","").open();
-
+        Handle controls = ConnectToDB.connectionToDB("controls").open();
+        System.out.println("Cap nhat status = crawling");
         // 3. Kết nối thành công
         System.out.println("Ket noi thanh cong");
         if(controls != null) {
@@ -103,6 +104,32 @@ public class Extracting {
         }
 
         return null;
+    }
+
+    private static void insertNewConfigAndLog(Handle handle, String path, String url, String username, String password) {
+        int id = handle.createQuery("SELECT id FROM controls.configurations ORDER BY id DESC LIMIT 1")
+                .mapTo(Integer.class)
+                .one();
+
+        int idLog = handle.createQuery("SELECT id FROM controls.logs ORDER BY id DESC LIMIT 1")
+                .mapTo(Integer.class)
+                .one();
+
+        int newID = id + 1;
+        int newLogId = idLog + 1;
+
+        handle.createUpdate("INSERT INTO controls.configurations VALUES (?, '', ?, ?, ?, ?, 1);")
+                .bind(0, newID)
+                .bind(1, path)
+                .bind(2, url)
+                .bind(3, username)
+                .bind(4, password)
+                .execute();
+
+        handle.createUpdate("INSERT INTO controls.logs VALUES (?, ?, '', '', 'PREPARED', current_date, '2026-12-31');")
+                .bind(0, newLogId)
+                .bind(1, newID)
+                .execute();
     }
 
 

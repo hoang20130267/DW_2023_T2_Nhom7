@@ -10,7 +10,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6bf8629-4db8-4b97-90dd-0d3b4e4b08eb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/ReadConfigFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Extracting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/FulProcessETL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/FulProcessETL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Load.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ETL/Transform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/db/ConnectToDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/db/ConnectToDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Configuration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Dmart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Dmart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Log.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Log.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bean/LotteryResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/LotteryResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Prize.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Prize.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bean/ProvinceResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/ProvinceResult.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Bean/Staging.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Bean/Staging.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/Crawling.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/ExportToExcel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DAO/XosoCrawling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DAO/XosoCrawling.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Extracting.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Load.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Load.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ETL/Transform.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ETL/Transform.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/ConnectToDB.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/ConnectToDB.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/DBProperties.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/DBProperties.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/JDBIConnector.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +77,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;NguyenHuuDat&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/hidroxit/Documents/GitHub/Xoso-DataWarehouse&quot;,
+    &quot;last_opened_file_path&quot;: &quot;A:/F/2023-HK2/Xoso-DataWarehouse&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -110,12 +132,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
+    <configuration name="ReadConfigFile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DAO.ReadConfigFile" />
       <module name="Xoso-Datawarehouse" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="ETL.*" />
+          <option name="PATTERN" value="DAO.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -123,12 +145,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="XosoCrawling" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DAO.XosoCrawling" />
+    <configuration name="Transform" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ETL.Transform" />
       <module name="Xoso-Datawarehouse" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="DAO.*" />
+          <option name="PATTERN" value="ETL.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -224,8 +246,8 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.ReadConfigFile" />
       <item itemvalue="Application.FulProcessETL" />
-      <item itemvalue="Application.XosoCrawling" />
       <item itemvalue="Application.Load" />
       <item itemvalue="Application.Extracting" />
       <item itemvalue="Application.Transform" />
@@ -234,10 +256,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.FulProcessETL" />
+        <item itemvalue="Application.ReadConfigFile" />
+        <item itemvalue="Application.Extracting" />
         <item itemvalue="Application.Transform" />
         <item itemvalue="Application.Load" />
-        <item itemvalue="Application.Extracting" />
-        <item itemvalue="Application.XosoCrawling" />
       </list>
     </recent_temporary>
   </component>
@@ -284,6 +306,11 @@
       <workItem from="1702636819186" duration="746000" />
       <workItem from="1702730708280" duration="3011000" />
       <workItem from="1702741668108" duration="2113000" />
+      <workItem from="1702908935269" duration="1725000" />
+      <workItem from="1702956537012" duration="2662000" />
+      <workItem from="1702979724945" duration="619000" />
+      <workItem from="1702980908773" duration="267000" />
+      <workItem from="1702992259491" duration="2324000" />
     </task>
     <task id="LOCAL-00001" summary="Ghi chú lại các bước trong workflow">
       <created>1702386484734</created>
@@ -299,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1702615229880</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix error">
+      <created>1702909049500</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702909049500</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
